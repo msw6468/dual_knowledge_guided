@@ -1,0 +1,155 @@
+\begin{thebibliography}{10}
+\urlstyle{rm}
+\expandafter\ifx\csname url\endcsname\relax
+  \def\url#1{\texttt{#1}}\fi
+\expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{URL }\fi
+\expandafter\ifx\csname doiprefix\endcsname\relax\def\doiprefix{DOI: }\fi
+\providecommand{\bibinfo}[2]{#2}
+\providecommand{\eprint}[2][]{\url{#2}}
+
+\bibitem{Rajkomar:2018:SAAD}
+\bibinfo{author}{Rajkomar, A.}, \bibinfo{author}{Oren, E.}, \bibinfo{author}{Chen, K.} \emph{et~al.}
+\newblock \bibinfo{journal}{\bibinfo{title}{Scalable and accurate deep learning with electronic health records}}.
+\newblock {\emph{\JournalTitle{npj Digital Medicine}}}  (\bibinfo{year}{2018}).
+
+\bibitem{Lakhani:2017:DLCR}
+\bibinfo{author}{Lakhani, P.} \& \bibinfo{author}{Sundaram, B.}
+\newblock \bibinfo{journal}{\bibinfo{title}{Deep learning at chest radiography: Automated classification of pulmonary tuberculosis by using convolutional neural networks}}.
+\newblock {\emph{\JournalTitle{Radiology}}}  (\bibinfo{year}{2017}).
+
+\bibitem{Sutton:2020:AOCS}
+\bibinfo{author}{Sutton, R.~T.} \emph{et~al.}
+\newblock \bibinfo{journal}{\bibinfo{title}{An overview of clinical decision support systems: benefits, risks, and strategies for success}}.
+\newblock {\emph{\JournalTitle{npj Digit Medicine}}}  (\bibinfo{year}{2020}).
+
+\bibitem{Islam:2023:CKDP}
+\bibinfo{author}{Islam, M.~A.}, \bibinfo{author}{Majumder, M. Z.~H.} \& \bibinfo{author}{Hussein, M.~A.}
+\newblock \bibinfo{journal}{\bibinfo{title}{Chronic kidney disease prediction based on machine learning algorithms}}.
+\newblock {\emph{\JournalTitle{Journal of Pathology Informatics}}}  (\bibinfo{year}{2023}).
+
+\bibitem{Ghosh:2024:IOEM}
+\bibinfo{author}{Ghosh, S.~K.} \& \bibinfo{author}{Khandoker, A.~H.}
+\newblock \bibinfo{journal}{\bibinfo{title}{Investigation on explainable machine learning models to predict chronic kidney diseases}}.
+\newblock {\emph{\JournalTitle{Scientific Reports}}}  (\bibinfo{year}{2024}).
+
+\bibitem{Moon:2025:DPTK}
+\bibinfo{author}{Moon, S.} \emph{et~al.}
+\newblock \bibinfo{journal}{\bibinfo{title}{Development of a prediction tool for kidney function decline in children with chronic kidney disease}}.
+\newblock {\emph{\JournalTitle{Kidney Research and Clinical Practice}}}  (\bibinfo{year}{2025}).
+
+\bibitem{Kanakasabapathy:2021:AANN}
+\bibinfo{author}{Kanakasabapathy, M.~K.}, \bibinfo{author}{Thirumalaraju, P.}, \bibinfo{author}{Kandula, H.} \emph{et~al.}
+\newblock \bibinfo{journal}{\bibinfo{title}{Adaptive adversarial neural networks for the analysis of lossy and domain-shifted datasets of medical images}}.
+\newblock {\emph{\JournalTitle{Nature Biomedical Engineering}}}  (\bibinfo{year}{2021}).
+
+\bibitem{Guo:2022:EODG}
+\bibinfo{author}{Guo, L.~L.}, \bibinfo{author}{Pfohl, S.~R.}, \bibinfo{author}{Fries, J.} \emph{et~al.}
+\newblock \bibinfo{journal}{\bibinfo{title}{Evaluation of domain generalization and adaptation on improving model robustness to temporal dataset shift in clinical medicine}}.
+\newblock {\emph{\JournalTitle{Scientific Reports}}}  (\bibinfo{year}{2022}).
+
+\bibitem{Zhang:2018:Mixup}
+\bibinfo{author}{Zhang, H.}, \bibinfo{author}{Cisse, M.}, \bibinfo{author}{Dauphin, Y.~N.}, \bibinfo{author}{Lopez-Paz, D.} \emph{et~al.}
+\newblock \bibinfo{title}{mixup: Beyond empirical risk minimization}.
+\newblock In \emph{\bibinfo{booktitle}{ICLR}} (\bibinfo{year}{2018}).
+
+\bibitem{Srivastava:2014:Dropout}
+\bibinfo{author}{Srivastava, N.}, \bibinfo{author}{Hinton, G.}, \bibinfo{author}{Krizhevsky, A.}, \bibinfo{author}{Sutskever, I.} \& \bibinfo{author}{Salakhutdinov, R.}
+\newblock \bibinfo{journal}{\bibinfo{title}{Dropout: A simple way to prevent neural networks from overfitting}}.
+\newblock {\emph{\JournalTitle{Journal of Machine Learning Research}}}  (\bibinfo{year}{2014}).
+
+\bibitem{Kang:2016:KNOW}
+\bibinfo{author}{Kang, H.~G.} \emph{et~al.}
+\newblock \bibinfo{journal}{\bibinfo{title}{Know-ped ckd (korean cohort study for outcomes in patients with pediatric ckd): design and methods}}.
+\newblock {\emph{\JournalTitle{BMC nephrology}}}  (\bibinfo{year}{2016}).
+
+\bibitem{Xu:2023:SimDE}
+\bibinfo{author}{Xu, Q.} \emph{et~al.}
+\newblock \bibinfo{title}{Simde: A simple domain expansion approach for single-source domain generalization}.
+\newblock In \emph{\bibinfo{booktitle}{CVPR Workshops}} (\bibinfo{year}{2023}).
+
+\bibitem{Cugu:2022:ACVC}
+\bibinfo{author}{Cugu, I.}, \bibinfo{author}{Mancini, M.}, \bibinfo{author}{Chen, Y.} \& \bibinfo{author}{Akata, Z.}
+\newblock \bibinfo{title}{Attention consistency on visual corruptions for single-source domain generalization}.
+\newblock In \emph{\bibinfo{booktitle}{CVPR Workshops}} (\bibinfo{year}{2022}).
+
+\bibitem{Xu:2021:AFFDG}
+\bibinfo{author}{Xu, Q.}, \bibinfo{author}{Zhang, R.}, \bibinfo{author}{Zhang, Y.}, \bibinfo{author}{Wang, Y.} \& \bibinfo{author}{Tian, Q.}
+\newblock \bibinfo{title}{A fourier-based framework for domain generalization}.
+\newblock In \emph{\bibinfo{booktitle}{CVPR}} (\bibinfo{year}{2021}).
+
+\bibitem{Zhao:2024:Morestyle}
+\bibinfo{author}{Zhao, H.} \emph{et~al.}
+\newblock \bibinfo{title}{Morestyle: relax low-frequency constraint of fourier-based image reconstruction in generalizable medical image segmentation}.
+\newblock In \emph{\bibinfo{booktitle}{MICCAI}} (\bibinfo{year}{2024}).
+
+\bibitem{Liu:2024:UFDP}
+\bibinfo{author}{Liu, C.}, \bibinfo{author}{Cao, Y.}, \bibinfo{author}{Su, X.} \& \bibinfo{author}{Zhu, H.}
+\newblock \bibinfo{title}{Universal frequency domain perturbation for single-source domain generalization}.
+\newblock In \emph{\bibinfo{booktitle}{Proceedings of the 32nd ACM International Conference on Multimedia}} (\bibinfo{year}{2024}).
+
+\bibitem{Huang:2021:FSDR}
+\bibinfo{author}{Huang, J.}, \bibinfo{author}{Guan, D.}, \bibinfo{author}{Xiao, A.} \& \bibinfo{author}{Lu, S.}
+\newblock \bibinfo{title}{Fsdr: Frequency space domain randomization for domain generalization}.
+\newblock In \emph{\bibinfo{booktitle}{CVPR}} (\bibinfo{year}{2021}).
+
+\bibitem{Zhou:2021:DGWM}
+\bibinfo{author}{Zhou, K.}, \bibinfo{author}{Yang, Y.}, \bibinfo{author}{Qiao, Y.} \& \bibinfo{author}{Xiang, T.}
+\newblock \bibinfo{journal}{\bibinfo{title}{Domain generalization with mixstyle}}.
+\newblock {\emph{\JournalTitle{ICLR}}}  (\bibinfo{year}{2021}).
+
+\bibitem{Verma:2019:ManifoldMixup}
+\bibinfo{author}{Verma, V.} \emph{et~al.}
+\newblock \bibinfo{title}{Manifold mixup: Better representations by interpolating hidden states}.
+\newblock In \emph{\bibinfo{booktitle}{International conference on machine learning}} (\bibinfo{year}{2019}).
+
+\bibitem{Yun:2019:Cutmix}
+\bibinfo{author}{Yun, S.} \emph{et~al.}
+\newblock \bibinfo{title}{Cutmix: Regularization strategy to train strong classifiers with localizable features}.
+\newblock In \emph{\bibinfo{booktitle}{ICCV}} (\bibinfo{year}{2019}).
+
+\bibitem{Uddin:2021:Saliencymix}
+\bibinfo{author}{Uddin, A. F.~M.}, \bibinfo{author}{Monira, M.}, \bibinfo{author}{Shin, W.}, \bibinfo{author}{Chung, T.} \& \bibinfo{author}{Bae, S.~H.}
+\newblock \bibinfo{journal}{\bibinfo{title}{Saliencymix: A saliency guided data augmentation strategy for better regularization}}.
+\newblock {\emph{\JournalTitle{ICLR}}}  (\bibinfo{year}{2021}).
+
+\bibitem{Qin:2020:Resizemix}
+\bibinfo{author}{Qin, J.} \emph{et~al.}
+\newblock \bibinfo{journal}{\bibinfo{title}{Resizemix: Mixing data with preserved object information and true labels}}.
+\newblock {\emph{\JournalTitle{arXiv preprint arXiv:2012.11101}}}  (\bibinfo{year}{2020}).
+
+\bibitem{Balasubramanian:2023:TIIM}
+\bibinfo{author}{Balasubramanian, S.} \& \bibinfo{author}{Feizi, S.}
+\newblock \bibinfo{title}{Towards improved input masking for convolutional neural networks}.
+\newblock In \emph{\bibinfo{booktitle}{ICCV}} (\bibinfo{year}{2023}).
+
+\bibitem{Yao:2022:Cmixup}
+\bibinfo{author}{Yao, H.}, \bibinfo{author}{Wang, Y.}, \bibinfo{author}{Zhang, L.}, \bibinfo{author}{Zou, J.~Y.} \& \bibinfo{author}{Finn, C.}
+\newblock \bibinfo{title}{C-mixup: Improving generalization in regression}.
+\newblock In \emph{\bibinfo{booktitle}{Advances in neural information processing systems}} (\bibinfo{year}{2022}).
+
+\bibitem{haque2025improving}
+\bibinfo{author}{Haque, M.~E.} \emph{et~al.}
+\newblock \bibinfo{title}{Improving chronic kidney disease detection efficiency: Fine tuned catboost and nature-inspired algorithms with explainable ai}.
+\newblock In \emph{\bibinfo{booktitle}{CSNT}} (\bibinfo{year}{2025}).
+
+\bibitem{priyadharshini2025population}
+\bibinfo{author}{Priyadharshini, M.} \emph{et~al.}
+\newblock \bibinfo{journal}{\bibinfo{title}{A population based optimization of convolutional neural networks for chronic kidney disease prediction}}.
+\newblock {\emph{\JournalTitle{Scientific Reports}}}  (\bibinfo{year}{2025}).
+
+\bibitem{supriana2024modified}
+\bibinfo{author}{Supriana, I.~W.}, \bibinfo{author}{Pramartha, C.}, \bibinfo{author}{Putra, I.~G.}, \bibinfo{author}{Raharja, M.} \& \bibinfo{author}{Wiguna, P.}
+\newblock \bibinfo{title}{Modified k-nearest neighbor optimization with genetic algorithm in chronic kidney disease classification}.
+\newblock In \emph{\bibinfo{booktitle}{ICAMSAC 2023}} (\bibinfo{year}{2024}).
+
+\bibitem{Maaten:2008:tSNE}
+\bibinfo{author}{Maaten, L. V.~D.} \& \bibinfo{author}{Hinton, G.}
+\newblock \bibinfo{journal}{\bibinfo{title}{Visualizing data using t-sne}}.
+\newblock {\emph{\JournalTitle{Journal of machine learning research}}}  (\bibinfo{year}{2008}).
+
+\bibitem{Hollmann:2025:Tabpfn}
+\bibinfo{author}{Hollmann, N.} \emph{et~al.}
+\newblock \bibinfo{journal}{\bibinfo{title}{Accurate predictions on small data with a tabular foundation model}}.
+\newblock {\emph{\JournalTitle{Nature}}}  (\bibinfo{year}{2025}).
+
+\end{thebibliography}
