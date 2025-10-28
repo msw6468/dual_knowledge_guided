@@ -1,5 +1,5 @@
 \relax 
-\providecommand \babel@aux [2]{\global \let \babel@toc \@gobbletwo }
+\providecommand\babel@aux[2]{}
 \@nameuse{bbl@beforestart}
 \providecommand\hyper@newdestlabel[2]{}
 \providecommand\HyField@AuxAddToFields[1]{}
@@ -22,6 +22,8 @@
 \citation{Yun:2019:Cutmix}
 \citation{Uddin:2021:Saliencymix}
 \citation{Qin:2020:Resizemix}
+\citation{Zhang:2018:Mixup,Verma:2019:ManifoldMixup}
+\citation{Yun:2019:Cutmix,Qin:2020:Resizemix,Uddin:2021:Saliencymix}
 \citation{Balasubramanian:2023:TIIM}
 \citation{Yao:2022:Cmixup}
 \newlabel{sec:similarity-guided-mixup}{{}{3}{}{figure.caption.1}{}}
@@ -33,21 +35,23 @@
 \citation{haque2025improving,priyadharshini2025population,supriana2024modified}
 \@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces \textbf  {Demographics and clinical characteristics}}}{5}{table.caption.2}\protected@file@percent }
 \newlabel{tab:demographics}{{1}{5}{\textbf {Demographics and clinical characteristics}}{table.caption.2}{}}
-\citation{Hollmann:2022:Tabpfn}
+\citation{Arjovsky2019InvariantRM}
+\citation{Zhang:2018:Mixup}
+\citation{Verma:2019:ManifoldMixup}
 \@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces \textbf  {T-test p-values of source domain (SNUH) to target domains.} T-test p-values are reported for continuous variables, while chi-square test p-values are reported for categorical variables. A significant difference in distribution was observed for most features.}}{6}{table.caption.3}\protected@file@percent }
 \newlabel{tab:ttest_results}{{2}{6}{\textbf {T-test p-values of source domain (SNUH) to target domains.} T-test p-values are reported for continuous variables, while chi-square test p-values are reported for categorical variables. A significant difference in distribution was observed for most features}{table.caption.3}{}}
 \citation{Maaten:2008:tSNE}
 \citation{Hollmann:2025:Tabpfn}
 \@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Performance comparison on the KNOW-pedCKD dataset under the single-source domain generalization setting. Overall performance is measured on the aggregated (unified) target datasets, whereas Center-wise performance represents the calculated statistics (e.g., mean and standard deviation) across each individual center. The row with the highest recall is highlighted in bold.}}{7}{table.caption.4}\protected@file@percent }
 \newlabel{tab:performance_mlp}{{3}{7}{Performance comparison on the KNOW-pedCKD dataset under the single-source domain generalization setting. Overall performance is measured on the aggregated (unified) target datasets, whereas Center-wise performance represents the calculated statistics (e.g., mean and standard deviation) across each individual center. The row with the highest recall is highlighted in bold}{table.caption.4}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Performance comparison on the KNOW-pedCKD dataset under the SSDG setting (TabPFN Model). Overall performance is measured on the aggregated (unified) target datasets, whereas Center-wise performance represents the calculated statistics (e.g., mean and standard deviation) across each individual center. The row with the highest recall is highlighted in bold.}}{8}{table.caption.5}\protected@file@percent }
-\newlabel{tab:performance_tabpfn}{{4}{8}{Performance comparison on the KNOW-pedCKD dataset under the SSDG setting (TabPFN Model). Overall performance is measured on the aggregated (unified) target datasets, whereas Center-wise performance represents the calculated statistics (e.g., mean and standard deviation) across each individual center. The row with the highest recall is highlighted in bold}{table.caption.5}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces  \textbf  {Feature Space Analysis via t-SNE Visualization.} Our method yielded a structured feature space with robust separation between positive and negative classes, and the resulting decision boundary was appropriately positioned to effectively identify True Positives (TPs). }}{8}{figure.caption.5}\protected@file@percent }
+\newlabel{fig:2.1}{{2}{8}{\textbf {Feature Space Analysis via t-SNE Visualization.} Our method yielded a structured feature space with robust separation between positive and negative classes, and the resulting decision boundary was appropriately positioned to effectively identify True Positives (TPs)}{figure.caption.5}{}}
 \bibdata{sample}
 \bibcite{Rajkomar:2018:SAAD}{1}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces  \textbf  {Center-wise recall analysis} we present center-wise recall score. }}{9}{figure.caption.6}\protected@file@percent }
+\newlabel{fig:2_center_wise_analysis}{{3}{9}{\textbf {Center-wise recall analysis} we present center-wise recall score}{figure.caption.6}{}}
+\@writefile{toc}{\contentsline {section}{\hspace  *{-\tocsep }References}{9}{table.caption.7}\protected@file@percent }
 \bibcite{Lakhani:2017:DLCR}{2}
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces  \textbf  {Feature Space Analysis via t-SNE Visualization.} Our method yielded a structured feature space with robust separation between positive and negative classes, and the resulting decision boundary was appropriately positioned to effectively identify True Positives (TPs). }}{9}{figure.caption.6}\protected@file@percent }
-\newlabel{fig:2.1}{{2}{9}{\textbf {Feature Space Analysis via t-SNE Visualization.} Our method yielded a structured feature space with robust separation between positive and negative classes, and the resulting decision boundary was appropriately positioned to effectively identify True Positives (TPs)}{figure.caption.6}{}}
-\@writefile{toc}{\contentsline {section}{\hspace  *{-\tocsep }References}{9}{figure.caption.6}\protected@file@percent }
 \bibcite{Sutton:2020:AOCS}{3}
 \bibcite{Islam:2023:CKDP}{4}
 \bibcite{Ghosh:2024:IOEM}{5}
@@ -62,6 +66,8 @@
 \bibcite{Xu:2021:AFFDG}{14}
 \bibcite{Zhao:2024:Morestyle}{15}
 \bibcite{Liu:2024:UFDP}{16}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Performance comparison on the KNOW-pedCKD dataset under the SSDG setting (TabPFN Model). Overall performance is measured on the aggregated (unified) target datasets, whereas Center-wise performance represents the calculated statistics (e.g., mean and standard deviation) across each individual center. The row with the highest recall is highlighted in bold.}}{10}{table.caption.7}\protected@file@percent }
+\newlabel{tab:performance_tabpfn}{{4}{10}{Performance comparison on the KNOW-pedCKD dataset under the SSDG setting (TabPFN Model). Overall performance is measured on the aggregated (unified) target datasets, whereas Center-wise performance represents the calculated statistics (e.g., mean and standard deviation) across each individual center. The row with the highest recall is highlighted in bold}{table.caption.7}{}}
 \bibcite{Huang:2021:FSDR}{17}
 \bibcite{Zhou:2021:DGWM}{18}
 \bibcite{Verma:2019:ManifoldMixup}{19}
@@ -73,10 +79,11 @@
 \bibcite{haque2025improving}{25}
 \bibcite{priyadharshini2025population}{26}
 \bibcite{supriana2024modified}{27}
-\bibcite{Maaten:2008:tSNE}{28}
-\bibcite{Hollmann:2025:Tabpfn}{29}
-\ttl@finishall
+\bibcite{Arjovsky2019InvariantRM}{28}
+\bibcite{Maaten:2008:tSNE}{29}
+\bibcite{Hollmann:2025:Tabpfn}{30}
 \newlabel{LastPage}{{}{11}{}{page.11}{}}
-\gdef\lastpage@lastpage{11}
-\gdef\lastpage@lastpageHy{11}
+\xdef\lastpage@lastpage{11}
+\xdef\lastpage@lastpageHy{11}
+\ttl@finishall
 \gdef \@abspage@last{11}

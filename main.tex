@@ -4,7 +4,7 @@
 \usepackage{multirow}
 \usepackage{booktabs} % 깔끔한 표의 상단, 중간, 하단 줄 (\toprule, \midrule, \bottomrule)
 \usepackage{siunitx}  % 숫자(평균 \pm 표준편차) 정렬을 위한 S 컬럼 타입
-\usepackage{makecell} % 셀 내 줄바꿈을 위한 \makecell 명령어
+\usepackage{makecell} % 셀 내 줄바꿈을 위한 \makecell 명 령어
 \usepackage{tabularx}
 
 
@@ -84,35 +84,23 @@ In conclusion, this research presents a novel regularization strategy that syste
 
 \section*{Related Works}
 \subsection*{Single Source Domain Generalization}
-SSDG research has been particularly active in the field of Computer Vision~\cite{Xu:2023:SimDE, Cugu:2022:ACVC}. 
-The core idea in vision is to decompose image data into two components: Content and Style. 
-Here, content refers to the domain-invariant features, such as the essential shape and structure 
-of an object, which remain consistent across domains. 
-Style, on the other hand, refers to the domain-variant features, such as the color palette, 
-texture, and lighting of an image, which change depending on the domain.
+Single-Source Domain Generalization (SSDG) has been particularly active in the field of Computer Vision~\cite{Xu:2023:SimDE, Cugu:2022:ACVC}. 
+The core idea in vision is to decompose image data into two components: Content and Style. Here, content refers to the `domain-invariant' features, such as the essential shape and structure of an object, which remain consistent across domains. On the other hand, style refers to the domain-variant features, such as the color palette, texture, and lighting of an image, which change depending on the domain.
 
-Based on this concept, researchers have employed strategies that artificially diversify the 
-"style" of an image to train the model to focus solely on the "content." 
-Successful data augmentation techniques have been proposed that manipulate the frequency 
-characteristics of an image using the Fourier Transform~\cite{Xu:2021:AFFDG, Zhao:2024:Morestyle, Liu:2024:UFDP, Huang:2021:FSDR} 
-or apply deep learning-based style transfer~\cite{Zhou:2021:DGWM} techniques to render a single image as 
-if it were created in various artistic styles.
+Based on this approach, researchers have employed strategies that artificially diversify the style of an image to train the model to focus solely on the content. 
+Successful data augmentation techniques have been proposed that manipulate the frequency characteristics of an image using the Fourier Transform~\cite{Xu:2021:AFFDG, Zhao:2024:Morestyle, Liu:2024:UFDP, Huang:2021:FSDR} 
+or apply deep learning-based style transfer~\cite{Zhou:2021:DGWM} techniques to render a single image as if it were created in various artistic styles.
 
 However, these computer vision-based SSDG approaches face a clear limitation: 
-they cannot be directly applied to structured data, such as the KNOW-pedCKD tabular dataset. 
-While the separation of `content' and `style' has been successful in computer vision, 
-this often relies on some prior knowledge about what constitutes stylistic variation. 
-In contrast, for clinical data in a single-source setting, 
-we inherently lack the prior knowledge about inter-hospital differences needed to define 
-what constitutes domain-invariant 'content' versus domain-specific `style'.
+they cannot be directly applied to the tabular dataset. While the separation of content and style has been successful in computer vision, this often relies on some prior knowledge about what constitutes stylistic variation. In contrast, for the tabular data in a single-source setting, we inherently lack the prior knowledge about inter-hospital differences needed to define what constitutes domain-invariant features versus domain-variant features. Consequently, the existing SSDG studies are difficult to apply to tabular datasets, which necessitated the introduction of robust learning or regularization techniques for domain generalization.
 
 \subsection*{Mixup}
-
-Mixup~\cite{Zhang:2018:Mixup} methods regularize deep networks by creating novel training instances from multiple samples. The foundational method, Mixup, generates virtual samples through linear interpolation of two data points and their labels. Manifold Mixup~\cite{Verma:2019:ManifoldMixup} applies interpolation within the model’s hidden layers. 
+Mixup~\cite{Zhang:2018:Mixup} methods regularize deep networks by creating novel training instances from multiple samples. The foundational method, Mixup, generates virtual samples through linear interpolation of two data points and their labels. Manifold Mixup~\cite{Verma:2019:ManifoldMixup} applies interpolation within the hidden layers. 
 
 Another popular approach, CutMix~\cite{Yun:2019:Cutmix}, combines samples by cutting a patch from one image and pasting it onto another, with labels mixed proportionally to the patch area. Subsequent methods have refined this patch-based strategy. SaliencyMix~\cite{Uddin:2021:Saliencymix} leverages saliency detection to ensure the cropped region is informative, while ResizeMix~\cite{Qin:2020:Resizemix} simplifies the process by resizing a source image into a small patch.
 
-However, the standard Mixup method has a fundamental problem: it combines patient data randomly without any consideration for the clinical context. For example, mixing the data of a stable, early-stage patient with that of a late-stage patient on the verge of requiring renal replacement therapy can create a clinically implausible virtual patient. Such unrealistic data can act as "noise" in the model training process and degrade performance, which strongly suggests the need for the proper approaches.
+However, these methods has a fundamental problem: it combines patient data randomly without any consideration for the clinical context~\cite{Zhang:2018:Mixup,Verma:2019:ManifoldMixup} or leverage characteristics of vision domain~\cite{Yun:2019:Cutmix,Qin:2020:Resizemix,Uddin:2021:Saliencymix}. 
+For example, mixing the data of a stable, early-stage patient with that of a late-stage patient on the verge of requiring renal replacement therapy can create a clinically implausible virtual patient. Such unrealistic data can act as `noise' in the model training process and degrade performance, which strongly suggests the need for the proper approaches.
 
 \subsection*{Input masking}
 
@@ -139,16 +127,7 @@ Each data point $(\mathbf{x}_i, y_i) \in \mathcal{D}$ consists of a $D$-dimensio
 
 \subsection*{Similarity-Guided Mixup}
 \label{sec:similarity-guided-mixup}
-A prior study, CMixup~\cite{Yao:2022:Cmixup}, improved upon the original Mixup by leveraging label information 
-to encourage interpolation between similar classes. 
-However, its methodology was specifically tailored for regression tasks, 
-limiting its applicability to classification problems. 
-Our proposed method overcomes this limitation by defining sample similarity 
-based on a clinically meaningful feature set, making it effective for classification tasks.
-We propose Similarity-guided Mixup, a method that first identifies 
-a subset of clinically significant features based on prior domain knowledge. 
-The Mixup augmentation is then performed exclusively between patient samples 
-that exhibit high similarity within this predefined feature space.
+A prior study, CMixup~\cite{Yao:2022:Cmixup}, improved upon the original Mixup by leveraging label information to encourage interpolation between similar classes.  However, its methodology was specifically tailored for regression tasks, limiting its applicability to classification problems. Our proposed method overcomes this limitation by defining sample similarity based on a clinically meaningful feature set, making it effective for classification tasks. We propose Similarity-guided Mixup, a method that first identifies a subset of clinically significant features based on prior domain knowledge. The Mixup augmentation is then performed exclusively between patient samples that exhibit high similarity within this predefined feature space.
 
 We define a subset of features, $\mathcal{F}_{\text{clinical}} \subset \{1, 2, \dots, D\}$, 
 which are selected based on domain expertise as being most critical to the clinical task. 
@@ -187,10 +166,7 @@ where $\lambda \sim \text{Beta}(\alpha, \alpha)$.
 
 \subsection*{Group-based Masking}
 \label{sec:group-based-masking}
-Conventional Input Masking assumes missingness occurs randomly and independently across features. 
-Our group-based masking incorporates domain knowledge 
-by modeling the correlated missing patterns often observed in clinical data, 
-thereby generating more realistic data imperfections to enhance model robustness.
+Conventional Input Masking assumes missingness occurs randomly and independently across features. Our group-based masking incorporates domain knowledge by modeling the correlated missing patterns often observed in clinical data, thereby generating more realistic data imperfections to enhance model robustness.
 
 \textbf{Identifying Correlated Missing Patterns}
 Based on clinical consultation 
@@ -297,16 +273,12 @@ The model was trained on the training set, and the model achieving the highest A
 and the average performance across each center (Center-wise).
 
 \subsection*{Baselines}
-We compared the performance of our proposed method against several baselines: Empirical Risk Minimization (ERM), Invariant Risk Minimization (IRM), Mixup, and Input Masking. As IRM is inherently designed for multi-source domain generalization, we adapted it to our SSDG setting by creating pseudo-domains by clustering patients within the SNUH source data, thereby simulating a multi-source environment for training.
+We compared the performance of our proposed method against several baselines: For non-augmetnation-based baseline, Empirical Risk Minimization (ERM), Invariant Risk Minimization (IRM~\cite{Arjovsky2019InvariantRM}). As IRM is inherently designed for multi-source domain generalization, we adapted it to our SSDG setting by creating pseudo-domains by clustering patients within the SNUH source data, thereby simulating a multi-source environment for training. For augmentation based methods as non-knowledge guided baselines, we select Mixup~\cite{Zhang:2018:Mixup}, Manifold Mixup~\cite{Verma:2019:ManifoldMixup}, and Input Masking. 
 
 \subsection*{Implement details}
-All experiments were conducted using Multi-Layer Perceptron (MLP) 
-and a recently developed foundation model for tabular data, TabPFN~\cite{Hollmann:2022:Tabpfn}. 
-We first fitted the TabPFN model using the features from the KNOW-pedCKD dataset. Subsequently, we fine-tuned an adapter layer for each specific methodology (baselines and ours) to train and evaluate the models.
+All experiments were conducted using Multi-Layer Perceptron (MLP) with single hidden layer. For Similarity-guided Mixup, we defined clinical similarity using features identified as critical in the widely-used Pediatric Estimated Time to Kidney Replacement Therapy (KRT) Calculator. This clinically meaningful feature set included [UPCR, eGFR, Hemoglobin, Systolic BP, Diastolic BP].
 
-For Similarity-Guided Mixup, we defined clinical similarity using features identified as critical in the widely-used Pediatric Estimated Time to Kidney Replacement Therapy (KRT) Calculator. This clinically meaningful feature set included UPCR, eGFR, Hemoglobin, Systolic BP, and Diastolic BP.
-
-For Knowledge-Guided Input Masking, we established predefined feature groups based on pairs of features that are often concurrently missing in clinical practice. The groups utilized were ("Diastolic BP", "Systolic BP"), ("Diastolic BP", "UPCR"), and ("Systolic BP", "UPCR").
+For Group-based Masking, we established predefined feature groups based on pairs of features that are often concurrently missing in clinical practice. The groups utilized were [("Diastolic BP", "Systolic BP"), ("Diastolic BP", "UPCR"), and ("Systolic BP", "UPCR")].
 
 \section*{Results}
 \begin{table}[ht]
@@ -337,6 +309,34 @@ W/o Aug. & ERM & 0.3451 & $0.2901 \pm 0.1097$ & 0.7970 & $0.7909 \pm 0.0266$ \\
 \end{tabular}
 \end{table}
 
+\textbf{Overall Performance Comparison.} Table~\ref{tab:performance_mlp} presents the performance results in terms of Recall and AUROC, for both Overall and Center-wise metrics. We observe that the proposed method significantly improves performance in terms of Recall, while also achieving a slight enhancement in AUROC performance.
+Our method achieved an Overall Recall of 0.7465, outperforming the best baseline (Mixup + Masking) by a substantial margin of 16.20 percentage points. This indicates that our approach is particularly effective at identifying patients at risk of condition deterioration across unseen domains. The Center-wise Recall also shows a similar trend, with our method achieving 0.7030, surpassing the best baseline by 8.91 percentage points. This consistency across different centers highlights the robustness of our approach in handling domain shifts.
+
+\textbf{Ablation of Proposed Components} Table~\ref{tab:performance_mlp} also presents an ablation study on each component of our proposed method. Relative to the ERM, Group-based Masking achieved a greater performance improvement than the conventional Input Masking technique, and Similarity-guided Mixup also demonstrated a larger gain compared to the conventional Mixup method. Furthermore, our combined method achieved the highest performance improvement in the Mixup + Masking combination, confirming that each component contributes to performance enhancement and exhibits a significant synergistic effect.
+
+\textbf{Feature Space Analysis.} To qualitatively analyze how our proposed method improves the model's feature representation, we visualized the latent space of the test set using t-SNE~\cite{Maaten:2008:tSNE} in Figure~\ref{fig:2.1}. In the case of the baseline ERM and Manifold Mixup, which yielded the lowest performance, the learned feature spaces are largely unstructured, with positive (blue, red) and negative (green) samples being heavily intermingled. Notably, the False Negatives (red 'x' markers) are scattered deep within the negative class cluster, visually explaining the model's poor Recall score of 0.3451. While Input Masking and Mixup show a slight trend towards separation, their feature spaces remain largely disorganized. In stark contrast, our proposed method (Ours) learns a highly structured and linearly separable feature space. The positive and negative classes form distinct clusters, and most importantly, the number of False Negatives is dramatically reduced. Furthermore, the few remaining False Negatives are primarily located near the decision boundary between the two clusters. This visualization demonstrates that our method does more than just improve a single metric; it learns a robust and meaningful feature space that better represents the underlying structure of the data. This well-separated representation is the key reason for achieving a significantly higher Recall score of 0.7465.
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=1\textwidth]{imgs/mixup.png}
+    \caption{
+        \textbf{Feature Space Analysis via t-SNE Visualization.}
+        Our method yielded a structured feature space with robust separation between positive and negative classes, and the resulting decision boundary was appropriately positioned to effectively identify True Positives (TPs).
+    }
+    \label{fig:2.1}
+\end{figure}
+
+\textbf{Center-wise analysis.} When examining the center-specific recall scores ~\ref{fig:2_center_wise_analysis}, we observed that performance generally rose across all hospitals, in line with the overall performance improvement. Notably, SSV achieved a substantial gain when Mixup was incorporated, suggesting that Mixup's data augmentation, by increasing the number of samples in the minority class, was a contributing factor.
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=1\textwidth]{imgs/2_center_wise_analysis.png}
+    \caption{
+        \textbf{Center-wise recall analysis}
+        we present center-wise recall score.  
+    }
+    \label{fig:2_center_wise_analysis}
+\end{figure}
+
+\textbf{Arhcitecture Robustness.} To validate the robustness of our proposed method across different model architectures, we conducted additional experiments using TabPFN~\cite{Hollmann:2025:Tabpfn}, a state-of-the-art foundation model for tabular data. The results, presented in Table~\ref{tab:performance_tabpfn}, demonstrate that our method consistently outperforms all baselines in terms of Recall, achieving an Overall Recall of 0.7042 and a Center-wise Recall of 0.6514. This further confirms the effectiveness and generalizability of our approach across different model architectures.
 \begin{table}[ht]
 \centering
 \caption{Performance comparison on the KNOW-pedCKD dataset under the SSDG setting (TabPFN Model). Overall performance is measured on the aggregated (unified) target datasets, whereas Center-wise performance represents the calculated statistics (e.g., mean and standard deviation) across each individual center. The row with the highest recall is highlighted in bold.}
@@ -363,37 +363,6 @@ W/o Aug. & ERM & 0.3451 & $0.2901 \pm 0.1097$ & 0.7970 & $0.7909 \pm 0.0266$ \\
 \bottomrule
 \end{tabular}
 \end{table}
-
-
-% overall performance
-% ablation study
-% feature spacer analysis
-% architecture robustness
-% center-wise analysis
-
-\textbf{Overall Performance Comparison.} Table~\ref{tab:performance_mlp} presents the performance results in terms of Recall and AUROC, for both Overall and Center-wise metrics. We observe that the proposed method significantly improves performance in terms of Recall, while also achieving a slight enhancement in AUROC performance.
-Our method achieved an Overall Recall of 0.7465, outperforming the best baseline (Mixup + Masking) by a substantial margin of 16.20 percentage points. This indicates that our approach is particularly effective at identifying patients at risk of condition deterioration across unseen domains. The Center-wise Recall also shows a similar trend, with our method achieving 0.7030, surpassing the best baseline by 8.91 percentage points. This consistency across different centers highlights the robustness of our approach in handling domain shifts.
-
-\textbf{Ablation of Proposed Components} Table~\ref{tab:performance_mlp} also presents an ablation study on each component of our proposed method. Relative to the ERM, Group-based Masking achieved a greater performance improvement than the conventional Input Masking technique, and Similarity-guided Mixup also demonstrated a larger gain compared to the conventional Mixup method. Furthermore, our combined method achieved the highest performance improvement in the Mixup + Masking combination, confirming that each component contributes to performance enhancement and exhibits a significant synergistic effect.
-
-\textbf{Feature Space Analysis.} To qualitatively analyze how our proposed method improves the model's feature representation, we visualized the latent space of the test set using t-SNE~\cite{Maaten:2008:tSNE} in Figure~\ref{fig:2.1}.
-In the case of the baseline ERM and Manifold Mixup, which yielded the lowest performance, the learned feature spaces are largely unstructured, with positive (blue, red) and negative (green) samples being heavily intermingled. Notably, the False Negatives (red 'x' markers) are scattered deep within the negative class cluster, visually explaining the model's poor Recall score of 0.3451. While Input Masking and Mixup show a slight trend towards separation, their feature spaces remain largely disorganized.
-
-In stark contrast, our proposed method (Ours) learns a highly structured and linearly separable feature space. The positive and negative classes form distinct clusters, and most importantly, the number of False Negatives is dramatically reduced. Furthermore, the few remaining False Negatives are primarily located near the decision boundary between the two clusters.
-
-This visualization demonstrates that our method does more than just improve a single metric; it learns a robust and meaningful feature space that better represents the underlying structure of the data. This well-separated representation is the key reason for achieving a significantly higher Recall score of 0.7465.
-\begin{figure}[!ht]
-    \centering
-    \includegraphics[width=1\textwidth]{imgs/mixup.png}
-    \caption{
-        \textbf{Feature Space Analysis via t-SNE Visualization.}
-        Our method yielded a structured feature space with robust separation between positive and negative classes, and the resulting decision boundary was appropriately positioned to effectively identify True Positives (TPs).
-    }
-    \label{fig:2.1}
-\end{figure}
-
-\textbf{Arhcitecture Robustness.} To validate the robustness of our proposed method across different model architectures, we conducted additional experiments using TabPFN~\cite{Hollmann:2025:Tabpfn}, a state-of-the-art foundation model for tabular data. The results, presented in Table~\ref{tab:performance_tabpfn}, demonstrate that our method consistently outperforms all baselines in terms of Recall, achieving an Overall Recall of 0.7042 and a Center-wise Recall of 0.6514. This further confirms the effectiveness and generalizability of our approach across different model architectures.
-
 
 \section*{Discussion}
 This study aimed to address the challenge of domain generalization in clinical prediction, where a model trained on data from a single source must maintain robust performance on unseen target domains. We proposed two novel data augmentation techniques that leverage prior clinical knowledge: Similarity-guided Mixup and Knowledge-guided Input Masking. Experimental results demonstrated that our proposed method significantly outperformed existing baselines, including ERM, IRM, Mixup, and Input Masking, particularly in terms of recall, thereby validating its efficacy.

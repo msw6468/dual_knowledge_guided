@@ -1,48 +1,48 @@
-This is BibTeX, Version 0.99d (TeX Live 2025/Homebrew)
+This is BibTeX, Version 0.99d
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: main.aux
+Reallocating 'name_of_file' (item size: 1) to 14 items.
 The style file: naturemag-doi.bst
+Reallocating 'name_of_file' (item size: 1) to 7 items.
 Database file #1: sample.bib
-Warning--I didn't find a database entry for "Hollmann:2022:Tabpfn"
-You've used 29 entries,
+You've used 30 entries,
             2380 wiz_defined-function locations,
-            1138 strings with 15314 characters,
-and the built_in function-call counts, 9730 in all, are:
-= -- 523
-> -- 364
+            1141 strings with 15458 characters,
+and the built_in function-call counts, 10067 in all, are:
+= -- 541
+> -- 380
 < -- 0
-+ -- 182
-- -- 91
-* -- 1109
-:= -- 1077
-add.period$ -- 87
-call.type$ -- 29
-change.case$ -- 55
++ -- 190
+- -- 95
+* -- 1151
+:= -- 1115
+add.period$ -- 90
+call.type$ -- 30
+change.case$ -- 56
 chr.to.int$ -- 0
-cite$ -- 29
-duplicate$ -- 961
-empty$ -- 943
-format.name$ -- 120
-if$ -- 1943
+cite$ -- 30
+duplicate$ -- 994
+empty$ -- 970
+format.name$ -- 125
+if$ -- 2007
 int.to.chr$ -- 0
-int.to.str$ -- 29
-missing$ -- 233
-newline$ -- 155
-num.names$ -- 29
-pop$ -- 357
+int.to.str$ -- 30
+missing$ -- 241
+newline$ -- 160
+num.names$ -- 30
+pop$ -- 368
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 229
+skip$ -- 236
 stack$ -- 0
 substring$ -- 0
-swap$ -- 825
+swap$ -- 856
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 0
-while$ -- 29
-width$ -- 31
-write$ -- 299
-(There was 1 warning)
+while$ -- 30
+width$ -- 32
+write$ -- 309
