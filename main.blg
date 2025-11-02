@@ -1,48 +1,46 @@
-This is BibTeX, Version 0.99d
+This is BibTeX, Version 0.99d (TeX Live 2025/Homebrew)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: main.aux
-Reallocating 'name_of_file' (item size: 1) to 14 items.
 The style file: naturemag-doi.bst
-Reallocating 'name_of_file' (item size: 1) to 7 items.
 Database file #1: sample.bib
-You've used 30 entries,
+You've used 29 entries,
             2380 wiz_defined-function locations,
-            1141 strings with 15458 characters,
-and the built_in function-call counts, 10067 in all, are:
-= -- 541
-> -- 380
+            1139 strings with 15272 characters,
+and the built_in function-call counts, 9527 in all, are:
+= -- 516
+> -- 360
 < -- 0
-+ -- 190
-- -- 95
-* -- 1151
-:= -- 1115
-add.period$ -- 90
-call.type$ -- 30
-change.case$ -- 56
++ -- 180
+- -- 90
+* -- 1094
+:= -- 1069
+add.period$ -- 87
+call.type$ -- 29
+change.case$ -- 49
 chr.to.int$ -- 0
-cite$ -- 30
-duplicate$ -- 994
-empty$ -- 970
-format.name$ -- 125
-if$ -- 2007
+cite$ -- 29
+duplicate$ -- 949
+empty$ -- 902
+format.name$ -- 119
+if$ -- 1885
 int.to.chr$ -- 0
-int.to.str$ -- 30
-missing$ -- 241
-newline$ -- 160
-num.names$ -- 30
-pop$ -- 368
+int.to.str$ -- 29
+missing$ -- 226
+newline$ -- 155
+num.names$ -- 29
+pop$ -- 339
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 236
+skip$ -- 216
 stack$ -- 0
 substring$ -- 0
-swap$ -- 856
+swap$ -- 815
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 0
-while$ -- 30
-width$ -- 32
-write$ -- 309
+while$ -- 29
+width$ -- 31
+write$ -- 299

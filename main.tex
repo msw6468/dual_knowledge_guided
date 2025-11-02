@@ -2,11 +2,10 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{multirow}
-\usepackage{booktabs} % 깔끔한 표의 상단, 중간, 하단 줄 (\toprule, \midrule, \bottomrule)
-\usepackage{siunitx}  % 숫자(평균 \pm 표준편차) 정렬을 위한 S 컬럼 타입
-\usepackage{makecell} % 셀 내 줄바꿈을 위한 \makecell 명 령어
+\usepackage{booktabs}
+\usepackage{siunitx} 
+\usepackage{makecell}
 \usepackage{tabularx}
-
 
 \sisetup{
     separate-uncertainty = true,
@@ -18,25 +17,57 @@
 \title{Dual Knowledge-Guided Data Augmentation for Robust Clinical Prediction Models}
 
 \author[1]{Sangwoo Moon}
-% \author[2]{Bob Author}
-% \author[1,2,+]{Christine Author}
-\author[2,*]{Eujin Park}
-\affil[1]{Department of Computer Science and Engineering, College of Engineering, Seoul National University, Seoul, 08826, Republic of Korea}
-\affil[2]{Department of Pediatrics, Korea University Guro Hospital, Seoul, 08300, Republic of Korea}
+\author[2,3]{Peong Gang Park}
+\author[4]{Naye Choi}
+\author[5,6]{Ji Hyun Kim}
+\author[7]{Seon Hee Lim}
+\author[8]{Joo Hoon Lee}
+\author[9]{Hee Sun Baek}
+\author[9]{Min Hyun Cho}
+\author[2]{Keum Hwa Lee}
+\author[2,3]{Jae Il Shin}
+\author[10]{Kyoung Hee Han}
+\author[11]{Jeong Yeon Kim}
+\author[7]{Ji Yeon Song}
+\author[12]{Eun Mi Yang}
+\author[4,6,13]{Seong Heon Kim}
+\author[4,6,13]{Yo Han Ahn}
+\author[4,6,13]{Hee Gyung Kang}
+\author[14,*]{Eujin Park}
+
+\affil[1]{Department of Computer Science and Engineering, College of Engineering, Seoul National University, Seoul, Republic of Korea}
+\affil[2]{Division of Pediatric Nephrology, Severance Children’s Hospital, Seoul, South Korea}
+\affil[3]{Department of Pediatrics, Yonsei University College of Medicine, Seoul, South Korea}
+\affil[4]{Department of Pediatrics, Seoul National University Children’s Hospital, Seoul, South Korea}
+\affil[5]{Department of Pediatrics, Seoul National University Bundang Hospital, Seongnam, South Korea}
+\affil[6]{Department of Pediatrics, Seoul National University College of Medicine, Seoul, South Korea}
+\affil[7]{Department of Pediatrics, Pusan National University Children’s Hospital, Pusan National University, School of Medicine, Busan, South Korea}
+\affil[8]{Department of Pediatrics, Children’s Hospital, Asan Medical Center, University of Ulsan College of Medicine, Seoul, South Korea}
+\affil[9]{Department of Pediatrics, Kyungpook National University, School of Medicine, Daegu, South Korea}
+\affil[10]{Department of Pediatrics, Jeju National University College of Medicine, Jeju, South Korea}
+\affil[11]{Department of Pediatrics, Samsung Medical Center, Sungkyunkwan University School of Medicine, Seoul, South Korea}
+\affil[12]{Department of Pediatrics, Chonnam National University Hospital and School of Medicine, Gwangju, South Korea}
+\affil[13]{Kidney Research Institute, Seoul National University Medical Research Center, Seoul, South Korea}
+\affil[14]{Department of Pediatrics, Korea University Guro Hospital, Seoul, South Korea}
 \affil[*]{eujinpark@korea.ac.kr}
 
 % formats
 % \affil[2]{Affiliation, department, city, postcode, country}
 % \affil[+]{these authors contributed equally to this work}
 
-\keywords{Medical Artificial Intelligence, 
-Domain generalization, 
-Robust learning, 
-Clinical Knowledge, 
-Tabular data}
+\keywords{
+    Medical Artificial Intelligence, 
+    Domain generalization, 
+    Robust learning, 
+    Clinical Knowledge, 
+    Tabular data
+}
 
 \begin{abstract}
-ABSTRACT
+The successful adoption of medical Artificial Intelligence (AI) models is critically hampered by the domain shift problem, particularly in the challenging Single-Source Domain Generalization (SSDG) scenario prevalent in data-scarce pediatric medicine. Existing augmentation methods, such as standard Mixup and Input Masking, fail to leverage the rich structural information and expert knowledge embedded within clinical data, leading to models that overfit to source-domain specifics (\textit{i.e.}, shortcuts).
+This study proposes a Dual Knowledge-Guided Data Augmentation Framework to systematically enhance model robustness by embedding clinical expertise into the learning process. Our framework introduces two novel components: 1) Similarity-guided Mixup, which generates clinically plausible virtual data by selectively interpolating between patients with high similarity in key clinical features; and 2) Group-based Masking, which simulates realistic data imperfections by concurrently masking clinically related feature groups.
+We validated this framework using the multicenter KNOW-pedCKD cohort for pediatric chronic kidney disease, training exclusively on a single source domain and testing on three unseen target domains. The proposed method significantly improved the clinically critical metric of Recall. This research validates that embedding domain knowledge into data augmentation offers a promising and practical pathway toward developing generalizable and trustworthy medical AI models that can reliably operate across heterogeneous clinical environments. 
+The codes are available at \url{https://github.com/msw6468/KNOW_pedCKD_SDG}.
 \end{abstract}
 
 \begin{document}
@@ -46,43 +77,19 @@ ABSTRACT
 
 \thispagestyle{empty}
 
-\noindent Please note: Abbreviations should be introduced at the first mention in the main text – no abbreviations lists. Suggested structure of main text (not enforced) is provided below.
 
 \section*{Introduction}
 
-Advancements in Artificial Intelligence (AI) and Machine Learning have shown immense potential across numerous fields. In the medical domain, in particular, Clinical Decision Support Systems (CDSS) based on imaging signals and Electronic Health Records (EHR) data are emerging as a core technology.~\cite{Rajkomar:2018:SAAD, Lakhani:2017:DLCR, Sutton:2020:AOCS}. These systems play a crucial role in enhancing patient safety and treatment efficacy by helping physicians' diagnoses and reducing potential errors during the therapeutic process.
+Advancements in Artificial Intelligence (AI) and machine learning have shown immense potential across numerous fields. In the medical domain, in particular, clinical decision support systems (CDSS) based on imaging signals and Electronic Health Records (EHR) data are emerging as core technologies~\cite{Rajkomar:2018:SAAD, Lakhani:2017:DLCR, Sutton:2020:AOCS}. These systems play a crucial role in enhancing patient safety and treatment efficacy by assisting physicians in diagnoses and minimizing potential errors during the therapeutic process.
 
-At the heart of this technological progress are predictive models that learn meaningful patterns from a given set of training data. Models are actively being developed to predict disease risk, simulate progression, and forecast treatment responses using biological signals, test results, imaging, and genetic data. Among these, the role of AI is especially critical in the management of chronic diseases such as Chronic Kidney Disease (CKD). CKD has a high global prevalence and imposes a significant burden on patients and society, as its progression to end-stage renal disease requires high-cost treatments such as dialysis or kidney transplantation. Therefore, early prediction of disease progression and timely intervention to slow its progression are of paramount importance, and AI-based predictive models can serve as powerful tools to this end~\cite{Islam:2023:CKDP, Ghosh:2024:IOEM, Moon:2025:DPTK}.
+At the heart of this technological progress are predictive models that learn meaningful patterns from given sets of training data. Such models are actively developed to predict disease risk, simulate progression, and forecast treatment responses using biological signals, laboratory results, imaging, and genetic data. Among these applications, AI holds particular promise in the management of chronic diseases such as chronic kidney disease (CKD). CKD has a high global prevalence and represents a major public health concern. Its progression to end-stage kidney disease is associated with substantial comorbidities and imposes a significant clinical and socioeconomic burden, as patients ultimately require costly kidney replacement therapies (KRTs) such as dialysis or kidney transplantation~\cite{Ng:2019:Incidence, Xie:2018:GlobalBurden}. Therefore, early prediction of disease progression and timely intervention to slow its course are of paramount importance, and AI-based predictive models can serve as powerful tools in this context~\cite{Islam:2023:CKDP, Ghosh:2024:IOEM, Moon:2025:DPTK}.
 
-Despite this bright outlook, numerous challenges stand in the way of the successful implementation of medical AI models in real clinical settings. One of the most critical obstacles is the domain shift problem~\cite{Kanakasabapathy:2021:AANN}. To address this, research is actively focusing on Domain Generalization~\cite{Guo:2022:EODG} and related fields such as robust learning. Domain shift refers to the phenomenon where an AI model, trained on data from a specific hospital (the source domain), experiences a significant degradation in predictive performance when applied to data from a different hospital (the target domain). This is a critical issue that undermines the robustness and trustworthiness of AI models, representing the largest technical hurdle to the widespread adoption of medical AI technology.
+Despite this bright outlook, numerous challenges stand in the way of the successful implementation of medical AI models in real clinical settings. One of the most critical obstacles is the domain shift problem~\cite{Kanakasabapathy:2021:AANN}. Domain shift refers to the phenomenon where an AI model, trained on data from a specific institution (the source domain), exhibits substantial degradation in predictive performance when applied to another institution (the target domain). This is a critical issue that undermines the robustness and trustworthiness of medical AI systems and constitutes a major technical barrier to their widespread adoption. To address this limitation, recent research has focused on Domain Generalization~\cite{Guo:2022:EODG} and robust learning approaches that enhance model stability across diverse environments. 
 
-The reasons why the domain shift problem is particularly severe in medical data are multifaceted.
+Although children account for only a small proportion of all CKD patients, their prolonged disease course and lifelong complications necessitate greater reliance on AI-based approaches to support clinical decision-making. However,  pediatric data for CKD patients are inherently more difficult to collect than adult data and remain limited in both quantity and quality~\cite{Harada:2022:Epidemiology}. These constraints underscore the particular importance of single-source domain generalization and robust learning approaches in achieving reliable and generalizable model performance. 
 
-\textbf{Heterogeneity of Patient Populations.} Each hospital has a distinct distribution of demographic characteristics (age, sex, ethnicity), socioeconomic background, and underlying comorbidities in its primary patient population. For example, tertiary referral hospitals have a higher proportion of patients with severe and rare diseases, whereas primary care clinics show a data distribution centered on patients with mild and chronic conditions.
+This study aimed to address the challenge of domain generalization in clinical prediction, where a model trained on data from a single source must maintain robust performance when applied to unseen target domains. The following sections provide a literature review covering Single-Source Domain Generalization, Mixup, and Input Masking.
 
-\textbf{Variations in Clinical Practices.} For the same disease, subtle differences exist between hospitals—and even between individual physicians—in diagnostic criteria, preferred types of tests, prescription patterns, and data recording practices. These variations cause shifts in the data's statistical distribution and can lead to the model overfitting to the specific clinical protocols of a hospital.
-
-\textbf{Differences in Measurement Environments.} Discrepancies in the technical infrastructure used by hospitals, such as blood analysis equipment, imaging devices (CT, MRI), and EHR solutions, also introduce subtle variations in the data. The model is at risk of learning these device- or system-specific artifacts rather than the biological patterns of the disease itself.
-
-Due to these factors, the model tends to learn superficial, domain-specific correlations—so-called "shortcuts"—that exist only in the data of a particular hospital, rather than learning the essential generalizable features. For example, a medication frequently used only at a specific hospital or the prescribing habits of a particular physician could be incorrectly learned as a significant predictor of the disease. When such a model is applied to another hospital where these shortcuts no longer exist, a sharp decline in performance is an inevitable consequence.
-
-To address this fundamental challenge of shortcut learning and enhance model robustness, this study moves beyond conventional regularization techniques. While methods like standard Mixup~\cite{Zhang:2018:Mixup} and Dropout~\cite{Srivastava:2014:Dropout} are effective, they operate on the principle of random perturbation and are inherently domain-agnostic, failing to leverage the rich structural information and expert knowledge embedded within clinical data.
-
-We begin with the hypothesis that systematically integrating the Clinical Knowledge of medical experts into the data augmentation process can serve as a powerful, domain-aware regularizer. Moving beyond the conventional "black-box" approaches, we aim to suppress shortcut learning and guide the model toward learning the essential patterns of disease by directly injecting domain expertise into the model training process.
-
-To this end, this study proposes a Dual Knowledge-Guided Data Augmentation Framework composed of the following two core strategies:
-
-\textbf{Similarity-guided Mixup.} This first strategy aims to generate more plausible virtual patient data. Unlike the conventional random Mixup~\cite{Zhang:2018:Mixup} method, this study selectively interpolates clinically similar patients. For instance, the probability of a data pair being selected for Mixup is increased if their key indicators of kidney disease, such as protein-to-creatinine ratio (UPCR) or estimated glomerular filtration rate (eGFR), are similar. This approach generates clinically plausible data, helping the model learn smoother and more robust decision boundaries.
-
-\textbf{Group-based Masking.} The second strategy acts as a structured regularizer to prevent the model from overfitting to spurious features. Through discussions with medical experts, we identify and group features that are clinically related or likely to be missing together. The training process then involves stochastically masking these entire feature groups. This process prevents the model from becoming overly reliant on any single feature and compels it to learn alternative reasoning paths based on the remaining biological relationships, thereby enhancing its robustness.
-
-To rigorously evaluate the efficacy of our proposed framework as a regularization method, we tested it in one of the most challenging scenarios: Single-Source Domain Generalization (SSDG). Using only the EHR data from a single institution in the KNOW-pedCKD~\cite{Kang:2016:KNOW} cohort (Seoul National University Hospital), we trained a predictive model based on our framework. We then validated its generalization performance on data8 from three external institutions that were never used for training (Asan Medical Center, Kyungpook National University Hospital, and Severance Hospital).
-
-Experimental results show that our framework not only slightly improves the overall predictive accuracy (AUROC) but also significantly enhances the most clinically crucial metric, Recall—the ability to correctly identify patients who actually kidney function decline. This outcome validates that our knowledge-guided regularization strategy effectively improves a model's ability to generalize under severe domain shifts.
-
-In conclusion, this research presents a novel regularization strategy that systematically injects clinical knowledge into the data augmentation process. This approach offers a pathway to develop AI models that can operate reliably across different medical environments using data from only a single institution. This will serve as a vital cornerstone for enabling medical AI technology to move beyond the laboratory and achieve successful implementation in real-world clinical practice, surmounting the barriers of data sharing.
-
-\section*{Related Works}
 \subsection*{Single Source Domain Generalization}
 Single-Source Domain Generalization (SSDG) has been particularly active in the field of Computer Vision~\cite{Xu:2023:SimDE, Cugu:2022:ACVC}. 
 The core idea in vision is to decompose image data into two components: Content and Style. Here, content refers to the `domain-invariant' features, such as the essential shape and structure of an object, which remain consistent across domains. On the other hand, style refers to the domain-variant features, such as the color palette, texture, and lighting of an image, which change depending on the domain.
@@ -99,35 +106,36 @@ Mixup~\cite{Zhang:2018:Mixup} methods regularize deep networks by creating novel
 
 Another popular approach, CutMix~\cite{Yun:2019:Cutmix}, combines samples by cutting a patch from one image and pasting it onto another, with labels mixed proportionally to the patch area. Subsequent methods have refined this patch-based strategy. SaliencyMix~\cite{Uddin:2021:Saliencymix} leverages saliency detection to ensure the cropped region is informative, while ResizeMix~\cite{Qin:2020:Resizemix} simplifies the process by resizing a source image into a small patch.
 
-However, these methods has a fundamental problem: it combines patient data randomly without any consideration for the clinical context~\cite{Zhang:2018:Mixup,Verma:2019:ManifoldMixup} or leverage characteristics of vision domain~\cite{Yun:2019:Cutmix,Qin:2020:Resizemix,Uddin:2021:Saliencymix}. 
+However, these methods have a fundamental problem: it combines patient data randomly without any consideration for the clinical context~\cite{Zhang:2018:Mixup,Verma:2019:ManifoldMixup} or leverage characteristics of vision domain~\cite{Yun:2019:Cutmix,Qin:2020:Resizemix,Uddin:2021:Saliencymix}. 
 For example, mixing the data of a stable, early-stage patient with that of a late-stage patient on the verge of requiring renal replacement therapy can create a clinically implausible virtual patient. Such unrealistic data can act as `noise' in the model training process and degrade performance, which strongly suggests the need for the proper approaches.
 
-\subsection*{Input masking}
+\subsection*{Input Masking}
 
 Input Masking~\cite{Balasubramanian:2023:TIIM}, also known as Input Dropout, is another widely used technique to enhance model robustness. It operates by randomly setting a fraction of the input features to zero (or another baseline value) during training. This prevents the model from becoming overly reliant on any single feature, forcing it to learn a more distributed and robust representation of the data. However, like standard Mixup, conventional input masking has limitations in a clinical setting. It typically applies masking to all features with a uniform probability, assuming that feature dropout is random. In reality, missing data in clinical environments often follows specific, non-random patterns. For instance, a set of related lab values from a single blood test may be missing concurrently. The failure of standard masking to account for these real-world patterns motivates our proposal for a knowledge-guided approach, which simulates more realistic missing data scenarios.
 
 \section*{Methods}
+This section details the proposed benchmark and methodology. 
+$\text{Figure~\ref{fig:2.overview}}$ presents an overview of both the benchmark and the method.
+
 \begin{figure}[h]
     \centering
-    \includegraphics[width=1\textwidth]{imgs/2_overview.png}
+    \includegraphics[width=1\textwidth]{imgs/2_overview.pdf}
     \caption{
         \textbf{Overview of our framework.}
-        We presented a benchmark for evaluating model generalization performance under domain shift conditions. In this setting, we evaluated and analyzed the performance of models trained using clinical knowledge-guided data augmentation.
+        We presented a benchmark for evaluating model generalization performance under domain shift conditions (\textit{i.e.}, single-source domain generalization). In this setting, we evaluated and analyzed the performance of models trained using clinical knowledge-guided data augmentation.
     }
     \label{fig:2.overview}
 \end{figure}
 
-This section details the proposed benchmark and methodology. 
-$\text{Figure~\ref{fig:2.overview}}$ presents an overview of both the benchmark and the method.
 
 \subsection*{Problem setting}
-The goal of domain generalization is to train a model on a source domain  that can generalize to an unseen target domain.
-We formally define the setting as follows. We denote the source domain dataset as $\mathcal{D}_{s}$ and the target domain dataset as $\mathcal{D}_{t}$. The core challenge arises because the source and target domains, $\mathcal{D}_{s}$ and $\mathcal{D}_{t}$, are drawn from distinct probability distributions ($P_s \neq P_t$).
-Each data point $(\mathbf{x}_i, y_i) \in \mathcal{D}$ consists of a $D$-dimensional feature vector $\mathbf{x}_i \in \mathbb{R}^D$ and a binary label $y_i \in \{0,1\}$. In this setting, we train a model $f_{\theta}: \mathbb{R}^D \rightarrow \{0,1\}$ on the source domain $\mathcal{D}_{s}$ and evaluate its performance on the unseen target domain $\mathcal{D}_{t}$.
+The primary goal our study falls under the framework of Domain Generalization (DG), aiming to train a robust model $f_{\theta}$ on a known source domain $\mathcal{D}_s$ that can maintain high performance when applied to an unseen target domain $\mathcal{D}_t$. Specifically, we address the challenging Single-Source Domain Generalization (SSDG) setting, where the model is exclusively trained on data from a single domain $\mathcal{D}_s$, with no access to data from the target domains or any other external source. 
 
-\subsection*{Similarity-Guided Mixup}
+We formally denote the source and target datasets as $\mathcal{D}_{s}$ and $\mathcal{D}_{t}$, respectively. The score challenge arises because these domain are sampled from distinct probability distributions ($P_s \neq P_t$). Each data point $(\mathbf{x}_i, y_i) \in \mathcal{D}$ consists of a $D$-dimensional feature vector $\mathbf{x}_i \in \mathbb{R}^D$ and a binary label $y_i \in \{0,1\}$. In this setting, we train a model $f_{\theta}: \mathbb{R}^D \rightarrow \{0,1\}$ on the source domain $\mathcal{D}_{s}$ and evaluate its performance on the unseen target domain $\mathcal{D}_{t}$.
+
+\subsection*{Proposed Method 1: Similarity-guided Mixup}
 \label{sec:similarity-guided-mixup}
-A prior study, CMixup~\cite{Yao:2022:Cmixup}, improved upon the original Mixup by leveraging label information to encourage interpolation between similar classes.  However, its methodology was specifically tailored for regression tasks, limiting its applicability to classification problems. Our proposed method overcomes this limitation by defining sample similarity based on a clinically meaningful feature set, making it effective for classification tasks. We propose Similarity-guided Mixup, a method that first identifies a subset of clinically significant features based on prior domain knowledge. The Mixup augmentation is then performed exclusively between patient samples that exhibit high similarity within this predefined feature space.
+Prior Mixup research largely focused on two approaches: random selection for pixel-wise interpolation or leveraging image-specific prior knowledge for augmentation. The former approach is inadequate for clinical data as it performs interpolation without regard for a patient's medical status, potentially generating clinically implausible virtual samples. Furthermore, the latter, which utilizes visual priors (\textit{e.g.}, saliency or patch area), is fundamentally ill-suited for application to tabular datasets. Our proposed method overcomes this limitation by defining sample similarity based on a clinically meaningful feature set, making it effective for medical tabular data. We introduce Similarity-guided Mixup, a technique that first identifies a subset of clinically significant features using prior domain knowledge. Mixup augmentation is then performed exclusively between patient samples that exhibit high similarity within this predefined clinical feature space.
 
 We define a subset of features, $\mathcal{F}_{\text{clinical}} \subset \{1, 2, \dots, D\}$, 
 which are selected based on domain expertise as being most critical to the clinical task. 
@@ -164,13 +172,13 @@ y' = \lambda y_i + (1 - \lambda) y_j \eqno{(5)}
 $$
 where $\lambda \sim \text{Beta}(\alpha, \alpha)$.
 
-\subsection*{Group-based Masking}
+\subsection*{Proposed Method 2: Group-based Masking}
 \label{sec:group-based-masking}
 Conventional Input Masking assumes missingness occurs randomly and independently across features. Our group-based masking incorporates domain knowledge by modeling the correlated missing patterns often observed in clinical data, thereby generating more realistic data imperfections to enhance model robustness.
 
 \textbf{Identifying Correlated Missing Patterns}
 Based on clinical consultation 
-(e.g., specific lab panels or concurrent measurement difficulties like in pediatric BP), 
+(\textit{e.g}., specific lab panels or concurrent measurement difficulties like in pediatric BP), 
 features known to be concurrently missing are grouped into sets 
 $\mathcal{G} = \{\mathcal{G}_1, \mathcal{G}_2, \dots\}$.
 
@@ -190,13 +198,21 @@ Here, $p_{\text{group}}$ is the probability of group masking, and $p_{\text{ind}
 The final augmented input $\mathbf{\tilde{x}}$ is the result of applying both correlated (Group) and independent (Random) masking mechanisms, simulating real-world data heterogeneity and missingness structure.
 
 \subsection*{Dataset and evaluation}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{imgs/2_data_collection.pdf}
+    \caption{
+        \textbf{Overview of KNOW-pedCKD dataset collection}
+    }
+    \label{fig:2.data_collection}
+\end{figure}
 \begin{table}[!ht]
 \centering
 \caption{\textbf{Demographics and clinical characteristics}}
 \label{tab:demographics}
 \begin{tabular}{l *{4}{S[table-format=3.2(2.2)]}} 
 \toprule
-\multirow{2}{*}{\textbf{Characteristic}} & \textbf{A} & \textbf{B} & \textbf{C} & \textbf{D} \\
+\multirow{2}{*}{\textbf{Characteristic, unit}} & \textbf{A} & \textbf{B} & \textbf{C} & \textbf{D} \\
 & \textbf{(Source)} & \textbf{(Target1)} & \textbf{(Target2)} & \textbf{(Target3)} \\
 \midrule
 Sex, Male & {333 (30.69\%)} & {144 (32.88\%)} & {102 (29.91\%)} & {111 (35.35\%)} \\
@@ -232,7 +248,7 @@ ARB & {384 (36.75\%)} & {60 (13.82\%)} & {30 (8.98\%)} & {91 (29.07\%)} \\
 
 \begin{table}[!ht]
 \centering
-\caption{\textbf{T-test p-values of source domain (A) to target domains.} T-test p-values are reported for continuous variables, while chi-square test p-values are reported for categorical variables. A significant difference in distribution was observed for most features.}
+\caption{\textbf{Statistical significance test results for features between the source and target domains.} P-values are reported for continuous variables, and chi-square test P-values are reported for categorical variables. A significant difference in distribution was observed for most features.}
 \label{tab:ttest_results}
 \setlength{\tabcolsep}{6pt}
 \begin{tabular}{l l l l l}
@@ -263,164 +279,141 @@ ARB & - & 0 & 0 & 0.01 \\
 \end{tabular}
 \end{table}
 
-For the validation of our proposed methodology, this study utilized data from the KNOW-pedCKD study (ClinicalTrials.gov: NCT02165878; registered June 11, 2014), a multicenter prospective observational cohort comprising Korean pediatric patients with CKD. Data were collected from teaching hospitals associated with seven major pediatric nephrology centers in South Korea.
+For the validation of our proposed methodology, this study utilized data from the KNOW-pedCKD study (ClinicalTrials.gov: NCT02165878; registered June 11, 2014), a multicenter prospective observational cohort comprising Korean pediatric patients with CKD. Data were collected from teaching hospitals associated with seven major pediatric nephrology centers in South Korea. Figure~\ref{fig:2.data_collection} illustrates the study protocol, including the specific collection period, patient inclusion, and exclusion criteria utilized for the KNOW-pedCKD dataset.
 
-The Seoul National University Hospital (SNUH) dataset, which had the largest number of patients, was selected as the source domain ($\mathcal{D}_{s}$). The next three largest hospitals—Asan Medical Center (AMC), Kyungpook National University Hospital (KNUH), and Severance Hospital (SSV)—were selected as the target domains ($\mathcal{D}_{t}$) to construct a single-source domain generalization scenario. Each data record was converted to a person-visit pair, following previous work~\cite{Moon:2025:DPTK}. The 18 features used for training and the statistical characteristics for each hospital are available in Table~\ref{tab:demographics}.
-Furthermore, the results of the t-tests assessing the distribution shift from the source domain to the target domains are shown in Table~\ref{tab:ttest_results}. Considering the p-values in Table~\ref{tab:ttest_results}, a significant distribution difference was observed between the source and target domains for all features except for Sex.
+The core research problem is defined as a classification task focused on predicting outcomes for patients in an unseen institution (target domain). Specifically, the task is to predict whether a patient's condition would worsen (defined as Kidney Replacement Therapy (KRT), death, or a $\ge 20\%$ decline in eGFR) within the subsequent year, based on their current visit data. 
 
-The primary metric used in this experiment was Recall. In this study, recall measures how accurately the model predicts patients whose condition actually deteriorates~\cite{haque2025improving, priyadharshini2025population, supriana2024modified}. For selecting the evaluation model during training, the source dataset was split into train (80\%) and validation (20\%). 
-The model was trained on the training set, and the model achieving the highest Area Under the Receiver Operating Characteristic curve (AUROC) performance on the validation set was selected for target domain evaluation. We report both the performance measured across all combined datasets (Overall) 
-and the average performance across each center (Center-wise).
+To measure Single-Source Domain Generalization (SSDG) performance, we sequentially named the institutions with the largest patient populations as A, B, C, and D. We designated the largest institution, A, as the source domain, and utilized the remaining three institutions (B, C, and D) as the target domains to build our benchmark. Patient records, collected sequentially during annual visits, were segmented into person-visit units (representing a one-year interval). In preprocessing, standardization was applied to continuous features to minimize the impact of scale differences on model training. Categorical features were processed using one-hot encoding to prevent the model from assuming an arbitrary ordinal relationship or magnitude between distinct categories (\textit{e.g.}, assigning a value of 1, 2, 3 to categories would imply $3 > 1$, which is incorrect for nominal data). Missing data during model training were handled via Multiple Imputation by Chained Equations (MICE), utilizing an imputer previously trained on the raw training dataset. Table~\ref{tab:demographics} shows the raw feature distribution for each domain, while Table~\ref{tab:ttest_results} presents the statistical significance difference between the source domain (A) and the target domains (B, C, and D). Specifically, p-value analysis confirmed strict differences in feature distributions across the datasets, statistically validating the existence of a domain shift between institutions. 
+
+Model evaluation employed both AUROC and Recall score. The model at the epoch with the highest AUROC on the validation set was selected as the optimal checkpoint, as AUROC provides a comprehensive, threshold-independent measure of overall model discrimination. However, Recall was chosen for reporting the final performance across different methods because, in a clinical setting with critical conditions like kidney failure, maximizing the detection of true positive cases is often prioritized to ensure minimal missed intervention opportunities.
+
+
+% The Seoul National University Hospital (SNUH) dataset, which had the largest number of patients, was selected as the source domain ($\mathcal{D}_{s}$). The next three largest hospitals—Asan Medical Center (AMC), Kyungpook National University Hospital (KNUH), and Severance Hospital (SSV)—were selected as the target domains ($\mathcal{D}_{t}$) to construct a single-source domain generalization scenario. Each data record was converted to a person-visit pair, following previous work~\cite{Moon:2025:DPTK}. The 18 features used for training and the statistical characteristics for each hospital are available in Table~\ref{tab:demographics}.
+% Furthermore, the results of the t-tests assessing the distribution shift from the source domain to the target domains are shown in Table~\ref{tab:ttest_results}. Considering the p-values in Table~\ref{tab:ttest_results}, a significant distribution difference was observed between the source and target domains for all features except for Sex.
+
+% The primary metric used in this experiment was Recall. In this study, recall measures how accurately the model predicts patients whose condition actually deteriorates~\cite{haque2025improving, priyadharshini2025population, supriana2024modified}. For selecting the evaluation model during training, the source dataset was split into train (80\%) and validation (20\%). 
+% The model was trained on the training set, and the model achieving the highest Area Under the Receiver Operating Characteristic curve (AUROC) performance on the validation set was selected for target domain evaluation. We report both the performance measured across all combined datasets (Overall) 
+% and the average performance across each center (Center-wise).
 
 \subsection*{Baselines}
-We compared the performance of our proposed method against several baselines: For non-augmetnation-based baseline, Empirical Risk Minimization (ERM), Invariant Risk Minimization (IRM~\cite{Arjovsky2019InvariantRM}). As IRM is inherently designed for multi-source domain generalization, we adapted it to our SSDG setting by creating pseudo-domains by clustering patients within the SNUH source data, thereby simulating a multi-source environment for training. For augmentation based methods as non-knowledge guided baselines, we select Mixup~\cite{Zhang:2018:Mixup}, Manifold Mixup~\cite{Verma:2019:ManifoldMixup}, and Input Masking. 
+We compared the performance of our proposed method against several baselines: For non-augmentation-based baseline, Empirical Risk Minimization (ERM), Invariant Risk Minimization (IRM~\cite{Arjovsky2019InvariantRM}). As IRM is inherently designed for multi-source domain generalization, we adapted it to our SSDG setting by creating pseudo-domains by clustering patients within the source domain (A), thereby simulating a multi-source environment for training. For augmentation based methods as non-knowledge guided baselines, we select Mixup~\cite{Zhang:2018:Mixup}, Manifold Mixup~\cite{Verma:2019:ManifoldMixup}, and Input Masking. 
 
 \subsection*{Implement details}
-All experiments were conducted using Multi-Layer Perceptron (MLP) with single hidden layer. For Similarity-guided Mixup, we defined clinical similarity using features identified as critical in the widely-used Pediatric Estimated Time to Kidney Replacement Therapy (KRT) Calculator. This clinically meaningful feature set included [UPCR, eGFR, Hemoglobin, Systolic BP, Diastolic BP].
+Data preprocessing techniques, including standardization, one-hot encoding, and imputation, were all implemented using the scikit-learn package. The model architecture employed was a Multi-Layer Perceptron (MLP). Considering the input size, the network was configured with two hidden layers consisting of 32 nodes and 16 nodes, respectively, with the ReLU activation function applied to the output of each node. Training was carried out for 2,000 epochs using the ADAM~\cite{Kingma:2014:Adam} optimizer with a fixed learning rate of 0.0001. Consistent with our evaluation strategy, the final performance was reported using the best model, which was selected based on the most balanced AUROC achieved across all training epochs.
 
-For Group-based Masking, we established predefined feature groups based on pairs of features that are often concurrently missing in clinical practice. The groups utilized were [("Diastolic BP", "Systolic BP"), ("Diastolic BP", "UPCR"), and ("Systolic BP", "UPCR")].
+In the Similarity-Guided Mixup, clinical similarity between patients was defined using features identified as critical in the widely used Pediatric Estimated Time to KRT Calculator. This web-based clinical prediction tool was developed and adapted from the Chronic Kidney Disease in CHIldren (CKiD) study, a large, prospective, multicenter cohort established in the United States and Canada~\cite{Wong:2012:CKiDReview}. The calculator predicts time to KRT based on key clinical parameters, including urine protein to creatinine ratio (UPCR), blood pressure, estimated glomerular filtration rate (eGFR), hemoglobin level, serum albumin, chloride, and bicarbonate concentrations~\cite{Ng:2023:PredictionTool}.
+
+For Group-based Masking, we established predefined feature groups based on clinical correlations and practice: (`Diastolic BP', `Systolic BP') were grouped because they are measured concurrently, and (`ARB', `ACE inhibitor') were grouped because they belong to the same RAAS-inhibitor drug class.
 
 \section*{Results}
-% \begin{table}[ht]
-% \centering
-% \caption{Performance comparison on the KNOW-pedCKD dataset under the single-source domain generalization setting. Overall performance is measured on the aggregated (unified) target datasets, whereas Center-wise performance represents the calculated statistics (e.g., mean and standard deviation) across each individual center. The row with the highest recall is highlighted in bold.}
-% \label{tab:performance_mlp}
-% \begin{tabular}{llcccc}
-% \toprule
-% \multirow{2}{*}{\textbf{MLP}} & \multirow{2}{*}{\textbf{Method}} & \multicolumn{2}{c}{\textbf{Recall}} & \multicolumn{2}{c}{\textbf{AUROC}} \\
-% \cmidrule(lr){3-4} \cmidrule(lr){5-6}
-% & & \textbf{Overall} & \textbf{Center-wise} & \textbf{Overall} & \textbf{Center-wise} \\
-% \midrule
-% W/o Aug. & ERM & 0.3451 & $0.2901 \pm 0.1097$ & 0.7970 & $0.7909 \pm 0.0266$ \\
-% \cmidrule{2-6}
-% & IRM & 0.3451 & $0.2831 \pm 0.1252$ & 0.7750 & $0.7754 \pm 0.0396$ \\
-% \midrule
-% \multirow{2}{*}{Masking only} & Input Masking & 0.3592 & $0.3050 \pm 0.1100$ & 0.7970 & $0.7918 \pm 0.0197$ \\
-% & Group-based Masking & 0.3732 & $0.3202 \pm 0.1058$ & 0.7931 & $0.7890 \pm 0.0197$ \\
-% \midrule
-% \multirow{3}{*}{Mixup only} & Mixup & 0.5141 & $0.4721 \pm 0.1308$ & 0.7995 & $0.7894 \pm 0.0314$ \\
-% & Manifold Mixup & 0.2535 & $0.2299 \pm 0.0470$ & 0.7079 & $0.6938 \pm 0.0915$ \\
-% & Similarity-guided Mixup & 0.6479 & $0.6258 \pm 0.1492$ & 0.7333 & $0.7244 \pm 0.0877$ \\
-% \midrule
-% \multirow{3}{*}{Mixup + Masking} & Mixup + Masking & 0.5845 & $0.5339 \pm 0.1528$ & 0.7978 & $0.7922 \pm 0.0212$ \\
-% & Manifold Mixup + Masking & 0.2535 & $0.2299 \pm 0.0470$ & 0.7079 & $0.6938 \pm 0.0915$ \\
-% & \textbf{Ours} & \textbf{0.7465} & $\mathbf{0.7030 \pm 0.1158}$ & \textbf{0.8028} & $\mathbf{0.7949 \pm 0.0118}$ \\
-% \bottomrule
-% \end{tabular}
-% \end{table}
-\begin{table}[ht]
+\begin{table*}[ht]
+\caption{\textbf{Recall Performance Comparison in the Single-Source Domain Generalization Setting.} We present the center-wise performance across target domains (B, C and D) and the overall mean ($\pm$ standard deviation) across all centers, demonstrating that our proposed method achieves the highest Recall performance compared to all baselines.}
+\label{tab:performance_mlp}
 \centering
-\caption{Performance comparison on the KNOW-pedCKD dataset under the single-source domain generalization setting in terms of Recall. Center-wise performance across individual centers (B, C, D) is shown, alongside the mean and standard deviation across all centers.}
-\label{tab:mlp_recall}
 \begin{tabular}{llcccc}
-\toprule
-{\textbf{MLP}} & {\textbf{Method}} & \textbf{B} & \textbf{C} & \textbf{D} & \textbf{Mean $\pm$ Std} \\
-\midrule
-W/o Augmentation & ERM & 0.4074 & 0.0333 & 0.2258 & $0.2222 \pm 0.0958$ \\
-\cmidrule{2-6}
+\hline
+\textbf{MLP} & \textbf{Method} & \textbf{B} & \textbf{C} & \textbf{D} & \textbf{Mean $\pm$ Std} \\
+\hline
+\multirow{2}{*}{W/o Augmentation} & ERM & 0.4074 & 0.0333 & 0.2258 & $0.2222 \pm 0.0958$ \\
 & IRM & 0.3210 & 0.0667 & 0.1613 & $0.1830 \pm 0.0958$ \\
-\midrule
+\hline
 \multirow{2}{*}{Masking only} & Input Masking & 0.4074 & 0.1667 & 0.2581 & $0.2774 \pm 0.2170$ \\
 & Group-based Masking & 0.4444 & 0.1667 & 0.4839 & $0.3650 \pm 0.0958$ \\
-\midrule
+\hline
 \multirow{3}{*}{Mixup only} & Mixup & 0.7284 & 0.5000 & 0.4516 & $0.5600 \pm 0.1635$ \\
 & Manifold Mixup & 0.4198 & 0.2000 & 0.7097 & $0.4431 \pm 0.2170$ \\
 & Similarity-guided Mixup & 0.7407 & 0.5333 & 0.4516 & $0.5752 \pm 0.1209$ \\
-\midrule
+\hline
 \multirow{3}{*}{Mixup + Masking} & Mixup + Input Masking & 0.8765 & 0.5000 & 0.8065 & $0.7277 \pm 0.1209$ \\
 & Manifold Mixup + Masking & 0.4321 & 0.2000 & 0.7097 & $0.4473 \pm 0.0958$ \\
-& Ours & 0.9259 & 0.5667 & 0.8710 & $\mathbf{0.7879 \pm 0.1473}$ \\
-\bottomrule
+& \textbf{Ours} & \textbf{0.9259} & \textbf{0.5667} & \textbf{0.8710} & $\mathbf{0.7879 \pm 0.1473}$ \\
+\hline
 \end{tabular}
-\end{table}
+\end{table*}
 
-\textbf{Overall Performance Comparison.} Table~\ref{tab:mlp_recall} presents the performance results. We observe that the proposed method significantly improves performance in identifying positive cases across domain shifts. Our method achieved a mean Recall of $\mathbf{0.7879}$, substantially outperforming the best baseline ($\text{Mixup + Masking}$, $0.7277$) by 6.02 percentage points ($\text{pp}$). This indicates that our approach is particularly effective at minimizing False Negatives ($\text{FNs}$)—i.e., accurately identifying patients truly at risk of kidney function failure across unseen domains. Consistent performance gains were also confirmed across all individual centers (B, C, and D), ranging from a minimum of 4.94 to a maximum of 6.67 percentage points ($\text{pp}$). This consistency across different centers highlights the robustness of our approach in handling diverse domain shifts in a clinically critical metric like Recall.
+\textbf{Overall Performance Comparison.} Table~\ref{tab:performance_mlp} presents the performance results in terms of Recall. We observe that the proposed method significantly improves performance.
+Our method achieved mean Recall of 0.7879, outperforming the best baseline (Mixup + Masking) by a substantial margin of 6.20 percentage points. This indicates that our approach is particularly effective at identifying patients at risk of condition deterioration across unseen domains. 
 
-\textbf{Ablation of Proposed Components} able~\ref{tab:mlp_recall} also presents an ablation study on each component of our proposed method. While the existing conventional methods (Input Masking and Mixup) demonstrated performance improvements due to their inherent regularization effects, Group-based Masking and Similarity-guided Mixup achieved further gains compared to their respective base methods (8.76, 1.52 percentage points). Furthermore, a synergistic effect, consistent with that observed in combinations of conventional methods, is evident within the Mixup + Masking categories. This confirms that each component contributes independently to the overall performance enhancement and that their combination yields a significant synergistic effect, validating the design of our proposed architecture.
+\textbf{Ablation of Proposed Components} Table~\ref{tab:performance_mlp} also presents an ablation study on each component of our proposed method. Relative to the ERM, Group-based Masking achieved a greater performance improvement than the conventional Input Masking technique, and Similarity-guided Mixup also demonstrated a larger gain compared to the conventional Mixup method. Furthermore, our combined method achieved the highest performance improvement in the Mixup + Masking combination, confirming that each component contributes to performance enhancement and exhibits a significant synergistic effect.
 
-\textbf{Feature Space Analysis.} To qualitatively analyze how our proposed method improves the model's feature representation, we visualized the latent space of the test set using t-SNE~\cite{Maaten:2008:tSNE} in Figure~\ref{fig:2.1}. In the case of the baseline ERM and Manifold Mixup, which yielded the lowest performance, the learned feature spaces are largely unstructured, with positive (blue, red) and negative (green) samples being heavily intermingled. Notably, the False Negatives (red 'x' markers) are scattered deep within the negative class cluster, visually explaining the model's poor Recall score of 0.3451. While Input Masking and Mixup show a slight trend towards separation, their feature spaces remain largely disorganized. In stark contrast, our proposed method (Ours) learns a highly structured and linearly separable feature space. The positive and negative classes form distinct clusters, and most importantly, the number of False Negatives is dramatically reduced. Furthermore, the few remaining False Negatives are primarily located near the decision boundary between the two clusters. This visualization demonstrates that our method does more than just improve a single metric; it learns a robust and meaningful feature space that better represents the underlying structure of the data. This well-separated representation is the key reason for achieving a significantly higher Recall score of 0.7465.
+\textbf{Feature Space Analysis.} To qualitatively analyze how our proposed method improves the model's feature representation, we visualized the latent space of the test set using t-SNE~\cite{Maaten:2008:tSNE} in Figure~\ref{fig:2_feature_analysis}. The t-SNE visualizations demonstrate that our proposed framework learns a more structured and discriminative feature space compared to the baselines. Compared to baseline methods like ERM, our method's True Positives (blue dots) and False Negatives (red `x' marks) are observed to be relatively better clustered. Most critically, our approach achieves a dramatic reduction in False Negatives , with only 24 misclassified positive cases—a considerable improvement over the 93 observed in ERM and 54 in Mixup. This reduction confirms that the Dual Knowledge-Guided Augmentation framework successfully forces the model to learn a robust decision boundary that accurately captures the inherent structure of the data, thereby maximizing the identification of high-risk patients across unseen target domains.
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=1\textwidth]{imgs/mixup.png}
+    \includegraphics[width=1\textwidth]{imgs/2_feature_analysis.pdf}
     \caption{
         \textbf{Feature Space Analysis via t-SNE Visualization.}
-        Our method yielded a structured feature space with robust separation between positive and negative classes, and the resulting decision boundary was appropriately positioned to effectively identify True Positives (TPs).
+        The plot visualizes the effect of each method by showing True Positives (TP) and False Negatives (FN) against the backdrop of the negative class (faded for clarity). Our method yields a highly structured feature space with robust separation between positive and negative classes, resulting in a decision boundary that is appropriately positioned to effectively maximize True Positive identification.
     }
-    \label{fig:2.1}
+    \label{fig:2_feature_analysis}
 \end{figure}
 
-\textbf{Center-wise analysis.} When examining the center-specific recall scores ~\ref{fig:2_center_wise_analysis}, we observed that performance generally rose across all hospitals, in line with the overall performance improvement. Notably, C achieved a substantial gain when Mixup was incorporated, suggesti
-ng that Mixup's data augmentation, by increasing the number of samples in the minority class, was a contributing factor.
+\textbf{Center-wise analysis.} When examining the center-specific recall scores in Figure~\ref{fig:2_center_wise_analysis}, we observed that performance generally rose across all hospitals, in line with the overall performance improvement. Notably, C achieved a substantial gain when Mixup was incorporated, suggesting that Mixup's data augmentation, by increasing the number of samples in the minority class, was a contributing factor.
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=1\textwidth]{imgs/2_center_wise_analysis.png}
-    \caption{
-        \textbf{Center-wise recall analysis}
-        we present center-wise recall score.  
-    }
+    \includegraphics[width=1\textwidth]{imgs/2_center_wise_analysis.pdf}
+    \caption{\textbf{Center-wise Recall Analysis Demonstrating Robustness to Domain Shift.} The bar plot presents the recall score for each method across the individual target domains (B, C, and D), alongside the overall mean recall score. This center-wise breakdown highlights the robustness and generalization capability of our proposed method, which achieves the highest mean recall (78.79\%) and consistently high performance across all unseen target institutions}
     \label{fig:2_center_wise_analysis}
 \end{figure}
 
-\textbf{Arhcitecture Robustness.} To validate the robustness of our proposed method across different model architectures, we conducted additional experiments using TabPFN~\cite{Hollmann:2025:Tabpfn}, a state-of-the-art foundation model for tabular data. The results, presented in Table~\ref{tab:performance_tabpfn}, demonstrate that our method consistently outperforms all baselines in terms of Recall, achieving an Overall Recall of 0.7042 and a Center-wise Recall of 0.6514. This further confirms the effectiveness and generalizability of our approach across different model architectures.
-\begin{table}[ht]
-\centering
-\caption{Performance comparison on the KNOW-pedCKD dataset under the SSDG setting (TabPFN Model). Overall performance is measured on the aggregated (unified) target datasets, whereas Center-wise performance represents the calculated statistics (e.g., mean and standard deviation) across each individual center. The row with the highest recall is highlighted in bold.}
-\label{tab:performance_tabpfn}
-\begin{tabular}{llcccc}
-\toprule
-\multirow{2}{*}{\textbf{TabPFN}} & \multirow{2}{*}{\textbf{Method}} & \multicolumn{2}{c}{\textbf{Recall}} & \multicolumn{2}{c}{\textbf{AUROC}} \\
-\cmidrule(lr){3-4} \cmidrule(lr){5-6}
-& & \textbf{Overall} & \textbf{Center-wise} & \textbf{Overall} & \textbf{Center-wise} \\
-\midrule
-\multirow{2}{*}{W/o Aug.} & ERM & 0.5070 & $0.4603 \pm 0.0989$ & 0.8161 & $0.8068 \pm 0.0120$ \\
-& IRM & 0.5141 & $0.4644 \pm 0.1044$ & 0.8166 & $0.8079 \pm 0.0123$ \\
-\midrule
-\multirow{2}{*}{Masking only} & Input Masking & 0.5352 & $0.4837 \pm 0.1128$ & 0.8173 & $0.8091 \pm 0.0113$ \\
-& Group-based Masking & 0.5423 & $0.4878 \pm 0.1182$ & 0.8177 & $0.8097 \pm 0.0108$ \\
-\midrule
-\multirow{3}{*}{Mixup only} & Mixup & 0.5775 & $0.5290 \pm 0.1142$ & 0.8152 & $0.8059 \pm 0.0115$ \\
-& Manifold Mixup & 0.5775 & $0.5220 \pm 0.1202$ & 0.8137 & $0.8036 \pm 0.0148$ \\
-& Similarity-guided Mixup & 0.6338 & $0.5756 \pm 0.1314$ & 0.8145 & $0.8047 \pm 0.0136$ \\
-\midrule
-\multirow{3}{*}{Mixup + Masking} & Mixup + Masking & 0.6690 & $0.6172 \pm 0.1456$ & 0.8178 & $0.8098 \pm 0.0096$ \\
-& Manifold Mixup + Masking & 0.5775 & $0.5220 \pm 0.1202$ & 0.8137 & $0.8036 \pm 0.0148$ \\
-& \textbf{Ours} & \textbf{0.7042} & $\mathbf{0.6514 \pm 0.1473}$ & \textbf{0.8184} & $\mathbf{0.8088 \pm 0.0064}$ \\
-\bottomrule
-\end{tabular}
-\end{table}
+% \textbf{Arhcitecture Robustness.} To validate the robustness of our proposed method across different model architectures, we conducted additional experiments using TabPFN~\cite{Hollmann:2025:Tabpfn}, a state-of-the-art foundation model for tabular data. The results, presented in Table~\ref{tab:performance_tabpfn}, demonstrate that our method consistently outperforms all baselines in terms of Recall, achieving an Overall Recall of 0.7042 and a Center-wise Recall of 0.6514. This further confirms the effectiveness and generalizability of our approach across different model architectures.
+% \begin{table}[ht]
+% \centering
+% \caption{Performance comparison on the KNOW-pedCKD dataset under the SSDG setting (TabPFN Model). Overall performance is measured on the aggregated (unified) target datasets, whereas Center-wise performance represents the calculated statistics (e.g., mean and standard deviation) across each individual center. The row with the highest recall is highlighted in bold.}
+% \label{tab:performance_tabpfn}
+% \begin{tabular}{llcccc}
+% \toprule
+% \multirow{2}{*}{\textbf{TabPFN}} & \multirow{2}{*}{\textbf{Method}} & \multicolumn{2}{c}{\textbf{Recall}} & \multicolumn{2}{c}{\textbf{AUROC}} \\
+% \cmidrule(lr){3-4} \cmidrule(lr){5-6}
+% & & \textbf{Overall} & \textbf{Center-wise} & \textbf{Overall} & \textbf{Center-wise} \\
+% \midrule
+% \multirow{2}{*}{W/o Aug.} & ERM & 0.5070 & $0.4603 \pm 0.0989$ & 0.8161 & $0.8068 \pm 0.0120$ \\
+% & IRM & 0.5141 & $0.4644 \pm 0.1044$ & 0.8166 & $0.8079 \pm 0.0123$ \\
+% \midrule
+% \multirow{2}{*}{Masking only} & Input Masking & 0.5352 & $0.4837 \pm 0.1128$ & 0.8173 & $0.8091 \pm 0.0113$ \\
+% & Group-based Masking & 0.5423 & $0.4878 \pm 0.1182$ & 0.8177 & $0.8097 \pm 0.0108$ \\
+% \midrule
+% \multirow{3}{*}{Mixup only} & Mixup & 0.5775 & $0.5290 \pm 0.1142$ & 0.8152 & $0.8059 \pm 0.0115$ \\
+% & Manifold Mixup & 0.5775 & $0.5220 \pm 0.1202$ & 0.8137 & $0.8036 \pm 0.0148$ \\
+% & Similarity-guided Mixup & 0.6338 & $0.5756 \pm 0.1314$ & 0.8145 & $0.8047 \pm 0.0136$ \\
+% \midrule
+% \multirow{3}{*}{Mixup + Masking} & Mixup + Masking & 0.6690 & $0.6172 \pm 0.1456$ & 0.8178 & $0.8098 \pm 0.0096$ \\
+% & Manifold Mixup + Masking & 0.5775 & $0.5220 \pm 0.1202$ & 0.8137 & $0.8036 \pm 0.0148$ \\
+% & \textbf{Ours} & \textbf{0.7042} & $\mathbf{0.6514 \pm 0.1473}$ & \textbf{0.8184} & $\mathbf{0.8088 \pm 0.0064}$ \\
+% \bottomrule
+% \end{tabular}
+% \end{table}
 
 \section*{Discussion}
-This study aimed to address the challenge of domain generalization in clinical prediction, where a model trained on data from a single source must maintain robust performance on unseen target domains. We proposed two novel data augmentation techniques that leverage prior clinical knowledge: Similarity-guided Mixup and Knowledge-guided Input Masking. Experimental results demonstrated that our proposed method significantly outperformed existing baselines, including ERM, IRM, Mixup, and Input Masking, particularly in terms of recall, thereby validating its efficacy.
+This study addressed the challenge of domain generalization in clinical prediction, where a model trained on data from a single source must maintain robust performance on unseen target domains. To this end, we proposed two novel knowledge-guided data augmentation techniques, Similarity-guided Mixup and Group-based Masking, that explicitly incorporate clinical context into the learning process. Experimental results demonstrated that these methods substantially outperformed existing baselines, including ERM, IRM, Mixup, and Input Masking, particularly in terms of recall, thereby validating its efficacy of our approach.
 
-The primary factor contributing to the success of our method was the active integration of clinical context into the data augmentation process. Whereas conventional Mixup generated unrealistic noise and degraded performance by indiscriminately interpolating data from clinically disparate patients, our Similarity-guided Mixup created more plausible and meaningful augmented samples. It achieved this by selectively mixing data only from similar patient groups within a clinically significant feature space. This suggests that our approach acted as an effective regularization strategy, enhancing data diversity without corrupting the original data distribution.
+The key factor underlying the success of our framework was the integration of clinical knowledge into the data augmentation process. Conventional Mixup techniques often generate unrealistic noise and degrade performance by indiscriminately interpolating data from clinically disparate patients. In contrast, our Similarity-guided Mixup selectively interpolated data between clinically similar patients, producing plausible and meaningful augmented samples. This approach functioned as an effective regularization mechanism, enhancing data diversity while preserving the intrinsic structure of the original data distribution.
 
-Similarly, our Knowledge-guided Input Masking technique forced the model to learn from more realistic imperfections by simulating authentic missing data patterns observed in clinical practice (e.g., the concurrent absence of related lab values). This method proved more effective at improving model robustness than conventional masking, which applies dropout uniformly across all features. It better prepared the model for the various missing data scenarios it would encounter in real-world target domains.
+The Group-based Masking method further strengthened model robustness by mimicking realistic missing data patterns commonly observed in clinical practice (\textit{e.g.}, the concurrent absence of related clinical values). Unlike conventional masking methods that apply dropout uniformly across features, our technique encouraged the model to learn stable representations under authentic data imperfections, improving its ability to handle missingness in real-world target domains.
 
-The limited performance of the baseline models can also be clearly interpreted. For IRM, the strategy of creating pseudo-domains based on patient information within a single source failed to adequately capture the complex domain shifts that exist between different institutions. These shifts can be attributed to a variety of factors, including differences in measurement equipment, patient demographics, and data recording protocols. This finding underscores that a central challenge in domain generalization is the ability to realistically simulate the true disparities between domains.
+The comparatively limited performance of baseline models, particularly IRM, can be explained by their inability to capture the complex inter-institutional variations that characterize real-world clinical data. Pseudo-domains generated from within a single dataset failed to reproduce the heterogeneity in patient demographics, measurement equipment, and data recording protocols observed across institutions. This finding underscores that a central challenge in domain generalization is not merely to enforce invariance but to simulate the true diversity between domains.
 
-This study offers several significant contributions. First, it empirically demonstrates the critical importance of integrating domain knowledge in the medical field, especially for tabular data where standard augmentation techniques often fall short. Second, it presents a concrete methodology for building a highly generalizable model using only single-source data, offering a practical solution to the challenges of limited data access in medical AI research.
+This study makes several notable contributions. First, it empirically highlights the importance of embedding domain knowledge into the medical AI models, particularly for tabular data where standard augmentation techniques often underperform. Second, it presents a concrete and practical methodology for building generalizable models from single-source data, a setting that reflects the data accessibility constraints commonly encountered in health care AI research. Together, these contributions demonstrate that medical knowledge-driven regularization can meaningfully enhance both model robustness and clinical interpretability.
 
-Nevertheless, this study has several limitations.First, our validation was confined to a specific pediatric chronic kidney disease dataset (KNOW-pedCKD). Further research is required to determine if the proposed methods yield similar benefits in other disease domains or with adult patient data.Second, the process of selecting "clinically significant features" and defining feature groups relied on expert knowledge, which may introduce subjectivity. Future work could explore data-driven methods for automatically identifying these crucial features and groupings.Third, this study was conducted using only a single source domain (SNUH). This was due to the insufficient sample sizes of the other hospital datasets, which made them unsuitable for use as independent source domains for training. Consequently, the impact of varying the source domain remains unexplored.
+Several limitations should be acknowledged. First, our validation was confined to a specific pediatric chronic kidney disease dataset (KNOW-pedCKD). Future studies should assess whether the proposed methods are generalized to other disease contexts or adult populations. Second, the identification of `clinically significant features' and their grouping relied on expert knowledge, which may introduce subjectivity. Future work could incorporate data-driven approaches for automated feature discovery. Third, our analysis utilized only a single source domain because of limited sample sizes from other institutions, leaving the impact of varying source domains unexamined. Finally, we emphasized that the primary contribution of this study lies in the proposal of a novel knowledge-guided regularization framework, rather than a definitive solution to the single-source domain generalization (SSDG) problem itself. We utilized the challenging SSDG setting as a rigorous testbed to demonstrate our method’s effectiveness in enhancing model robustness. Future research could investigate the integration of our method with other dedicated domain generalization techniques to further address the core SSDG challenge.
 
-Finally, it is important to clarify that this study's primary contribution is the proposal of a novel, knowledge-guided regularization framework rather than a direct solution to the single-source domain generalization (SSDG) problem itself. We utilized the challenging SSDG setting as a rigorous testbed to demonstrate our method's effectiveness in enhancing model robustness. Future research could investigate the integration of our method with other dedicated domain generalization techniques to further address the core SSDG challenge.
-
-Future research will focus on validating the generalizability of our methodology by applying it to a broader range of clinical datasets and on developing techniques to automate the feature selection process. We also plan to extend this work to a Multi-Source Domain Generalization setting to investigate effective ways of fusing domain knowledge from multiple institutions. In conclusion, this study demonstrates that combining clinical knowledge with advanced data augmentation is a promising direction for dramatically improving the generalization performance of medical AI models.
+Future research will focus on validating the generalizability of the proposed framework across diverse clinical datasets, automating the identification of clinically significant features, and extending the methodology to Multi-Source Domain Generalization settings. By integrating domain knowledge with advanced augmentation techniques, this study demonstrates a promising pathway toward developing medical AI models that are both more robust and more trustworthy across heterogeneous clinical environments.
 
 \bibliography{sample}
 
-For data citations of datasets uploaded to e.g. \emph{figshare}, please use the \verb|howpublished| option in the bib entry to specify the platform and the link, as in the \verb|Hao:gidmaps:2014| example in the sample bibliography file.
+\section*{Acknowledgements}
 
-\section*{Acknowledgements (not compulsory)}
-
-Acknowledgements should be brief, and should not include thanks to anonymous referees and editors, or effusive comments. Grant or contribution numbers may be acknowledged.
+We acknowledge the help of the following individuals at the Medical Research Collaborating Center (Biomedical Research Institute of Seoul National University Hospital): Heejung Ahn, Sungkyung Kim (data management), Jayoun Kim, and Nanhee Park (biostatistics).
 
 \section*{Author contributions statement}
 
-Must include all authors, identified by initials, for example:
-A.A. conceived the experiment(s),  A.A. and B.A. conducted the experiment(s), C.A. and D.A. analysed the results.  All authors reviewed the manuscript. 
+S.M. and E.P. conceptualized the study. S.M. conducted the methodology and wrote the original draft. E.P. reviewed and edited the manuscript and supervised the work. All authors contributed to data curation, investigation, and resources. All authors read and approved the final manuscript.
 
 \section*{Additional information}
 
-The corresponding author is responsible for submitting a \href{http://www.nature.com/srep/policies/index.html#competing}{competing interests statement} on behalf of all authors of the paper. This statement must be included in the submitted article file.
+\subsection*{Ethical consent} This study was reviewed and approved by the Institutional Review Board of Seoul National University Hospital (No. H-1906-068-1041). 
+
+\subsection*{Informed consent} Informed consent was obtained from participants or their guardians, as appropriate, based on their ages.
+
+\subsection*{Competing interests} No potential conflict of interest relevant to this article was reported. This work was supported by the research program of the National Institute of Health (NIH) under research project No. 2025E110100. Additional support was provided by a grant from Korea University Medicine (No. K2427191).
 
 \end{document}
