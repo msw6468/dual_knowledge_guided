@@ -6,51 +6,40 @@
 \usepackage{siunitx} 
 \usepackage{makecell}
 \usepackage{tabularx}
+\usepackage{amsmath, amssymb, graphicx}
+\usepackage{fancyvrb}
+\usepackage{geometry}
+\usepackage{algorithm}
+\usepackage{xcolor}
+\usepackage{algorithmic}
 
-\sisetup{
-    separate-uncertainty = true,
-    table-align-text-after = false,
-    table-space-text-post = \text{\,\%}, % 퍼센트 기호 공간 확보
-    table-number-alignment = center % siunitx가 처리하는 셀의 내용 중앙 정렬
-}
+% \newcommand{\ALGCOMMENT}[1]{\hfill\color{blue}// #1}
+\newcommand{\ALGCOMMENT}[1]{\textcolor{blue}{// #1}}
 
-\title{Dual Knowledge-Guided Data Augmentation for Robust Clinical Prediction Models}
+\title{Refined Annotations and Specialized Augmentation for Minor Epicardial Arteries in Coronary Angiography}
 
-\author[1]{Sangwoo Moon}
-\author[2,3]{Peong Gang Park}
-\author[4]{Naye Choi}
-\author[5,6]{Ji Hyun Kim}
-\author[7]{Seon Hee Lim}
-\author[8]{Joo Hoon Lee}
-\author[9]{Hee Sun Baek}
-\author[9]{Min Hyun Cho}
-\author[2]{Keum Hwa Lee}
-\author[2,3]{Jae Il Shin}
-\author[10]{Kyoung Hee Han}
-\author[11]{Jeong Yeon Kim}
-\author[7]{Ji Yeon Song}
-\author[12]{Eun Mi Yang}
-\author[4,6,13]{Seong Heon Kim}
-\author[4,6,13]{Yo Han Ahn}
-\author[4,6,13]{Hee Gyung Kang}
-\author[14,*]{Eujin Park}
+\author[1,2]{Do-Hyun Kim\textsuperscript{+}}
+\author[3]{Sangwoo Moon\textsuperscript{+}}
+\author[4]{Dae-Hyeon Choe}
+\author[5]{Je Yoon Shin}
+\author[6]{Su-Jin Kim}
+\author[7]{Jae Jin Lee}
+\author[8]{DaeHong Kang}
+\author[9]{Jihwan Moon}
+\author[1,2,*]{Si-Hyuck Kang}
 
-\affil[1]{Department of Computer Science and Engineering, College of Engineering, Seoul National University, Seoul, Republic of Korea}
-\affil[2]{Division of Pediatric Nephrology, Severance Children’s Hospital, Seoul, South Korea}
-\affil[3]{Department of Pediatrics, Yonsei University College of Medicine, Seoul, South Korea}
-\affil[4]{Department of Pediatrics, Seoul National University Children’s Hospital, Seoul, South Korea}
-\affil[5]{Department of Pediatrics, Seoul National University Bundang Hospital, Seongnam, South Korea}
-\affil[6]{Department of Pediatrics, Seoul National University College of Medicine, Seoul, South Korea}
-\affil[7]{Department of Pediatrics, Pusan National University Children’s Hospital, Pusan National University, School of Medicine, Busan, South Korea}
-\affil[8]{Department of Pediatrics, Children’s Hospital, Asan Medical Center, University of Ulsan College of Medicine, Seoul, South Korea}
-\affil[9]{Department of Pediatrics, Kyungpook National University, School of Medicine, Daegu, South Korea}
-\affil[10]{Department of Pediatrics, Jeju National University College of Medicine, Jeju, South Korea}
-\affil[11]{Department of Pediatrics, Samsung Medical Center, Sungkyunkwan University School of Medicine, Seoul, South Korea}
-\affil[12]{Department of Pediatrics, Chonnam National University Hospital and School of Medicine, Gwangju, South Korea}
-\affil[13]{Kidney Research Institute, Seoul National University Medical Research Center, Seoul, South Korea}
-\affil[14]{Department of Pediatrics, Korea University Guro Hospital, Seoul, South Korea}
-\affil[*]{eujinpark@korea.ac.kr}
+\affil[1]{Cardiovascular Center, Seoul National University Bundang Hospital, Seongnam-si, Republic of Korea}
+\affil[2]{Department of Internal Medicine, Seoul National University, Seoul, Republic of Korea}
+\affil[3]{Department of Computer Science and Engineering, Seoul National University, Seoul, Republic of Korea}
+\affil[4]{Interdisciplinary Program of Medical Informatics, Seoul National University College of Medicine, Seoul, Republic of Korea}
+\affil[5]{Department of Internal Medicine, Seoul National University Hospital, Seoul National University College of Medicine, Seoul, Republic of Korea}
+\affil[6]{Department of Family Medicine, Seoul National University Hospital, Seoul, Republic of Korea}
+\affil[7]{Department of Urology, Seoul National University Hospital, Seoul National University College of Medicine, Seoul, Republic of Korea}
+\affil[8]{Seoul National University Hospital, Seoul, Republic of Korea}
+\affil[9]{Interdisciplinary Program in Artificial Intelligence, Seoul National University, Seoul, Republic of Korea}
 
+\affil[+]{The first two authors contributed equally to the manuscript}
+\affil[*]{eandp303@snu.ac.kr}
 % formats
 % \affil[2]{Affiliation, department, city, postcode, country}
 % \affil[+]{these authors contributed equally to this work}
@@ -60,14 +49,10 @@
     Domain generalization, 
     Robust learning, 
     Clinical Knowledge, 
-    Tabular data
 }
 
 \begin{abstract}
-The successful adoption of medical Artificial Intelligence (AI) models is critically hampered by the domain shift problem, particularly in the challenging Single-Source Domain Generalization (SSDG) scenario prevalent in data-scarce pediatric medicine. Existing augmentation methods, such as standard Mixup and Input Masking, fail to leverage the rich structural information and expert knowledge embedded within clinical data, leading to models that overfit to source-domain specifics (\textit{i.e.}, shortcuts).
-This study proposes a Dual Knowledge-Guided Data Augmentation Framework to systematically enhance model robustness by embedding clinical expertise into the learning process. Our framework introduces two novel components: 1) Similarity-guided Mixup, which generates clinically plausible virtual data by selectively interpolating between patients with high similarity in key clinical features; and 2) Group-based Masking, which simulates realistic data imperfections by concurrently masking clinically related feature groups.
-We validated this framework using the multicenter KNOW-pedCKD cohort for pediatric chronic kidney disease, training exclusively on a single source domain and testing on three unseen target domains. The proposed method significantly improved the clinically critical metric of Recall. This research validates that embedding domain knowledge into data augmentation offers a promising and practical pathway toward developing generalizable and trustworthy medical AI models that can reliably operate across heterogeneous clinical environments. 
-The codes are available at \url{https://github.com/msw6468/KNOW_pedCKD_SDG}.
+AI-based analysis of coronary angiography (CAG) has advanced rapidly in recent years. However, the number of public CAG datasets remains limited, and existing datasets often exclude small vessels because they are not primary treatment targets and their annotation is technically challenging. Further progress in CAG segmentation requires both larger datasets and precise labeling of small-caliber vessels. We developed a CAG segmentation framework that incorporates refined annotations, CAG-specific augmentation, and a small-vessel-focused evaluation metric. The refined dataset (Fine-ARCADE dataset) comprises 196 right coronary artery images with additional annotations of minor epicardial arteries. Copy-paste augmentation was modified for vessel images by matching intensities, adjusting vessel overlap, and varying branching complexity to enhance data diversity. We fine-tuned SAM-Med2D model on public and augmented CAG datasets for 50 epochs. Segmentation performance was evaluated using three metrics: $\text{Dice}_{\text{overall}}$ (full vessel tree), $\text{Dice}_{\text{minor}}$ (minor epicardial arteries), and $\text{Dice}_{\text{major}}$ (major epicardial arteries). Fine-tuned models outperformed the pretrained baseline across all public CAG datasets. CAG-specific augmentation significantly improved $\text{Dice}_{\text{overall}}$ by up to $8.95\%$ and $\text{Dice}_{\text{minor}}$ by up to $12.17\%$, with the best gains observed in the ARCADE and XCAD datasets. These results suggest that while existing public CAG datasets provide limited assessment of small-vessel segmentation, refined annotations enabled more accurate evaluation, and CAG-specific augmentation effectively enhances model performance in minor epicardial regions.
 \end{abstract}
 
 \begin{document}
@@ -79,341 +64,341 @@ The codes are available at \url{https://github.com/msw6468/KNOW_pedCKD_SDG}.
 
 
 \section*{Introduction}
+Coronary angiography (CAG) is a standard diagnostic technique for imaging the coronary arteries \cite{Lawton:2022:2021, Neumann:2019:2018}. However, visual estimation of stenosis severity by operators is highly variable between observers and even within observers, thereby limiting reproducibility \cite{Kim:2024:Artificial}. Objective analysis methods, including quantitative coronary angiography (QCA) and the SYNTAX score, have been developed to provide a more structured assessment of lesion complexity \cite{Sianos:2005:SYNTAX, Suzuki:2020:Clinical, Collet:2017:Quantitative}. More recently, fractional flow reserve (FFR) estimation based on three-dimensional QCA has emerged as a compelling alternative to invasive wire-based FFR measurement \cite{Witberg:2020:Diagnostic, Xu:2017:Diagnostic}. These technologies rely on proprietary algorithms for essential tasks such as contour detection, centerline extraction, reference segment identification, and calculation of key variables.
 
-Advancements in Artificial Intelligence (AI) and machine learning have shown immense potential across numerous fields. In the medical domain, in particular, clinical decision support systems (CDSS) based on imaging signals and Electronic Health Records (EHR) data are emerging as core technologies~\cite{Rajkomar:2018:SAAD, Lakhani:2017:DLCR, Sutton:2020:AOCS}. These systems play a crucial role in enhancing patient safety and treatment efficacy by assisting physicians in diagnoses and minimizing potential errors during the therapeutic process.
+A significant limitation of conventional QCA and angiography-based FFR is their dependence on human input – operators need to select optimal image angles and best frames, and often need to correct vessel contours and diseased segments. Recent advances in artificial intelligence (AI) offer the potential to automate this lesion assessment, thereby saving human time and effort \cite{Avram:2023:CathAI,Labrecque:2024:evaluation, Kim:2024:Validation}. Segmentation is the key step for any AI-based analysis of CAG. Despite AI’s success in other segmentation tasks, its application to CAG remains limited.
+\subsection*{Challenges in CAG Segmentation}
 
-At the heart of this technological progress are predictive models that learn meaningful patterns from given sets of training data. Such models are actively developed to predict disease risk, simulate progression, and forecast treatment responses using biological signals, laboratory results, imaging, and genetic data. Among these applications, AI holds particular promise in the management of chronic diseases such as chronic kidney disease (CKD). CKD has a high global prevalence and represents a major public health concern. Its progression to end-stage kidney disease is associated with substantial comorbidities and imposes a significant clinical and socioeconomic burden, as patients ultimately require costly kidney replacement therapies (KRTs) such as dialysis or kidney transplantation~\cite{Ng:2019:Incidence, Xie:2018:GlobalBurden}. Therefore, early prediction of disease progression and timely intervention to slow its course are of paramount importance, and AI-based predictive models can serve as powerful tools in this context~\cite{Islam:2023:CKDP, Ghosh:2024:IOEM, Moon:2025:DPTK}.
+While segmenting medical images requires specialized domain knowledge, CAG poses additional challenges, including diverse coronary anatomy variants, vessel tortuosity, overlapping vessels in 2D, and complex microvasculature. This problem is compounded by a scarcity of public datasets and segmentation labels \cite{Yaman:2025:Deep}. Existing segmentation labels are often coarse, focusing mainly on major epicardial arteries and excluding the smaller microvessels \cite{Yang:2023:ARCADE, Li:2023:XCAD, Ma:2022:DCA1}. Minor epicardial arteries, such as the sinus node artery, conus branch, acute marginal branches, and septal branches, are often omitted because of their small caliber and poor delineation on CAG, which makes annotation more challenging. Therefore, it is important to explore alternative strategies to enhance the segmentation of minor epicardial arteries by leveraging major epicardial arteries.
 
-Despite this bright outlook, numerous challenges stand in the way of the successful implementation of medical AI models in real clinical settings. One of the most critical obstacles is the domain shift problem~\cite{Kanakasabapathy:2021:AANN}. Domain shift refers to the phenomenon where an AI model, trained on data from a specific institution (the source domain), exhibits substantial degradation in predictive performance when applied to another institution (the target domain). This is a critical issue that undermines the robustness and trustworthiness of medical AI systems and constitutes a major technical barrier to their widespread adoption. To address this limitation, recent research has focused on Domain Generalization~\cite{Guo:2022:EODG} and robust learning approaches that enhance model stability across diverse environments. 
+The coronary arterial circulation comprises both large epicardial arteries and a smaller microvascular system \cite{Camici:2007:Coronary}. While only epicardial coronary arteries are visualized by CAG, most segmentation tasks focus on major large epicardial segments with diameters of 2 mm or greater. The microvascular system, including prearterioles and intramural arterioles, although not well-delineated on angiography, is crucial for maintaining coronary perfusion pressure and myocardial blood supply. Minor epicardial arteries with smaller diameters ranging from 500 $\mu$m to 2 mm are responsible for distributing blood throughout the myocardium with minimal resistance.
 
-Although children account for only a small proportion of all CKD patients, their prolonged disease course and lifelong complications necessitate greater reliance on AI-based approaches to support clinical decision-making. However,  pediatric data for CKD patients are inherently more difficult to collect than adult data and remain limited in both quantity and quality~\cite{Harada:2022:Epidemiology}. These constraints underscore the particular importance of single-source domain generalization and robust learning approaches in achieving reliable and generalizable model performance. 
+The focus on large epicardial arteries is often justified because vessels with a diameter greater than 2 mm are the primary targets for coronary interventions, such as balloon angioplasty or stent implantation. However, the coronary artery system of the heart is a complex vascular structure that resembles a tree. Analysis of smaller vessels, such as those less than 2 mm in diameter, may provide a comprehensive understanding of coronary anatomy and blood flow. This is particularly relevant at bifurcations, where vessel diameters change abruptly and hemodynamics are notoriously complex to model \cite{Huo:2012:Optimal, Starodumov:2022:Modelling}. Furthermore, coronary microvascular dysfunction is gaining clinical attention due to its prevalence, impact on patient outcomes, and diagnostic and therapeutic challenges \cite{Taqueti:2018:Coronary}.
 
-This study aimed to address the challenge of domain generalization in clinical prediction, where a model trained on data from a single source must maintain robust performance when applied to unseen target domains. The following sections provide a literature review covering Single-Source Domain Generalization, Mixup, and Input Masking.
+\subsection*{Our Contributions}
+This study aims to leverage a low-quality, coarse-labeled dataset to train a high-quality segmentation model that accurately delineates vessels down to the level of small, traceable vessels. Our main contributions are as follows.
 
-\subsection*{Single Source Domain Generalization}
-Single-Source Domain Generalization (SSDG) has been particularly active in the field of Computer Vision~\cite{Xu:2023:SimDE, Cugu:2022:ACVC}. 
-The core idea in vision is to decompose image data into two components: Content and Style. Here, content refers to the `domain-invariant' features, such as the essential shape and structure of an object, which remain consistent across domains. On the other hand, style refers to the domain-variant features, such as the color palette, texture, and lighting of an image, which change depending on the domain.
+\begin{enumerate}
+    \item \textbf{Fine-labeled High-Quality Evaluation Dataset:} We propose a novel, physician-refined evaluation dataset, Fine-ARCADE, by re-annotating an existing coarse-labeled dataset (\textit{i.e.}, ARCADE). This refined dataset meticulously covers both major and minor vessels, providing a reliable standard for accurate CAG segmentation assessment.
+    
+    \item \textbf{Vessel Size-Specific Evaluation Metrics:} We introduce three complementary evaluation metrics—$\text{Dice}_{\text{overall}}$, $\text{Dice}_{\text{major}}$, and $\text{Dice}_{\text{minor}}$—to offer a granular assessment of model performance based explicitly on vessel size.
+    
+    \item \textbf{Anatomy-Guided CAG Augmentation:} We enhance the standard Copy-Paste augmentation method by incorporating anatomical knowledge to boost CAG segmentation performance further. We experimentally validate that our proposed method consistently improves performance across three distinct low-quality training datasets~\cite{Yang:2023:ARCADE, Li:2023:XCAD, Ma:2022:DCA1}.
+\end{enumerate}
 
-Based on this approach, researchers have employed strategies that artificially diversify the style of an image to train the model to focus solely on the content. 
-Successful data augmentation techniques have been proposed that manipulate the frequency characteristics of an image using the Fourier Transform~\cite{Xu:2021:AFFDG, Zhao:2024:Morestyle, Liu:2024:UFDP, Huang:2021:FSDR} 
-or apply deep learning-based style transfer~\cite{Zhou:2021:DGWM} techniques to render a single image as if it were created in various artistic styles.
+\section*{Related works}
+\subsection*{Segment Anything Model (SAM) and SAM-Med2D}
+SAM is a foundation model for image segmentation \cite{Kirillov:2023:Segment}. It performs image segmentation using interactive prompts, such as points, bounding boxes, or masks. The interactive prompt encoder improves the model’s ability to delineate complex object boundaries, enhancing segmentation accuracy. SAM was originally trained on a large-scale natural image dataset containing 11 million images and 1.1 billion masks.
 
-However, these computer vision-based SSDG approaches face a clear limitation: 
-they cannot be directly applied to the tabular dataset. While the separation of content and style has been successful in computer vision, this often relies on some prior knowledge about what constitutes stylistic variation. In contrast, for the tabular data in a single-source setting, we inherently lack the prior knowledge about inter-hospital differences needed to define what constitutes domain-invariant features versus domain-variant features. Consequently, the existing SSDG studies are difficult to apply to tabular datasets, which necessitated the introduction of robust learning or regularization techniques for domain generalization.
+Given the substantial domain gap between natural and medical images, many studies have focused on fine-tuning SAM for medical imaging applications \cite{Ma:2024:Segment, Wu:2025:Medical, Zhang:2023:Customized}. \textbf{SAM-Med2D} adapts SAM to the medical domain by freezing the image encoder and inserting learnable adapter layers into each transformer block to capture medical-specific knowledge \cite{Cheng:2023:SAM}. The prompt encoder and mask decoder were fine-tuned, with later iterations updating only the mask decoder. The model was trained on a dataset composed of 4.6 million medical images and 19.7 million masks. This combination of architectural adaptation and large-scale training significantly improved segmentation performance on medical images. It achieved high accuracy even with a single-point prompt and allowed more efficient user interaction. Given its strong performance in medical image segmentation, SAM-Med2D was selected as the baseline model for CAG segmentation in our study. In this study, we use SAM-Med2D for CAG segmentation.
 
-\subsection*{Mixup}
-Mixup~\cite{Zhang:2018:Mixup} methods regularize deep networks by creating novel training instances from multiple samples. The foundational method, Mixup, generates virtual samples through linear interpolation of two data points and their labels. Manifold Mixup~\cite{Verma:2019:ManifoldMixup} applies interpolation within the hidden layers. 
+\subsection*{Public CAG Datasets}
+The public CAG datasets with available segmentation masks are summarized in Table~\ref{tab:public_datasets} \cite{Yang:2023:ARCADE, Li:2023:XCAD, Ma:2022:DCA1}. The ARCADE dataset~\cite{Yang:2023:ARCADE} is a public benchmark composed of 1,500 single-frame coronary angiography images and their corresponding vessel segmentation masks. The annotated vessels are labeled according to the coronary artery classification defined by the SYNTAX score. The XCAD~\cite{Li:2023:XCAD} and DCA1~\cite{Ma:2022:DCA1} datasets do not provide detailed protocols for manual labeling, but the ground truth annotations were created by expert radiologists and an expert cardiologist, respectively. While these datasets have served as key resources in previous studies, their annotations are largely limited to major arteries, and minor arteries remain unlabeled. Training models without detailed ground-truth datasets not only leads to insufficient segmentation performance in minor artery regions but also renders them inadequate as precise evaluation tools for CAG segmentation. To overcome these significant limitations, there is a need for advanced training methods specifically designed to address data sparsity in minor arteries, alongside the establishment of an appropriate benchmark to accurately assess minor artery segmentation performance.
 
-Another popular approach, CutMix~\cite{Yun:2019:Cutmix}, combines samples by cutting a patch from one image and pasting it onto another, with labels mixed proportionally to the patch area. Subsequent methods have refined this patch-based strategy. SaliencyMix~\cite{Uddin:2021:Saliencymix} leverages saliency detection to ensure the cropped region is informative, while ResizeMix~\cite{Qin:2020:Resizemix} simplifies the process by resizing a source image into a small patch.
-
-However, these methods have a fundamental problem: it combines patient data randomly without any consideration for the clinical context~\cite{Zhang:2018:Mixup,Verma:2019:ManifoldMixup} or leverage characteristics of vision domain~\cite{Yun:2019:Cutmix,Qin:2020:Resizemix,Uddin:2021:Saliencymix}. 
-For example, mixing the data of a stable, early-stage patient with that of a late-stage patient on the verge of requiring renal replacement therapy can create a clinically implausible virtual patient. Such unrealistic data can act as `noise' in the model training process and degrade performance, which strongly suggests the need for the proper approaches.
-
-\subsection*{Input Masking}
-
-Input Masking~\cite{Balasubramanian:2023:TIIM}, also known as Input Dropout, is another widely used technique to enhance model robustness. It operates by randomly setting a fraction of the input features to zero (or another baseline value) during training. This prevents the model from becoming overly reliant on any single feature, forcing it to learn a more distributed and robust representation of the data. However, like standard Mixup, conventional input masking has limitations in a clinical setting. It typically applies masking to all features with a uniform probability, assuming that feature dropout is random. In reality, missing data in clinical environments often follows specific, non-random patterns. For instance, a set of related lab values from a single blood test may be missing concurrently. The failure of standard masking to account for these real-world patterns motivates our proposal for a knowledge-guided approach, which simulates more realistic missing data scenarios.
+\subsection*{Copy-Paste Augmentation}
+Copy-Paste augmentation is a technique that generates new training samples by pasting segmented objects from a source image onto a target (background) image \cite{Ghiasi:2021:Simple}. It has proven effective in natural image tasks by increasing object diversity and scale variation while requiring minimal computational resources. However, applying Copy-Paste augmentation directly to CAG segmentation is challenging. CAG images are displayed in grayscale, making vanilla Copy-Paste difficult to apply. In addition, ignoring the fractal geometry of the coronary artery tree can lead to unrealistic vascular structures \cite{Finet:2008:Fractal}.
 
 \section*{Methods}
-This section details the proposed benchmark and methodology. 
-$\text{Figure~\ref{fig:2.overview}}$ presents an overview of both the benchmark and the method.
+This section introduces the Standard Copy-Paste augmentation technique, presents our proposed method (Modified Augmentation Techniques for CAG), and provides the corresponding pseudo-code implementation in Algorithm \ref{alg:cag_copypaste}.
+For clarity in describing this process, we utilize the following notations throughout this paper. We assume access to two pairs of images and masks: a background pair and a foreground pair.
+\begin{itemize}
+    \item \textbf{Background Image and Mask:} $I_{\text{bg}}$ denotes the background CAG image, and $M_{\text{bg}}$ is its corresponding vessel mask. This pair represents the existing coronary tree structure to which new vessels will be added.
+    \item \textbf{Foreground Image and Mask:} $I_{\text{fg}}$ denotes the foreground CAG vessel image, and $M_{\text{fg}}$ is its corresponding vessel mask. This pair represents the vessel segment that will be copied and inserted into the background.
+    \item \textbf{Geometric Transformation:} $T$ denotes a geometric transformation applied to the foreground segment, including operations such as resizing and relocation.
+\end{itemize}
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=1\textwidth]{imgs/2_overview.pdf}
-    \caption{
-        \textbf{Overview of our framework.}
-        We presented a benchmark for evaluating model generalization performance under domain shift conditions (\textit{i.e.}, single-source domain generalization). In this setting, we evaluated and analyzed the performance of models trained using clinical knowledge-guided data augmentation.
-    }
-    \label{fig:2.overview}
-\end{figure}
+\section*{Introduction to Standard Copy-Paste Augmentation}
+Standard Copy-Paste augmentation~\cite{Ghiasi:2021:Simple} synthesizes a new image by applying a \textbf{geometric transformation} ($\boldsymbol{T}$) to a foreground object $I_{\text{fg}} \odot M_{\text{fg}}$ and its mask $M_{\text{fg}}$ before inserting it into a background image $I_{\text{bg}}$. The foreground mask also undergoes the same geometric transformation and is subsequently merged with the background mask.
 
-
-\subsection*{Problem setting}
-The primary goal our study falls under the framework of Domain Generalization (DG), aiming to train a robust model $f_{\theta}$ on a known source domain $\mathcal{D}_s$ that can maintain high performance when applied to an unseen target domain $\mathcal{D}_t$. Specifically, we address the challenging Single-Source Domain Generalization (SSDG) setting, where the model is exclusively trained on data from a single domain $\mathcal{D}_s$, with no access to data from the target domains or any other external source. 
-
-We formally denote the source and target datasets as $\mathcal{D}_{s}$ and $\mathcal{D}_{t}$, respectively. The score challenge arises because these domain are sampled from distinct probability distributions ($P_s \neq P_t$). Each data point $(\mathbf{x}_i, y_i) \in \mathcal{D}$ consists of a $D$-dimensional feature vector $\mathbf{x}_i \in \mathbb{R}^D$ and a binary label $y_i \in \{0,1\}$. In this setting, we train a model $f_{\theta}: \mathbb{R}^D \rightarrow \{0,1\}$ on the source domain $\mathcal{D}_{s}$ and evaluate its performance on the unseen target domain $\mathcal{D}_{t}$.
-
-\subsection*{Proposed Method 1: Similarity-guided Mixup}
-\label{sec:similarity-guided-mixup}
-Prior Mixup research largely focused on two approaches: random selection for pixel-wise interpolation or leveraging image-specific prior knowledge for augmentation. The former approach is inadequate for clinical data as it performs interpolation without regard for a patient's medical status, potentially generating clinically implausible virtual samples. Furthermore, the latter, which utilizes visual priors (\textit{e.g.}, saliency or patch area), is fundamentally ill-suited for application to tabular datasets. Our proposed method overcomes this limitation by defining sample similarity based on a clinically meaningful feature set, making it effective for medical tabular data. We introduce Similarity-guided Mixup, a technique that first identifies a subset of clinically significant features using prior domain knowledge. Mixup augmentation is then performed exclusively between patient samples that exhibit high similarity within this predefined clinical feature space.
-
-We define a subset of features, $\mathcal{F}_{\text{clinical}} \subset \{1, 2, \dots, D\}$, 
-which are selected based on domain expertise as being most critical to the clinical task. 
-Let $\phi: \mathbb{R}^D \rightarrow \mathbb{R}^{|\mathcal{F}_{\text{clinical}}|}$ be a projection function that extracts only these clinically meaningful features from a given sample vector $\mathbf{x}$.
-
-\textbf{Distance Calculation}
-The distance $d(\mathbf{x}_i, \mathbf{x}_j)$ between two samples $\mathbf{x}_i$ and $\mathbf{x}_j$ is measured exclusively within this projected feature space using the Euclidean norm ($L_2$ norm):
 $$
-d(\mathbf{x}_i, \mathbf{x}_j) = ||\phi(\mathbf{x}_i) - \phi(\mathbf{x}_j)||_2 \eqno{(1)}
-$$
-
-\textbf{Similarity Score}
-This distance is subsequently used to calculate a similarity score, which forms the basis for our probabilistic sampling. We formalize this using a Gaussian kernel to convert distance into a similarity score $S(\mathbf{x}_i, \mathbf{x}_j)$:
-$$
-S(\mathbf{x}_i, \mathbf{x}_j) = \exp \left( - \frac{d(\mathbf{x}_i, \mathbf{x}_j)^2}{2\sigma^2} \right) \eqno{(2)}
-$$
-where $\sigma$ is a hyperparameter that controls the sensitivity of the similarity score.
-
-\textbf{Sampling Probability}
-Finally, the probability $P(\mathbf{x}_j | \mathbf{x}_i)$ of selecting anchor sample $\mathbf{x}_j$ from the dataset $\mathcal{D}$ to form a Mixup pair with $\mathbf{x}_i$ is given by normalizing these similarity scores across all possible pairs:
-$$
-P(\mathbf{x}_j | \mathbf{x}_i) = \frac{S(\mathbf{x}_i, \mathbf{x}_j)}{\sum_{k: \mathbf{x}_k \in \mathcal{D}} S(\mathbf{x}_i, \mathbf{x}_k)}
-\eqno{(3)}
-$$
-This ensures that samples that are clinically more similar have a higher probability of being mixed, thereby generating more plausible and effective augmented data.
-
-\textbf{Interpolation}
-Once the pair $(\mathbf{x}_i, \mathbf{x}_j)$ is selected according to $P(\mathbf{x}_j | \mathbf{x}_i)$, the augmented sample $(\mathbf{x}', y')$ is generated using the conventional Mixup formula:
-$$
-\mathbf{x}' = \lambda \mathbf{x}_i + (1 - \lambda) \mathbf{x}_j  \eqno{(4)}
+I_{\text{aug}} = T(I_{\text{fg}} \odot M_{\text{fg}}) + I_{\text{bg}} \odot (1 - T(M_{\text{fg}})) \eqno{(1)}
 $$
 $$
-y' = \lambda y_i + (1 - \lambda) y_j \eqno{(5)}
+M_{\text{aug}} = T(M_{\text{fg}}) + M_{\text{bg}} \odot (1 - T(M_{\text{fg}})) \eqno{(2)}
 $$
-where $\lambda \sim \text{Beta}(\alpha, \alpha)$.
+\label{eq:standard_copy_paste}
+Where $I_{\text{aug}}$ is the augmented image and $\odot$ denotes element-wise multiplication.
 
-\subsection*{Proposed Method 2: Group-based Masking}
-\label{sec:group-based-masking}
-Conventional Input Masking assumes missingness occurs randomly and independently across features. Our group-based masking incorporates domain knowledge by modeling the correlated missing patterns often observed in clinical data, thereby generating more realistic data imperfections to enhance model robustness.
+However, applying this naively to CAG images requires three specific modifications to maintain anatomical and visual fidelity.
 
-\textbf{Identifying Correlated Missing Patterns}
-Based on clinical consultation 
-(\textit{e.g}., specific lab panels or concurrent measurement difficulties like in pediatric BP), 
-features known to be concurrently missing are grouped into sets 
-$\mathcal{G} = \{\mathcal{G}_1, \mathcal{G}_2, \dots\}$.
+\section*{Modified Augmentation Techniques for CAG}
+\subsection*{Intensity Matching}
+This modification ensures \textbf{visual consistency} by making the sampling probability of a foreground vessel segment inversely proportional to its intensity mismatch with the background artery.
 
-\textbf{Masking Procedure}
-The binary mask vector $m \in \{0,1\}^D$ applied to the input feature vector 
-$x \in \mathbb{R}^D$ is generated based on feature groups $\{\mathcal{G}_1,\dots,\mathcal{G}_K\}$ 
-defined by clinical knowledge. 
-For each group $G_k$, a single binary variable 
-$b_k \sim \text{Bernoulli}(1-p_{\text{group}})$ is sampled.
-$$
-m_j = \begin{cases}
-b_k & \text{if } j \in \mathcal{G}_k \text{ for some group } k \\
-\sim \text{Bernoulli}(1-p_{\text{ind}}) & \text{if } j \text{ is not in any group}
-\end{cases} \eqno{(6)}
-$$
-Here, $p_{\text{group}}$ is the probability of group masking, and $p_{\text{ind}}$ is the probability of individual feature masking. The final masked vector is $\mathbf{x}' = \mathbf{x} \otimes m$.
-The final augmented input $\mathbf{\tilde{x}}$ is the result of applying both correlated (Group) and independent (Random) masking mechanisms, simulating real-world data heterogeneity and missingness structure.
+\begin{itemize}
+    \item \textbf{Representative Intensity:} The mean pixel intensity of the vessel.
+    $$
+    \text{Intensity}_{\text{vessel}} = \frac{1}{|\text{Pixel}_{\text{vessel}}|} \sum_{p \in \text{Pixel}_{\text{vessel}}} p \eqno{(3)}
+    \label{eq:representative_intensity}
+    $$
+    \item \textbf{Intensity Difference:} The absolute difference in representative intensities between the candidate foreground segment $k$ and the background vessel.
+    $$
+    \Delta \text{Intensity}_k = |\text{Intensity}_{\text{fg}, k} - \text{Intensity}_{\text{bg}}|
+    \label{eq:intensity_difference} \eqno{(4)}
+    $$
+    \item \textbf{Normalized Sampling Probability:} Prioritizes segments with smaller $\Delta \text{Intensity}_k$. $M$ is the total number of candidates, and $W_k = f(\Delta \text{Intensity}_k)$ is an inverse function. (e.g., $W_k = 1/(\Delta \text{Intensity}_k + \epsilon)$).
+    $$
+    P_{\text{sample}, k} = \frac{W_k}{\sum_{j=1}^{M} W_j} \eqno{(5)}
+    $$
+    \label{eq:normalized_sampling}
+\end{itemize}
 
-\subsection*{Dataset and evaluation}
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.8\textwidth]{imgs/2_data_collection.pdf}
-    \caption{
-        \textbf{Overview of KNOW-pedCKD dataset collection}
-    }
-    \label{fig:2.data_collection}
-\end{figure}
-\begin{table}[!ht]
-\centering
-\caption{\textbf{Demographics and clinical characteristics}}
-\label{tab:demographics}
-\begin{tabular}{l *{4}{S[table-format=3.2(2.2)]}} 
-\toprule
-\multirow{2}{*}{\textbf{Characteristic, unit}} & \textbf{A} & \textbf{B} & \textbf{C} & \textbf{D} \\
-& \textbf{(Source)} & \textbf{(Target1)} & \textbf{(Target2)} & \textbf{(Target3)} \\
-\midrule
-Sex, Male & {333 (30.69\%)} & {144 (32.88\%)} & {102 (29.91\%)} & {111 (35.35\%)} \\
-Age, years & 12.85 \pm 5.91 & 12.10 \pm 6.35 & 13.69 \pm 5.45 & 14.43 \pm 5.11 \\
-eGFR, mL/min/1.73m\textsuperscript{2} & 58.05 \pm 29.24 & 57.39 \pm 32.09 & 61.90 \pm 26.32 & 89.85 \pm 29.52 \\
-Systolic BP, mmHg & 111.36 \pm 12.49 & 113.98 \pm 15.36 & 114.63 \pm 11.39 & 117.76 \pm 15.76 \\
-Diastolic BP, mmHg & 66.65 \pm 10.93 & 68.86 \pm 12.32 & 70.01 \pm 9.18 & 66.42 \pm 11.57 \\
-Hemoglobin, g/dL & 13.14 \pm 1.88 & 12.51 \pm 2.06 & 13.58 \pm 1.86 & 13.20 \pm 1.79 \\
-Reticulocyte, \% & 1.48 \pm 1.25 & 1.34 \pm 0.87 & 1.63 \pm 0.63 & 1.25 \pm 0.49 \\
-Potassium, mmol/L & 4.40 \pm 0.52 & 4.28 \pm 0.61 & 4.40 \pm 0.43 & 4.36 \pm 0.46 \\
-Chloride, mmol/L & 105.52 \pm 3.52 & 105.45 \pm 3.53 & 103.21 \pm 3.15 & 104.48 \pm 2.89 \\
-Calcium, mg/dL & 9.60 \pm 0.54 & 9.29 \pm 0.63 & 9.43 \pm 0.52 & 9.43 \pm 0.64 \\
-Phosphate, mg/dL & 4.47 \pm 0.81 & 4.86 \pm 4.19 & 4.29 \pm 0.70 & 4.20 \pm 0.87 \\
-Albumin, g/dL & 4.26 \pm 0.42 & 3.99 \pm 0.56 & 4.36 \pm 0.39 & 4.36 \pm 0.49 \\
-UPCR, mg/mg & 1.19 \pm 2.91 & 2.01 \pm 7.68 & 0.71 \pm 0.95 & 0.72 \pm 1.79 \\
-Calcium phosphate binder & {279 (27.41\%)} & {80 (18.31\%)} & {59 (17.61\%)} & {10 (3.25\%)} \\
-Iron supplements & & & & \\
-- Oral & {218 (20.15\%)} & {62 (14.16\%)} & {29 (8.53\%)} & {18 (5.73\%)} \\
-- Intravenous & {6 (0.55\%)} & {4 (0.91\%)} & {0 (0.00\%)} & {0 (0.00\%)} \\
-- Intravenous and oral & {4 (0.37\%)} & {21 (4.79\%)} & {0 (0.00\%)} & {0 (0.00\%)} \\
-- Not use & {854 (78.93\%)} & {351 (80.14\%)} & {311 (91.47\%)} & {296 (94.27\%)} \\
-ESA & & & & \\
-- Epoetin alfa & {9 (0.83\%)} & {13 (2.97\%)} & {0 (0.00\%)} & {2 (0.64\%)} \\
-- Epoetin beta & {86 (7.96\%)} & {21 (4.79\%)} & {0 (0.00\%)} & {1 (0.32\%)} \\
-- Darbepoetin alfa & {13 (1.20\%)} & {3 (0.68\%)} & {0 (0.00\%)} & {3 (0.96\%)} \\
-- CERA & {2 (0.19\%)} & {4 (0.91\%)} & {0 (0.00\%)} & {0 (0.00\%)} \\
-- Not use & {971 (89.82\%)} & {397 (90.64\%)} & {340 (100.00\%)} & {308 (98.09\%)} \\
-ACE inhibitor & {304 (29.09\%)} & {144 (33.18\%)} & {135 (40.42\%)} & {208 (66.45\%)} \\
-ARB & {384 (36.75\%)} & {60 (13.82\%)} & {30 (8.98\%)} & {91 (29.07\%)} \\
-\bottomrule
-\end{tabular}
-\end{table}
+\subsection*{Overlapped Vessels}
+This modification ensures \textbf{anatomical continuity} by enforcing a connection between the new vessel segment and the existing coronary tree structure.
 
-\begin{table}[!ht]
-\centering
-\caption{\textbf{Statistical significance test results for features between the source and target domains.} P-values are reported for continuous variables, and chi-square test P-values are reported for categorical variables. A significant difference in distribution was observed for most features.}
-\label{tab:ttest_results}
-\setlength{\tabcolsep}{6pt}
-\begin{tabular}{l l l l l}
-\toprule
-\textbf{Characteristic, unit} & {\makecell{\textbf{A} \\ \textbf{(Source)}}} & {\makecell{\textbf{B} \\ \textbf{(Target1)}}} & {\makecell{\textbf{C} \\ \textbf{(Target2)}}} & {\makecell{\textbf{D} \\ \textbf{(Target3)}}} \\
-\midrule
-\makecell[l]{Count (\% of patients)} & {1085 (15.48\%)} & {438 (18.49\%)} & {341 (8.80\%)} & {314 (9.87\%)} \\
-\midrule
-Sex & - & 0.41 & 0.79 & 0.12 \\
-Age, years & - & 0.02 & 0.04 & 0 \\
-eGFR, mL/min/1.73m\textsuperscript{2} & - & 0.35 & 0.01 & 0 \\
-Systolic BP, mmHg & - & 0.01 & 0 & 0 \\
-Diastolic BP, mmHg & - & 0 & 0 & 0.31 \\
-Hemoglobin, g/dL & - & 0 & 0 & 0.28 \\
-Reticulocyte, \% & - & 0.04 & 0 & 0.04 \\
-Potassium, mmol/L & - & 0 & 0.53 & 0.05 \\
-Chloride, mmol/L & - & 0.66 & 0 & 0 \\
-Calcium, mg/dL & - & 0 & 0 & 0 \\
-Phosphate, mg/dL & - & 0.01 & 0 & 0 \\
-Albumin, g/dL & - & 0 & 0 & 0 \\
-UPCR, mg/mg & - & 0 & 0.07 & 0 \\
-Calcium phosphate binder & - & 0 & 0 & 0 \\
-Iron supplements & - & 0.33 & 0 & 0 \\
-ESA & - & 0.70 & 0 & 0 \\
-ACE inhibitor & - & 0.12 & 0 & 0 \\
-ARB & - & 0 & 0 & 0.01 \\
-\bottomrule
-\end{tabular}
-\end{table}
+\begin{itemize}
+    \item \textbf{Description:} A geometric transformation is sought that guarantees an \textbf{Overlap} between the transformed foreground vessel and a suitable background vessel. Once the connection is established, blending is performed.
+    \item \textbf{Connection Condition:} A valid connection exists if the $\text{Overlap}()$ is strictly greater than zero for some transformation. The $\text{Overlap}()$ function returns the count of overlapping pixels between two masks.
+    $$
+    \exists T \text{ such that } \text{Overlap}(T(M_{\text{fg}}), M_{\text{bg}}) > 0 \eqno{(6)}
+    $$
+    \label{eq:connection_condition}
+\end{itemize}
 
-For the validation of our proposed methodology, this study utilized data from the KNOW-pedCKD study (ClinicalTrials.gov: NCT02165878; registered June 11, 2014), a multicenter prospective observational cohort comprising Korean pediatric patients with CKD. Data were collected from teaching hospitals associated with seven major pediatric nephrology centers in South Korea. Figure~\ref{fig:2.data_collection} illustrates the study protocol, including the specific collection period, patient inclusion, and exclusion criteria utilized for the KNOW-pedCKD dataset.
+\subsection*{Multiple Insertion}
+This modification captures the \textbf{fractal geometry and complexity} of the coronary artery tree by sequentially increasing the number of branches.
 
-The core research problem is defined as a classification task focused on predicting outcomes for patients in an unseen institution (target domain). Specifically, the task is to predict whether a patient's condition would worsen (defined as Kidney Replacement Therapy (KRT), death, or a $\ge 20\%$ decline in eGFR) within the subsequent year, based on their current visit data. 
+\begin{itemize}
+    \item \textbf{Description:} The complete augmentation process is repeated $N$ times. The outputs from the previous step ($I_{i-1}$, $M_{i-1}$) serves as the background fo the current step ($I_{bg,i}$, $M_{bg,i}$).
+    \item \textbf{Sequential Insertion:}
+    $$
+    I_{\text{aug,i}} = T(I_{\text{fg,i}} \odot M_{\text{fg,i}}) + I_{\text{bg,i}} \odot (1 - T(M_{\text{fg,i}})) \eqno{(7)}
+    $$
+    $$
+    M_{\text{aug,i}} = T(M_{\text{fg,i}}) + M_{\text{bg,i}} \odot (1 - T(M_{\text{fg,i}})) \eqno{(8)}
+    $$
 
-To measure Single-Source Domain Generalization (SSDG) performance, we sequentially named the institutions with the largest patient populations as A, B, C, and D. We designated the largest institution, A, as the source domain, and utilized the remaining three institutions (B, C, and D) as the target domains to build our benchmark. Patient records, collected sequentially during annual visits, were segmented into person-visit units (representing a one-year interval). In preprocessing, standardization was applied to continuous features to minimize the impact of scale differences on model training. Categorical features were processed using one-hot encoding to prevent the model from assuming an arbitrary ordinal relationship or magnitude between distinct categories (\textit{e.g.}, assigning a value of 1, 2, 3 to categories would imply $3 > 1$, which is incorrect for nominal data). Missing data during model training were handled via Multiple Imputation by Chained Equations (MICE), utilizing an imputer previously trained on the raw training dataset. Table~\ref{tab:demographics} shows the raw feature distribution for each domain, while Table~\ref{tab:ttest_results} presents the statistical significance difference between the source domain (A) and the target domains (B, C, and D). Specifically, p-value analysis confirmed strict differences in feature distributions across the datasets, statistically validating the existence of a domain shift between institutions. 
+    \label{eq:sequential_insertion}
+    Where $I_{0} = I_{\text{bg}}$, $M_{0} = M_{\text{bg}}$ and the final augmented image and mask are $I_{\text{final}} = I_{aug,N}$. $M_{\text{final}} = M_{aug,N}$.
+\end{itemize}
 
-Model evaluation employed both AUROC and Recall score. The model at the epoch with the highest AUROC on the validation set was selected as the optimal checkpoint, as AUROC provides a comprehensive, threshold-independent measure of overall model discrimination. However, Recall was chosen for reporting the final performance across different methods because, in a clinical setting with critical conditions like kidney failure, maximizing the detection of true positive cases is often prioritized to ensure minimal missed intervention opportunities.
+\begin{algorithm}
+\caption{\textbf{CAG-specific Copy-Paste Augmentation}}
+\label{alg:cag_copypaste}
+\begin{algorithmic}[1]
+\REQUIRE $I_{\text{bg}}, M_{\text{bg}}$ (Background image and mask), $\mathcal{I}_{\text{fg}}, \mathcal{M}_{\text{fg}}$ (Set of foreground image and mask), $N_{\text{Insertions}}$ (Number of insertions), T (geometric transformation function)
+\ENSURE $I_{\text{Augmented}}, M_{\text{Augmented}}$ (Final augmented image and mask)
+\STATE $I_{\text{Augmented}} \gets I_{\text{bg}}$
+\STATE $M_{\text{Augmented}} \gets M_{\text{bg}}$
+\STATE $\text{Intensity}_{\text{bg}} \gets \text{CalculateMeanIntensity}(I_{\text{Augmented}}, M_{\text{Augmented}})$
+\STATE $\mathcal{P}_{\text{sample}} \gets \text{CalculateNormalizedProbabilities}(\mathcal{I}_{\text{fg}}, \mathcal{M}_\text{fg}, \text{Intensity}_{\text{bbg}})$ 
+\FOR{$i=1$ TO $N_{\text{Insertions}}$}
 
+    \STATE \ALGCOMMENT{Intensity Matching (Eq. 3-5)}
 
-% The Seoul National University Hospital (SNUH) dataset, which had the largest number of patients, was selected as the source domain ($\mathcal{D}_{s}$). The next three largest hospitals—Asan Medical Center (AMC), Kyungpook National University Hospital (KNUH), and Severance Hospital (SSV)—were selected as the target domains ($\mathcal{D}_{t}$) to construct a single-source domain generalization scenario. Each data record was converted to a person-visit pair, following previous work~\cite{Moon:2025:DPTK}. The 18 features used for training and the statistical characteristics for each hospital are available in Table~\ref{tab:demographics}.
-% Furthermore, the results of the t-tests assessing the distribution shift from the source domain to the target domains are shown in Table~\ref{tab:ttest_results}. Considering the p-values in Table~\ref{tab:ttest_results}, a significant distribution difference was observed between the source and target domains for all features except for Sex.
+    \STATE $(I_{\text{fg}}, M_{\text{fg}}) \gets \text{SampleForeground}(\mathcal{P}_{\text{sample}})$
+    
+    \STATE \ALGCOMMENT{Overlap and Seamless Merging (Eq. 6: Connection Check)} 
+    
+    \IF{$\text{Overlap}(T(M_{\text{Seg}}), M_{\text{Augmented}}) > 0$}
+        \STATE \ALGCOMMENT{Multiple Insertion (Eq. 7, 8: Sequential Copy-Paste)}
+        \STATE $I_{\text{Augmented}} \gets T(I_{\text{fg}} \odot M_\text{fg}) + I_{\text{Augmented}} \odot (1 - T(M_{\text{fg}}))$
+        \STATE $M_{\text{Augmented}} \gets T(M_\text{fg}) + M_{\text{Augmented}} \odot (1 - T(M_{\text{fg}}))$
+    \ELSE
+        \STATE \textbf{CONTINUE} \COMMENT{Try next iteration}
+    \ENDIF
+\ENDFOR
+\STATE \textbf{RETURN} $I_{\text{Augmented}}, M_{\text{Augmented}}$
+\end{algorithmic}
+\end{algorithm}
 
-% The primary metric used in this experiment was Recall. In this study, recall measures how accurately the model predicts patients whose condition actually deteriorates~\cite{haque2025improving, priyadharshini2025population, supriana2024modified}. For selecting the evaluation model during training, the source dataset was split into train (80\%) and validation (20\%). 
-% The model was trained on the training set, and the model achieving the highest Area Under the Receiver Operating Characteristic curve (AUROC) performance on the validation set was selected for target domain evaluation. We report both the performance measured across all combined datasets (Overall) 
-% and the average performance across each center (Center-wise).
+\subsection*{Fine-tuning SAM-Med2D with Public and Augmented CAG Datasets}
+We fine-tuned SAM-Med2D using both public CAG datasets and their augmented versions described in Section 3.2. We applied a single-point prompt method for the prompt encoder. The same hyperparameters as in the original SAM-Med2D training were applied, except for the number of training epochs. Training was run for 50 epochs instead of the default setting to ensure sufficient convergence for CAG segmentation.
 
-\subsection*{Baselines}
-We compared the performance of our proposed method against several baselines: For non-augmentation-based baseline, Empirical Risk Minimization (ERM), Invariant Risk Minimization (IRM~\cite{Arjovsky2019InvariantRM}). As IRM is inherently designed for multi-source domain generalization, we adapted it to our SSDG setting by creating pseudo-domains by clustering patients within the source domain (A), thereby simulating a multi-source environment for training. For augmentation based methods as non-knowledge guided baselines, we select Mixup~\cite{Zhang:2018:Mixup}, Manifold Mixup~\cite{Verma:2019:ManifoldMixup}, and Input Masking. 
-
-\subsection*{Implement details}
-Data preprocessing techniques, including standardization, one-hot encoding, and imputation, were all implemented using the scikit-learn package. The model architecture employed was a Multi-Layer Perceptron (MLP). Considering the input size, the network was configured with two hidden layers consisting of 32 nodes and 16 nodes, respectively, with the ReLU activation function applied to the output of each node. Training was carried out for 2,000 epochs using the ADAM~\cite{Kingma:2014:Adam} optimizer with a fixed learning rate of 0.0001. Consistent with our evaluation strategy, the final performance was reported using the best model, which was selected based on the most balanced AUROC achieved across all training epochs.
-
-In the Similarity-Guided Mixup, clinical similarity between patients was defined using features identified as critical in the widely used Pediatric Estimated Time to KRT Calculator. This web-based clinical prediction tool was developed and adapted from the Chronic Kidney Disease in CHIldren (CKiD) study, a large, prospective, multicenter cohort established in the United States and Canada~\cite{Wong:2012:CKiDReview}. The calculator predicts time to KRT based on key clinical parameters, including urine protein to creatinine ratio (UPCR), blood pressure, estimated glomerular filtration rate (eGFR), hemoglobin level, serum albumin, chloride, and bicarbonate concentrations~\cite{Ng:2023:PredictionTool}.
-
-For Group-based Masking, we established predefined feature groups based on clinical correlations and practice: (`Diastolic BP', `Systolic BP') were grouped because they are measured concurrently, and (`ARB', `ACE inhibitor') were grouped because they belong to the same RAAS-inhibitor drug class.
+\subsection*{Evaluation}
+We conducted all evaluations on the Fine-ARCADE dataset. Segmentation performance was evaluated for each training dataset and for the pretrained SAM-Med2D model using the Dice similarity coefficient. We reported three variants of the Dice similarity coefficient metric reflecting different regions of the coronary tree. $\text{Dice}_{\text{overall}}$ was computed against the whole ground truth, defined as the union of the original annotations and the re-annotated minor artery masks. $\text{Dice}_{\text{minor}}$ was computed only within the re-annotated minor epicardial artery masks, providing a specific assessment of segmentation performance in minor artery regions. $\text{Dice}_{\text{major}}$ was computed only within the original annotation areas, which covered the major epicardial arteries, and corresponds to the conventional evaluation metric used in prior studies. Figure~\ref{fig:3.overview} provides a schematic overview of the workflow described above.
 
 \section*{Results}
-\begin{table*}[ht]
-\caption{\textbf{Recall Performance Comparison in the Single-Source Domain Generalization Setting.} We present the center-wise performance across target domains (B, C and D) and the overall mean ($\pm$ standard deviation) across all centers, demonstrating that our proposed method achieves the highest Recall performance compared to all baselines.}
-\label{tab:performance_mlp}
-\centering
-\begin{tabular}{llcccc}
-\hline
-\textbf{MLP} & \textbf{Method} & \textbf{B} & \textbf{C} & \textbf{D} & \textbf{Mean $\pm$ Std} \\
-\hline
-\multirow{2}{*}{W/o Augmentation} & ERM & 0.4074 & 0.0333 & 0.2258 & $0.2222 \pm 0.0958$ \\
-& IRM & 0.3210 & 0.0667 & 0.1613 & $0.1830 \pm 0.0958$ \\
-\hline
-\multirow{2}{*}{Masking only} & Input Masking & 0.4074 & 0.1667 & 0.2581 & $0.2774 \pm 0.2170$ \\
-& Group-based Masking & 0.4444 & 0.1667 & 0.4839 & $0.3650 \pm 0.0958$ \\
-\hline
-\multirow{3}{*}{Mixup only} & Mixup & 0.7284 & 0.5000 & 0.4516 & $0.5600 \pm 0.1635$ \\
-& Manifold Mixup & 0.4198 & 0.2000 & 0.7097 & $0.4431 \pm 0.2170$ \\
-& Similarity-guided Mixup & 0.7407 & 0.5333 & 0.4516 & $0.5752 \pm 0.1209$ \\
-\hline
-\multirow{3}{*}{Mixup + Masking} & Mixup + Input Masking & 0.8765 & 0.5000 & 0.8065 & $0.7277 \pm 0.1209$ \\
-& Manifold Mixup + Masking & 0.4321 & 0.2000 & 0.7097 & $0.4473 \pm 0.0958$ \\
-& \textbf{Ours} & \textbf{0.9259} & \textbf{0.5667} & \textbf{0.8710} & $\mathbf{0.7879 \pm 0.1473}$ \\
-\hline
-\end{tabular}
-\end{table*}
+Figure~\ref{fig:3.fine-arcade} visualizes examples of the refined ground truth in which minor branches were additionally annotated. On average, annotating and reviewing each image required approximately 20 minutes, totaling about 65 hours of expert effort for the 196 images. Figure~\ref{fig:3.augmeted_images} illustrates CAG-specific Copy-Paste augmentation and its modifications. Table~\ref{tab:dsc_metrics} summarizes the segmentation performance of the models as measured by the three Dice metrics. Fine-tuned models substantially outperformed the pretrained baseline across all datasets. For $\text{Dice}_{\text{overall}}$, augmentation improved performance in every dataset, with the best result observed in ARCADE ($69.09\%$, $+3.25\%$). For $\text{Dice}_{\text{minor}}$, augmentation also provided consistent gains, and XCAD achieved the highest score ($30.54\%$, $+6.29\%$). XCAD already showed relatively strong performance before augmentation. In terms of relative improvement, DCA1 benefited most in $\text{Dice}_{\text{overall}}$ ($+8.95\%$), while ARCADE showed the largest gain in $\text{Dice}_{\text{minor}}$ ($+12.17\%$). For $\text{Dice}_{\text{major}}$, augmentation slightly decreased performance in ARCADE ($-2.53\%$) and XCAD ($-1.91\%$), while a modest gain was observed in DCA1 ($+3.96\%$). Figure~\ref{fig:3.qualitative} shows qualitative segmentation results under $\text{Dice}_{\text{minor}}$, showing differences across datasets. The pretrained SAM-Med2D model showed the lowest performance, while fine-tuning with the DCA1, ARCADE, and XCAD datasets progressively improved the segmentation of minor arteries. Although conventional augmentation methods, such as rotation and flipping, showed slight performance improvements compared to simple fine-tuning, they did not exhibit substantial gains in terms of $\text{Dice}_\text{minor}$. Among them, the XCAD-trained model achieved the best results, and applying coronary-specific augmentation further enhanced performance compared with the non-augmented version.
 
-\textbf{Overall Performance Comparison.} Table~\ref{tab:performance_mlp} presents the performance results in terms of Recall. We observe that the proposed method significantly improves performance.
-Our method achieved mean Recall of 0.7879, outperforming the best baseline (Mixup + Masking) by a substantial margin of 6.20 percentage points. This indicates that our approach is particularly effective at identifying patients at risk of condition deterioration across unseen domains. 
+To further assess the contribution of each augmentation component, we performed an ablation study using the DCA1 dataset (Table~\ref{tab:ablation_copypaste_symbols_colored}). Copy-Paste augmentation alone improved $\text{Dice}_{\text{overall}}$ from $55.29\%$ to $59.98\%$ and $\text{Dice}_{\text{minor}}$ from $13.89\%$ to $17.88\%$. Adding intensity matching (\texttt{Intensity}), anatomical overlap (\texttt{Overlap}), or branching complexity (\texttt{Complexity}) provided additional gains. When two modifications were combined, the performance exceeded that of applying a single modification. The combination of all three achieved the highest scores ($\text{Dice}_{\text{overall}}$ $64.24\%$, $\text{Dice}_{\text{minor}}$ $24.19\%$). Overall, incremental improvements were observed with each step, and the best results were obtained when all components were applied together.
 
-\textbf{Ablation of Proposed Components} Table~\ref{tab:performance_mlp} also presents an ablation study on each component of our proposed method. Relative to the ERM, Group-based Masking achieved a greater performance improvement than the conventional Input Masking technique, and Similarity-guided Mixup also demonstrated a larger gain compared to the conventional Mixup method. Furthermore, our combined method achieved the highest performance improvement in the Mixup + Masking combination, confirming that each component contributes to performance enhancement and exhibits a significant synergistic effect.
+\section*{Discussion}
+The key finding of our study is that adding minor branch annotations to the test set substantially affected segmentation performance. The $\text{Dice}_{\text{minor}}$ was stricter than $\text{Dice}_{\text{overall}}$, consistently yielding lower scores and highlighting the difficulty of capturing thin and distal arteries. Fine-tuned models outperformed the pretrained baseline, particularly when trained with augmented data. Our augmentation strategy improved segmentation performance by up to 3.4-fold in $\text{Dice}_{\text{overall}}$ and 5.7-fold in $\text{Dice}_{\text{minor}}$ compared with the pretrained model. These findings underscore the challenge of segmenting thin and distal branches and the importance of tailored augmentation strategies for improving performance in these regions. While augmentation improved $\text{Dice}_{\text{minor}}$ and $\text{Dice}_{\text{overall}}$, $\text{Dice}_{\text{major}}$ showed a slight decrease in ARCADE and XCAD. This may suggest a trade-off, as augmentations designed for minor epicardial artery delineation can introduce boundary variability, reducing accuracy in major epicardial arteries.
 
-\textbf{Feature Space Analysis.} To qualitatively analyze how our proposed method improves the model's feature representation, we visualized the latent space of the test set using t-SNE~\cite{Maaten:2008:tSNE} in Figure~\ref{fig:2_feature_analysis}. The t-SNE visualizations demonstrate that our proposed framework learns a more structured and discriminative feature space compared to the baselines. Compared to baseline methods like ERM, our method's True Positives (blue dots) and False Negatives (red `x' marks) are observed to be relatively better clustered. Most critically, our approach achieves a dramatic reduction in False Negatives , with only 24 misclassified positive cases—a considerable improvement over the 93 observed in ERM and 54 in Mixup. This reduction confirms that the Dual Knowledge-Guided Augmentation framework successfully forces the model to learn a robust decision boundary that accurately captures the inherent structure of the data, thereby maximizing the identification of high-risk patients across unseen target domains.
-\begin{figure}[!ht]
+SAM-Med2D achieved Dice scores ranging from $57.16\%$ to $87.69\%$ in CT, MRI, endoscopy, and other modalities under the single-point prompt setting \cite{Cheng:2023:SAM}. In CAG, however, its $\text{Dice}_{\text{overall}}$ was only $20.36\%$. Fine-tuning raised $\text{Dice}_{\text{overall}}$ to a level comparable with other benchmarks, but $\text{Dice}_{\text{minor}}$ remained low. This gap reflects both the imaging characteristics of CAG, such as small vessel caliber, overlapping structures, and low resolution, as well as the limited number of high-quality annotations for minor epicardial arteries. Expanding datasets by systematically labeling minor epicardial arteries may improve model performance.
+
+The scarcity of public medical image datasets is a critical bottleneck for medical AI research \cite{Tajbakhsh:2020:Embracing}. Unlike natural image domains, where large-scale data are readily available, medical data are rarely shared openly. This limitation arises from legal, ethical, and societal imperatives to protect patient privacy \cite{Li:2023:A}. Because clinical images and health records inherently contain sensitive information, broad disclosure is restricted unless they are thoroughly anonymized. To address this limitation, augmentation and synthesis are frequently employed in medical imaging research. Our study focused on augmentation specifically designed for CAG, whereas other groups have explored synthesis. For example, diffusion-based methods using CCTA-derived 2D projection masks have been applied to generate realistic angiographic images, and fractal synthetic modules have been introduced in self-supervised frameworks to create vessel-like masks that guide coronary angiogram generation \cite{Zhao:2025:Leveraging, Ma:2021:Self-supervised}.
+
+Segmentation of pixel-width structures is one of the most difficult tasks in medical imaging. In coronary artery segmentation, these fine structures make accurate annotation both technically demanding and labor-intensive. Nevertheless, reliable ground truth annotations of these structures are essential for constructing dynamic coronary roadmaps and enabling advanced analyses of coronary blood flow \cite{Piayda:2021:Dynamic, Westra:2018:Diagnostic}. They also provide a crucial reference for the development and thorough evaluation of AI methods in coronary imaging.
+
+Future work may explore more advanced augmentation strategies. It may also involve expanding the scale of annotated datasets. Extending segmentation from images to videos can allow the use of temporal information in CAG. This study has several limitations. First, the Fine-ARCADE dataset was small in scale and limited to the right coronary artery. Annotation of the left coronary artery was not performed, which would have required substantially greater labeling effort and expert validation. In addition, external validation across broader multi-center cohorts was not performed, which restricts generalizability. Second, inter-observer variability was not formally assessed, which may cause annotation bias in the ground truth labels. Third, the analysis was confined to SAM-Med2D, without comparison to alternative architectures such as CNN-based models or other recently proposed foundation models. Finally, as previously mentioned, a slight performance decrease in $\text{Dice}_{\text{major}}$ was observed in XCAD and ARCADE compared to the performance improvement in $\text{Dice}_{\text{minor}}$. This could be attributed to two main reasons: the original main artery labeling being polygon-based rather than pixel-wise, potentially leading to inaccurate evaluation at boundary regions, and inaccurate predictions for thin line structures that are not actual blood vessels.
+
+\section*{Conclusion}
+In this study, we developed a segmentation framework for CAG that includes refined annotations, specialized augmentation strategies, and a small-vessel-focused evaluation metric. Our approach substantially improved segmentation performance compared with the pretrained baseline, particularly in minor epicardial arteries. These results highlight the value of systematic labeling and specialized methods for advancing AI-based analysis of CAG.
+
+
+\bibliography{sample}
+
+\section*{Figure legends}
+\noindent Figure 1. 
+        \textbf{Overview of the Proposed Framework and Contributions.} 
+        Our framework consists of three key components: (1) \textbf{Fine-labeled Evaluation Dataset (Fine-ARCADE)} creation via expert annotation of minor vessels. (2) \textbf{CAG-specific Copy-Paste Augmentation} applied to coarse-labeled datasets for robust model training. (3) \textbf{Vessel Size-Specific Evaluation Metrics} ($\text{Dice}_{\text{overall}}$, $\text{Dice}_{\text{minor}}$, $\text{Dice}_{\text{major}}$) for granular performance analysis, particularly focusing on small-vessel detection.
+
+\noindent Figure 2. 
+        \textbf{Refined ground truth in the Fine-ARCADE}
+        Original coarse annotations, derived from the SYNTAX score and covering primarily major vessels, are shown in blue. In contrast, our newly refined annotations meticulously delineate the minor epicardial arteries, which are shown in red.
+
+\noindent Figure 3. 
+        \textbf{Visualization of CAG-specific Copy-Paste augmentation}
+        a) Background images and masks (yellow arrows). 
+        b) Foreground images and masks after geometric transformation (red arrows), with intensity distribution matched to the background images. 
+        c) Augmented images created by pasting b) onto a), generating anatomically continuous and morphologically diverse training datasets.
+
+\noindent Figure 4. 
+        \textbf{Qualitative comparison of vessel segmentation results.} 
+        The figure illustrates the performance of models trained on different datasets and methods on two representative CAG images. The first two columns show the original image and the ground truth (major vessel in green, minor in yellow). Subsequent columns compare segmentation masks: Black represents correctly identified major vessels, blue for correctly identified minor vessels (True Positives), red for incorrect predictions (False Positives), and gray for unidentified minor vessels (False Negatives). The results clearly demonstrate that the proposed method, XCAD (Ours), achieves \textbf{Enhanced Minor Artery Detection} (highlighted in the zoomed box and red ellipses) by showing more blue region and significantly less red/gray region compared to the baseline XCAD (w/o aug.) and other methods, validating the effectiveness of our augmentation strategy.
+
+\section*{Author contributions statement}
+Conceptualization: D.K, S.M.; Methodology: S.M and D.K.; Software and engineering: S.M, D.C, and D.K.; Resources: D.K, S.M, D.C, J.S, S.K, J.L, D.K, and J.M.; Data curation: D.K, J.S, S.K, and J.L.; Writing original draft: D.K, S.M.; Writing review \& editing: D.K, S.M, and S.K.; Funding acquisition: D.K, and S.K.; Supervision: S.M and S.K.
+
+\section*{Data availability}
+Public CAG dataset mentioned on our research is available at \url{https://zenodo.org/records/10390295}, \url{https://github.com/AISIGSJTU/SSVS}, and \url{http://personal.cimat.mx:8181/~ivan.cruz/DB_Angiograms.html}. Fine-ARCADE dataset is available at \url{https://github.com/msw6468/CAGSAM}.
+
+\section*{Code availability}
+Source code of data preparation, augmentation, fine-tuning and evaluating SAMMed-2D is available at \url{https://github.com/msw6468/CAGSAM}.
+
+\section*{Additional information}
+
+\subsection*{Ethical consent} 
+The use of institutional data was approved by the Public Institutional Review Board (P01-202505-01-042), with the requirement for informed consent wavied.
+
+\subsection*{Funding} This research was supported by the Bio\&Medical Technology Development Program of the National Research Foundation (NRF) funded by the Korean government (MSIT) (no. RS-2025-00517929).
+
+\subsection*{Competing interests} No potential conflict of interest relevant to this article was reported. 
+
+
+\begin{figure}[h]
     \centering
-    \includegraphics[width=1\textwidth]{imgs/2_feature_analysis.pdf}
+    \includegraphics[width=1\textwidth]{imgs/3_overview.pdf}
     \caption{
-        \textbf{Feature Space Analysis via t-SNE Visualization.}
-        The plot visualizes the effect of each method by showing True Positives (TP) and False Negatives (FN) against the backdrop of the negative class (faded for clarity). Our method yields a highly structured feature space with robust separation between positive and negative classes, resulting in a decision boundary that is appropriately positioned to effectively maximize True Positive identification.
+        \textbf{Overview of the Proposed Framework and Contributions.} 
+        Our framework consists of three key components: (1) \textbf{Fine-labeled Evaluation Dataset (Fine-ARCADE)} creation via expert annotation of minor vessels. (2) \textbf{CAG-specific Copy-Paste Augmentation} applied to coarse-labeled datasets for robust model training. (3) \textbf{Vessel Size-Specific Evaluation Metrics} ($\text{Dice}_{\text{overall}}$, $\text{Dice}_{\text{minor}}$, $\text{Dice}_{\text{major}}$) for granular performance analysis, particularly focusing on small-vessel detection.
     }
-    \label{fig:2_feature_analysis}
+    \label{fig:3.overview}
 \end{figure}
 
-\textbf{Center-wise analysis.} When examining the center-specific recall scores in Figure~\ref{fig:2_center_wise_analysis}, we observed that performance generally rose across all hospitals, in line with the overall performance improvement. Notably, C achieved a substantial gain when Mixup was incorporated, suggesting that Mixup's data augmentation, by increasing the number of samples in the minority class, was a contributing factor.
-\begin{figure}[!ht]
+\begin{figure}[h]
     \centering
-    \includegraphics[width=1\textwidth]{imgs/2_center_wise_analysis.pdf}
-    \caption{\textbf{Center-wise Recall Analysis Demonstrating Robustness to Domain Shift.} The bar plot presents the recall score for each method across the individual target domains (B, C, and D), alongside the overall mean recall score. This center-wise breakdown highlights the robustness and generalization capability of our proposed method, which achieves the highest mean recall (78.79\%) and consistently high performance across all unseen target institutions}
-    \label{fig:2_center_wise_analysis}
+    \includegraphics[width=0.6\textwidth]{imgs/3_Fine-ARCDAE.pdf}
+    \caption{
+        \textbf{Refined ground truth in the Fine-ARCADE}
+        Original coarse annotations, derived from the SYNTAX score and covering primarily major vessels, are shown in blue. In contrast, our newly refined annotations meticulously delineate the minor epicardial arteries, which are shown in red.
+    }
+    \label{fig:3.fine-arcade}
 \end{figure}
 
-% \textbf{Arhcitecture Robustness.} To validate the robustness of our proposed method across different model architectures, we conducted additional experiments using TabPFN~\cite{Hollmann:2025:Tabpfn}, a state-of-the-art foundation model for tabular data. The results, presented in Table~\ref{tab:performance_tabpfn}, demonstrate that our method consistently outperforms all baselines in terms of Recall, achieving an Overall Recall of 0.7042 and a Center-wise Recall of 0.6514. This further confirms the effectiveness and generalizability of our approach across different model architectures.
-% \begin{table}[ht]
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{imgs/3_augmented_images.pdf}
+    \caption{
+        \textbf{Visualization of CAG-specific Copy-Paste augmetation}
+        a) Background images and masks (yellow arrows). 
+        b) Forground images and masks after geometric transformation (red arrows), with intensity distribution matched to the background images. 
+        c) Augmented images created by pasting b) onto a), generating anatomically continuous and morphologically diverse training datasets.
+    }
+    \label{fig:3.augmeted_images}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{imgs/3_qualitative_result.pdf}
+    \caption{
+        \textbf{Qualitative comparison of vessel segmentation results.} 
+        The figure illustrates the performance of models trained on different datasets and methods on two representative CAG images. The first two columns show the original image and the ground truth (major vessel in green, minor in yellow). Subsequent columns compare segmentation masks: Black represents correctly identified major vessels, blue for correctly identified minor vessels (True Positives), red for incorrect predictions (False Positives), and gray for unidentified minor vessels (False Negatives). The results clearly demonstrate that the proposed method, XCAD (Ours), achieves \textbf{Enhanced Minor Artery Detection} (highlighted in the zoomed box and red ellipses) by showing more blue region and significantly less red/gray region compared to the baseline XCAD (w/o aug.) and other methods, validating the effectiveness of our augmentation strategy.
+    }
+    \label{fig:3.qualitative}
+\end{figure}
+
+\clearpage
+\begin{table}[h!]
+\centering
+\caption{Public datasets for CAG segmentation.}
+\label{tab:public_datasets}
+\begin{tabular}{l|l|l|l|l}
+\toprule
+\textbf{Dataset} & \textbf{Size} & \textbf{Resolution} & \makecell[l]{\fontsize{10pt}{0pt}\selectfont\textbf{Minor} \\ \textbf{artery}} & \textbf{Details} \\
+\midrule
+ARCADE~\cite{Yang:2023:ARCADE} & 1500 & $512 \times 512$ & \makecell[c]{$\times$} & \makecell[l]{labeled by experts \\ based on the \\ SYNTAX score} \\
+\hline
+XCAD~\cite{Li:2023:XCAD} & 126 & $512 \times 512$ & \makecell[c]{$\times$} & \makecell[l]{labeled by experienced \\ radiologists} \\
+\hline
+DCA1~\cite{Ma:2022:DCA1} & 130 & $300 \times 300$ & \makecell[c]{$\times$} & \makecell[l]{labeled by an expert \\ cardiologist} \\
+\hline
+\makecell[l]{{Fine-ARCADE}\\{(Ours)}} & 196 & $512 \times 512$ & \makecell[c]{$\circ$} & \makecell[l]{Segmentation mask of \\ RCA with minor arteries \\ (based on ARCADE)} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\centering
+\caption{\textbf{Model performance using conventional and newly proposed metrics, based on ground truth including minor branches.}}
+\label{tab:dsc_metrics}
+\begin{tabular}{llccc}
+\toprule
+Dataset & Method & $\text{Dice}_\text{overall}$ & $\text{Dice}_\text{minor} $ & $\text{Dice}_\text{major}$ \\
+\midrule
+- & Pretrained & 20.36 & 5.37 & 24.89 \\
+\midrule
+\multirow{4}{*}{ARCADE} & Fine-tune & 65.84 & 12.04 & 82.35 \\
+& Flip & 65.89 & 12.60 & 82.49 \\
+& Rotation & 67.20 & 12.36 & \textbf{83.91} \\
+& Ours & \textbf{69.09} & \textbf{24.21} & 79.82\\
+\midrule
+\multirow{4}{*}{XCAD} & Fine-tune & 64.63 & 24.25 & 75.84 \\
+& Flip & 65.00 & 25.33 & 75.74 \\
+& Rotation & 66.58 & 25.87 & \textbf{77.68} \\
+& Ours & \textbf{67.68} & \textbf{30.54} & 73.93 \\
+\midrule
+\multirow{4}{*}{DCA1} & Fine-tune & 55.29 & 13.89 & 68.70 \\
+& Flip & 55.37 & 12.74 & 69.27 \\
+& Rotation & 57.03 & 15.26 & 70.30 \\
+& Ours & \textbf{64.24} & \textbf{24.19} & \textbf{72.66} \\
+\bottomrule
+\end{tabular}
+\end{table}
+% \begin{table}[h]
 % \centering
-% \caption{Performance comparison on the KNOW-pedCKD dataset under the SSDG setting (TabPFN Model). Overall performance is measured on the aggregated (unified) target datasets, whereas Center-wise performance represents the calculated statistics (e.g., mean and standard deviation) across each individual center. The row with the highest recall is highlighted in bold.}
-% \label{tab:performance_tabpfn}
-% \begin{tabular}{llcccc}
+% \caption{Model performance using conventional and newly proposed metrics, based on ground truth including minor branches.}
+% \label{tab:dsc_metrics}
+% \begin{tabular}{llccc}
 % \toprule
-% \multirow{2}{*}{\textbf{TabPFN}} & \multirow{2}{*}{\textbf{Method}} & \multicolumn{2}{c}{\textbf{Recall}} & \multicolumn{2}{c}{\textbf{AUROC}} \\
-% \cmidrule(lr){3-4} \cmidrule(lr){5-6}
-% & & \textbf{Overall} & \textbf{Center-wise} & \textbf{Overall} & \textbf{Center-wise} \\
+% Dataset & Method & $\text{Dice}_\text{overall}$ & $\text{Dice}_\text{minor} $ & $\text{Dice}_\text{major}$ \\
 % \midrule
-% \multirow{2}{*}{W/o Aug.} & ERM & 0.5070 & $0.4603 \pm 0.0989$ & 0.8161 & $0.8068 \pm 0.0120$ \\
-% & IRM & 0.5141 & $0.4644 \pm 0.1044$ & 0.8166 & $0.8079 \pm 0.0123$ \\
+% - & Pretrained & 20.36 & 5.37 & 24.89 \\
 % \midrule
-% \multirow{2}{*}{Masking only} & Input Masking & 0.5352 & $0.4837 \pm 0.1128$ & 0.8173 & $0.8091 \pm 0.0113$ \\
-% & Group-based Masking & 0.5423 & $0.4878 \pm 0.1182$ & 0.8177 & $0.8097 \pm 0.0108$ \\
+% \multirow{2}{*}{ARCADE} & Fine-tune & 65.84 & 12.04 & \textbf{82.35} \\
+% & Ours & \textbf{69.09 (+3.25)} & \textbf{24.21 (+12.17)} & 79.82 (-2.53) \\
 % \midrule
-% \multirow{3}{*}{Mixup only} & Mixup & 0.5775 & $0.5290 \pm 0.1142$ & 0.8152 & $0.8059 \pm 0.0115$ \\
-% & Manifold Mixup & 0.5775 & $0.5220 \pm 0.1202$ & 0.8137 & $0.8036 \pm 0.0148$ \\
-% & Similarity-guided Mixup & 0.6338 & $0.5756 \pm 0.1314$ & 0.8145 & $0.8047 \pm 0.0136$ \\
+% \multirow{2}{*}{XCAD} & Fine-tune & 64.63 & 24.25 & \textbf{75.84} \\
+% & Ours & \textbf{67.68 (+3.05)} & \textbf{30.54 (+6.29)} & 73.93 (-1.91) \\
 % \midrule
-% \multirow{3}{*}{Mixup + Masking} & Mixup + Masking & 0.6690 & $0.6172 \pm 0.1456$ & 0.8178 & $0.8098 \pm 0.0096$ \\
-% & Manifold Mixup + Masking & 0.5775 & $0.5220 \pm 0.1202$ & 0.8137 & $0.8036 \pm 0.0148$ \\
-% & \textbf{Ours} & \textbf{0.7042} & $\mathbf{0.6514 \pm 0.1473}$ & \textbf{0.8184} & $\mathbf{0.8088 \pm 0.0064}$ \\
+% \multirow{2}{*}{DCA1} & Fine-tune & 55.29 & 13.89 & 68.70 \\
+% & Ours & \textbf{64.24 (+8.95)} & \textbf{24.19 (+10.30)} & \textbf{72.66 (+3.96)} \\
 % \bottomrule
 % \end{tabular}
 % \end{table}
 
-\section*{Discussion}
-This study addressed the challenge of domain generalization in clinical prediction, where a model trained on data from a single source must maintain robust performance on unseen target domains. To this end, we proposed two novel knowledge-guided data augmentation techniques, Similarity-guided Mixup and Group-based Masking, that explicitly incorporate clinical context into the learning process. Experimental results demonstrated that these methods substantially outperformed existing baselines, including ERM, IRM, Mixup, and Input Masking, particularly in terms of recall, thereby validating its efficacy of our approach.
-
-The key factor underlying the success of our framework was the integration of clinical knowledge into the data augmentation process. Conventional Mixup techniques often generate unrealistic noise and degrade performance by indiscriminately interpolating data from clinically disparate patients. In contrast, our Similarity-guided Mixup selectively interpolated data between clinically similar patients, producing plausible and meaningful augmented samples. This approach functioned as an effective regularization mechanism, enhancing data diversity while preserving the intrinsic structure of the original data distribution.
-
-The Group-based Masking method further strengthened model robustness by mimicking realistic missing data patterns commonly observed in clinical practice (\textit{e.g.}, the concurrent absence of related clinical values). Unlike conventional masking methods that apply dropout uniformly across features, our technique encouraged the model to learn stable representations under authentic data imperfections, improving its ability to handle missingness in real-world target domains.
-
-The comparatively limited performance of baseline models, particularly IRM, can be explained by their inability to capture the complex inter-institutional variations that characterize real-world clinical data. Pseudo-domains generated from within a single dataset failed to reproduce the heterogeneity in patient demographics, measurement equipment, and data recording protocols observed across institutions. This finding underscores that a central challenge in domain generalization is not merely to enforce invariance but to simulate the true diversity between domains.
-
-This study makes several notable contributions. First, it empirically highlights the importance of embedding domain knowledge into the medical AI models, particularly for tabular data where standard augmentation techniques often underperform. Second, it presents a concrete and practical methodology for building generalizable models from single-source data, a setting that reflects the data accessibility constraints commonly encountered in health care AI research. Together, these contributions demonstrate that medical knowledge-driven regularization can meaningfully enhance both model robustness and clinical interpretability.
-
-Several limitations should be acknowledged. First, our validation was confined to a specific pediatric chronic kidney disease dataset (KNOW-pedCKD). Future studies should assess whether the proposed methods are generalized to other disease contexts or adult populations. Second, the identification of `clinically significant features' and their grouping relied on expert knowledge, which may introduce subjectivity. Future work could incorporate data-driven approaches for automated feature discovery. Third, our analysis utilized only a single source domain because of limited sample sizes from other institutions, leaving the impact of varying source domains unexamined. Finally, we emphasized that the primary contribution of this study lies in the proposal of a novel knowledge-guided regularization framework, rather than a definitive solution to the single-source domain generalization (SSDG) problem itself. We utilized the challenging SSDG setting as a rigorous testbed to demonstrate our method’s effectiveness in enhancing model robustness. Future research could investigate the integration of our method with other dedicated domain generalization techniques to further address the core SSDG challenge.
-
-Future research will focus on validating the generalizability of the proposed framework across diverse clinical datasets, automating the identification of clinically significant features, and extending the methodology to Multi-Source Domain Generalization settings. By integrating domain knowledge with advanced augmentation techniques, this study demonstrates a promising pathway toward developing medical AI models that are both more robust and more trustworthy across heterogeneous clinical environments.
-
-\bibliography{sample}
-
-\section*{Acknowledgements}
-
-We acknowledge the help of the following individuals at the Medical Research Collaborating Center (Biomedical Research Institute of Seoul National University Hospital): Heejung Ahn, Sungkyung Kim (data management), Jayoun Kim, and Nanhee Park (biostatistics).
-
-\section*{Author contributions statement}
-
-S.M. and E.P. conceptualized the study. S.M. conducted the methodology and wrote the original draft. E.P. reviewed and edited the manuscript and supervised the work. All authors contributed to data curation, investigation, and resources. All authors read and approved the final manuscript.
-
-\section*{Additional information}
-
-\subsection*{Ethical consent} This study was reviewed and approved by the Institutional Review Board of Seoul National University Hospital (No. H-1906-068-1041). 
-
-\subsection*{Informed consent} Informed consent was obtained from participants or their guardians, as appropriate, based on their ages.
-
-\subsection*{Competing interests} No potential conflict of interest relevant to this article was reported. This work was supported by the research program of the National Institute of Health (NIH) under research project No. 2025E110100. Additional support was provided by a grant from Korea University Medicine (No. K2427191).
+\begin{table}[h]
+\setlength{\tabcolsep}{2pt}
+\centering
+\caption{Ablation study of CAG-specific Copy-Paste augmentation on DCA1 dataset.}
+\label{tab:ablation_copypaste_symbols_colored}
+\begin{tabular}{cccc|ccc}
+\toprule
+Copy-Paste & Intensity mathching & Overlap vessels & Multiple insertion & $\text{Dice}_\text{overall}$ & $\text{Dice}_\text{minor} $ & $\text{Dice}_\text{major}$\\
+\midrule
+\textcolor{red}{$\times$} & \textcolor{red}{$\times$} & \textcolor{red}{$\times$} & \textcolor{red}{$\times$} & 55.29 & 13.89 & 68.70 \\
+\textcolor{blue}{$\circ$} & \textcolor{red}{$\times$} & \textcolor{red}{$\times$} & \textcolor{red}{$\times$} & 59.98 & 17.88 & 72.07 \\
+\textcolor{blue}{$\circ$} & \textcolor{blue}{$\circ$} & \textcolor{red}{$\times$} & \textcolor{red}{$\times$} & 61.46 & 19.42 & 72.93 \\
+\textcolor{blue}{$\circ$} & \textcolor{red}{$\times$} & \textcolor{blue}{$\circ$} & \textcolor{red}{$\times$} & 62.31 & 21.07 & 72.52 \\
+\textcolor{blue}{$\circ$} & \textcolor{red}{$\times$} & \textcolor{red}{$\times$} & \textcolor{blue}{$\circ$} & 62.59 & 19.47 & \textbf{73.92} \\
+\textcolor{blue}{$\circ$} & \textcolor{blue}{$\circ$} & \textcolor{red}{$\times$} & \textcolor{blue}{$\circ$} & 62.94 & 20.95 & 72.58 \\
+\textcolor{blue}{$\circ$} & \textcolor{red}{$\times$} & \textcolor{blue}{$\circ$} & \textcolor{blue}{$\circ$} & 63.22 & 22.52 & 72.72 \\
+\textcolor{blue}{$\circ$} & \textcolor{blue}{$\circ$} & \textcolor{blue}{$\circ$} & \textcolor{red}{$\times$} & 63.40 & 23.84 & 71.74 \\
+\textcolor{blue}{$\circ$} & \textcolor{blue}{$\circ$} & \textcolor{blue}{$\circ$} & \textcolor{blue}{$\circ$} & \textbf{64.24} & \textbf{24.19} & 72.66 \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \end{document}

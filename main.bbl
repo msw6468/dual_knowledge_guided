@@ -7,149 +7,164 @@
 \providecommand{\bibinfo}[2]{#2}
 \providecommand{\eprint}[2][]{\url{#2}}
 
-\bibitem{Rajkomar:2018:SAAD}
-\bibinfo{author}{Rajkomar, A.}, \bibinfo{author}{Oren, E.}, \bibinfo{author}{Chen, K.} \emph{et~al.}
-\newblock \bibinfo{journal}{\bibinfo{title}{Scalable and accurate deep learning with electronic health records}}.
-\newblock {\emph{\JournalTitle{npj Digital Medicine}}}  (\bibinfo{year}{2018}).
+\bibitem{Lawton:2022:2021}
+\bibinfo{author}{Lawton, J.~S.} \emph{et~al.}
+\newblock \bibinfo{journal}{\bibinfo{title}{2021 acc/aha/scai guideline for coronary artery revascularization: a report of the american college of cardiology/american heart association joint committee on clinical practice guidelines}}.
+\newblock {\emph{\JournalTitle{Circulation}}}  (\bibinfo{year}{2022}).
 
-\bibitem{Lakhani:2017:DLCR}
-\bibinfo{author}{Lakhani, P.} \& \bibinfo{author}{Sundaram, B.}
-\newblock \bibinfo{journal}{\bibinfo{title}{Deep learning at chest radiography: Automated classification of pulmonary tuberculosis by using convolutional neural networks}}.
-\newblock {\emph{\JournalTitle{Radiology}}}  (\bibinfo{year}{2017}).
+\bibitem{Neumann:2019:2018}
+\bibinfo{author}{Neumann, F.~J.} \emph{et~al.}
+\newblock \bibinfo{journal}{\bibinfo{title}{2018 esc/eacts guidelines on myocardial revascularization}}.
+\newblock {\emph{\JournalTitle{Eur Heart J}}}  (\bibinfo{year}{2019}).
 
-\bibitem{Sutton:2020:AOCS}
-\bibinfo{author}{Sutton, R.~T.} \emph{et~al.}
-\newblock \bibinfo{journal}{\bibinfo{title}{An overview of clinical decision support systems: benefits, risks, and strategies for success}}.
-\newblock {\emph{\JournalTitle{npj Digit Medicine}}}  (\bibinfo{year}{2020}).
+\bibitem{Kim:2024:Artificial}
+\bibinfo{author}{Kim, Y.~I.} \emph{et~al.}
+\newblock \bibinfo{journal}{\bibinfo{title}{Artificial intelligence-based quantitative coronary angiography of major vessels using deep learning}}.
+\newblock {\emph{\JournalTitle{Int J Cardiol}}}  (\bibinfo{year}{2024}).
 
-\bibitem{Ng:2019:Incidence}
-\bibinfo{author}{Ng, D.~K.} \emph{et~al.}
-\newblock \bibinfo{journal}{\bibinfo{title}{Incidence of initial renal replacement therapy over the course of kidney disease in children}}.
-\newblock {\emph{\JournalTitle{American Journal of Epidemiology}}}  (\bibinfo{year}{2019}).
+\bibitem{Sianos:2005:SYNTAX}
+\bibinfo{author}{Sianos, G.} \emph{et~al.}
+\newblock \bibinfo{journal}{\bibinfo{title}{The syntax score: an angiographic tool grading the complexity of coronary artery disease}}.
+\newblock {\emph{\JournalTitle{EuroIntervention}}}  (\bibinfo{year}{2005}).
 
-\bibitem{Xie:2018:GlobalBurden}
-\bibinfo{author}{Xie, Y.} \emph{et~al.}
-\newblock \bibinfo{journal}{\bibinfo{title}{Analysis of the global burden of disease study highlights the global, regional, and national trends of chronic kidney disease epidemiology from 1990 to 2016}}.
-\newblock {\emph{\JournalTitle{Kidney International}}}  (\bibinfo{year}{2018}).
+\bibitem{Suzuki:2020:Clinical}
+\bibinfo{author}{Suzuki, N.} \emph{et~al.}
+\newblock \bibinfo{journal}{\bibinfo{title}{Clinical expert consensus document on quantitative coronary angiography from the japanese association of cardiovascular intervention and therapeutics}}.
+\newblock {\emph{\JournalTitle{Cardiovasc Interv Ther}}}  (\bibinfo{year}{2020}).
 
-\bibitem{Islam:2023:CKDP}
-\bibinfo{author}{Islam, M.~A.}, \bibinfo{author}{Majumder, M. Z.~H.} \& \bibinfo{author}{Hussein, M.~A.}
-\newblock \bibinfo{journal}{\bibinfo{title}{Chronic kidney disease prediction based on machine learning algorithms}}.
-\newblock {\emph{\JournalTitle{Journal of Pathology Informatics}}}  (\bibinfo{year}{2023}).
+\bibitem{Collet:2017:Quantitative}
+\bibinfo{author}{Collet, C.} \emph{et~al.}
+\newblock \bibinfo{journal}{\bibinfo{title}{Quantitative angiography methods for bifurcation lesions: a consensus statement update from the european bifurcation club}}.
+\newblock {\emph{\JournalTitle{EuroIntervention}}}  (\bibinfo{year}{2017}).
 
-\bibitem{Ghosh:2024:IOEM}
-\bibinfo{author}{Ghosh, S.~K.} \& \bibinfo{author}{Khandoker, A.~H.}
-\newblock \bibinfo{journal}{\bibinfo{title}{Investigation on explainable machine learning models to predict chronic kidney diseases}}.
-\newblock {\emph{\JournalTitle{Scientific Reports}}}  (\bibinfo{year}{2024}).
+\bibitem{Witberg:2020:Diagnostic}
+\bibinfo{author}{Witberg, G.} \emph{et~al.}
+\newblock \bibinfo{journal}{\bibinfo{title}{Diagnostic performance of angiogram-derived fractional flow reserve: a pooled analysis of 5 prospective cohort studies}}.
+\newblock {\emph{\JournalTitle{JACC Cardiovasc Interv}}}  (\bibinfo{year}{2020}).
 
-\bibitem{Moon:2025:DPTK}
-\bibinfo{author}{Moon, S.} \emph{et~al.}
-\newblock \bibinfo{journal}{\bibinfo{title}{Development of a prediction tool for kidney function decline in children with chronic kidney disease}}.
-\newblock {\emph{\JournalTitle{Kidney Research and Clinical Practice}}}  (\bibinfo{year}{2025}).
+\bibitem{Xu:2017:Diagnostic}
+\bibinfo{author}{Xu, B.} \emph{et~al.}
+\newblock \bibinfo{journal}{\bibinfo{title}{Diagnostic accuracy of angiography-based quantitative flow ratio measurements for online assessment of coronary stenosis (favor ii china study)}}.
+\newblock {\emph{\JournalTitle{J Am Coll Cardiol}}}  (\bibinfo{year}{2017}).
 
-\bibitem{Kanakasabapathy:2021:AANN}
-\bibinfo{author}{Kanakasabapathy, M.~K.}, \bibinfo{author}{Thirumalaraju, P.}, \bibinfo{author}{Kandula, H.} \emph{et~al.}
-\newblock \bibinfo{journal}{\bibinfo{title}{Adaptive adversarial neural networks for the analysis of lossy and domain-shifted datasets of medical images}}.
-\newblock {\emph{\JournalTitle{Nature Biomedical Engineering}}}  (\bibinfo{year}{2021}).
+\bibitem{Avram:2023:CathAI}
+\bibinfo{author}{Avram, R.} \emph{et~al.}
+\newblock \bibinfo{journal}{\bibinfo{title}{Cathai: fully automated coronary angiography interpretation and stenosis estimation}}.
+\newblock {\emph{\JournalTitle{NPJ Digit Med}}}  (\bibinfo{year}{2023}).
 
-\bibitem{Guo:2022:EODG}
-\bibinfo{author}{Guo, L.~L.}, \bibinfo{author}{Pfohl, S.~R.}, \bibinfo{author}{Fries, J.} \emph{et~al.}
-\newblock \bibinfo{journal}{\bibinfo{title}{Evaluation of domain generalization and adaptation on improving model robustness to temporal dataset shift in clinical medicine}}.
-\newblock {\emph{\JournalTitle{Scientific Reports}}}  (\bibinfo{year}{2022}).
+\bibitem{Labrecque:2024:evaluation}
+\bibinfo{author}{Labrecque~Langlais, {\'E}.} \emph{et~al.}
+\newblock \bibinfo{journal}{\bibinfo{title}{Evaluation of stenoses using ai video models applied to coronary angiography}}.
+\newblock {\emph{\JournalTitle{NPJ digital medicine}}}  (\bibinfo{year}{2024}).
 
-\bibitem{Harada:2022:Epidemiology}
-\bibinfo{author}{Harada, R.}, \bibinfo{author}{Hamasaki, Y.}, \bibinfo{author}{Okuda, Y.}, \bibinfo{author}{Hamada, R.} \& \bibinfo{author}{Ishikura, K.}
-\newblock \bibinfo{journal}{\bibinfo{title}{Epidemiology of pediatric chronic kidney disease/kidney failure: learning from registries and cohort studies}}.
-\newblock {\emph{\JournalTitle{Pediatric Nephrology}}}  (\bibinfo{year}{2022}).
+\bibitem{Kim:2024:Validation}
+\bibinfo{author}{Kim, D.~H.} \emph{et~al.}
+\newblock \bibinfo{journal}{\bibinfo{title}{Validation of artificial intelligence-based quantitative coronary angiography}}.
+\newblock {\emph{\JournalTitle{Digit Health}}}  (\bibinfo{year}{2024}).
 
-\bibitem{Xu:2023:SimDE}
-\bibinfo{author}{Xu, Q.} \emph{et~al.}
-\newblock \bibinfo{title}{Simde: A simple domain expansion approach for single-source domain generalization}.
-\newblock In \emph{\bibinfo{booktitle}{CVPR Workshops}} (\bibinfo{year}{2023}).
+\bibitem{Yaman:2025:Deep}
+\bibinfo{author}{Yaman, S.}
+\newblock \bibinfo{journal}{\bibinfo{title}{Deep learning techniques for automated coronary artery segmentation and coronary artery disease detection: a systematic review of the last decade (2013–2024)}}.
+\newblock {\emph{\JournalTitle{Int J Comput Assist Radiol Surg}}}  (\bibinfo{year}{2025}).
 
-\bibitem{Cugu:2022:ACVC}
-\bibinfo{author}{Cugu, I.}, \bibinfo{author}{Mancini, M.}, \bibinfo{author}{Chen, Y.} \& \bibinfo{author}{Akata, Z.}
-\newblock \bibinfo{title}{Attention consistency on visual corruptions for single-source domain generalization}.
-\newblock In \emph{\bibinfo{booktitle}{CVPR Workshops}} (\bibinfo{year}{2022}).
+\bibitem{Yang:2023:ARCADE}
+\bibinfo{author}{Yang, J.} \emph{et~al.}
+\newblock \bibinfo{title}{Arcade: a large-scale coronary angiography dataset for stenosis detection and anatomical segmentation}.
+\newblock In \emph{\bibinfo{booktitle}{MICCAI Workshop}} (\bibinfo{year}{2023}).
 
-\bibitem{Xu:2021:AFFDG}
-\bibinfo{author}{Xu, Q.}, \bibinfo{author}{Zhang, R.}, \bibinfo{author}{Zhang, Y.}, \bibinfo{author}{Wang, Y.} \& \bibinfo{author}{Tian, Q.}
-\newblock \bibinfo{title}{A fourier-based framework for domain generalization}.
+\bibitem{Li:2023:XCAD}
+\bibinfo{author}{Li, Y.} \emph{et~al.}
+\newblock \bibinfo{journal}{\bibinfo{title}{Xcad: a coronary x-ray angiography dataset for vessel segmentation and stenosis detection}}.
+\newblock {\emph{\JournalTitle{Sci Data}}}  (\bibinfo{year}{2023}).
+
+\bibitem{Ma:2022:DCA1}
+\bibinfo{author}{Ma, Y.} \emph{et~al.}
+\newblock \bibinfo{journal}{\bibinfo{title}{Dca1: a digital coronary angiography dataset for vessel segmentation}}.
+\newblock {\emph{\JournalTitle{Data Brief}}}  (\bibinfo{year}{2022}).
+
+\bibitem{Camici:2007:Coronary}
+\bibinfo{author}{Camici, P.~G.} \& \bibinfo{author}{Crea, F.}
+\newblock \bibinfo{journal}{\bibinfo{title}{Coronary microvascular dysfunction}}.
+\newblock {\emph{\JournalTitle{N Engl J Med}}}  (\bibinfo{year}{2007}).
+
+\bibitem{Huo:2012:Optimal}
+\bibinfo{author}{Huo, Y.} \emph{et~al.}
+\newblock \bibinfo{journal}{\bibinfo{title}{Optimal diameter of diseased bifurcation segment: a practical rule for percutaneous coronary intervention}}.
+\newblock {\emph{\JournalTitle{EuroIntervention}}}  (\bibinfo{year}{2012}).
+
+\bibitem{Starodumov:2022:Modelling}
+\bibinfo{author}{Starodumov, I.~O.} \emph{et~al.}
+\newblock \bibinfo{journal}{\bibinfo{title}{Modelling of hemodynamics in bifurcation lesions of coronary arteries before and after myocardial revascularization}}.
+\newblock {\emph{\JournalTitle{Philos Trans A Math Phys Eng Sci}}}  (\bibinfo{year}{2022}).
+
+\bibitem{Taqueti:2018:Coronary}
+\bibinfo{author}{Taqueti, V.~R.} \& \bibinfo{author}{Di~Carli, M.~F.}
+\newblock \bibinfo{journal}{\bibinfo{title}{Coronary microvascular disease: pathogenic mechanisms and therapeutic options: Jacc state-of-the-art review}}.
+\newblock {\emph{\JournalTitle{J Am Coll Cardiol}}}  (\bibinfo{year}{2018}).
+
+\bibitem{Kirillov:2023:Segment}
+\bibinfo{author}{Kirillov, A.} \emph{et~al.}
+\newblock \bibinfo{title}{Segment anything}.
+\newblock In \emph{\bibinfo{booktitle}{Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV)}} (\bibinfo{year}{2023}).
+
+\bibitem{Ma:2024:Segment}
+\bibinfo{author}{Ma, J.} \emph{et~al.}
+\newblock \bibinfo{journal}{\bibinfo{title}{Segment anything in medical images}}.
+\newblock {\emph{\JournalTitle{Nat Commun}}}  (\bibinfo{year}{2024}).
+
+\bibitem{Wu:2025:Medical}
+\bibinfo{author}{Wu, J.} \emph{et~al.}
+\newblock \bibinfo{journal}{\bibinfo{title}{Medical sam adapter: adapting segment anything model for medical image segmentation}}.
+\newblock {\emph{\JournalTitle{Med Image Anal}}}  (\bibinfo{year}{2025}).
+
+\bibitem{Zhang:2023:Customized}
+\bibinfo{author}{Zhang, K.} \& \bibinfo{author}{Liu, D.}
+\newblock \bibinfo{journal}{\bibinfo{title}{Customized segment anything model for medical image segmentation}}.
+\newblock {\emph{\JournalTitle{arXiv preprint arXiv:2304.13785}}}  (\bibinfo{year}{2023}).
+
+\bibitem{Cheng:2023:SAM}
+\bibinfo{author}{Cheng, D.} \emph{et~al.}
+\newblock \bibinfo{journal}{\bibinfo{title}{Sam on medical images: a comprehensive study on three prompt modes}}.
+\newblock {\emph{\JournalTitle{arXiv preprint arXiv:2305.00035}}}  (\bibinfo{year}{2023}).
+
+\bibitem{Ghiasi:2021:Simple}
+\bibinfo{author}{Ghiasi, G.} \emph{et~al.}
+\newblock \bibinfo{title}{Simple copy-paste is a strong data augmentation method for instance segmentation}.
 \newblock In \emph{\bibinfo{booktitle}{CVPR}} (\bibinfo{year}{2021}).
 
-\bibitem{Zhao:2024:Morestyle}
-\bibinfo{author}{Zhao, H.} \emph{et~al.}
-\newblock \bibinfo{title}{Morestyle: relax low-frequency constraint of fourier-based image reconstruction in generalizable medical image segmentation}.
-\newblock In \emph{\bibinfo{booktitle}{MICCAI}} (\bibinfo{year}{2024}).
+\bibitem{Finet:2008:Fractal}
+\bibinfo{author}{Finet, G.} \emph{et~al.}
+\newblock \bibinfo{journal}{\bibinfo{title}{Fractal geometry of arterial coronary bifurcations: a quantitative coronary angiography and intravascular ultrasound analysis}}.
+\newblock {\emph{\JournalTitle{EuroIntervention}}}  (\bibinfo{year}{2008}).
 
-\bibitem{Liu:2024:UFDP}
-\bibinfo{author}{Liu, C.}, \bibinfo{author}{Cao, Y.}, \bibinfo{author}{Su, X.} \& \bibinfo{author}{Zhu, H.}
-\newblock \bibinfo{title}{Universal frequency domain perturbation for single-source domain generalization}.
-\newblock In \emph{\bibinfo{booktitle}{Proceedings of the 32nd ACM International Conference on Multimedia}} (\bibinfo{year}{2024}).
+\bibitem{Tajbakhsh:2020:Embracing}
+\bibinfo{author}{Tajbakhsh, N.} \emph{et~al.}
+\newblock \bibinfo{journal}{\bibinfo{title}{Embracing imperfect datasets: a review of deep learning solutions for medical image segmentation}}.
+\newblock {\emph{\JournalTitle{Med Image Anal}}}  (\bibinfo{year}{2020}).
 
-\bibitem{Huang:2021:FSDR}
-\bibinfo{author}{Huang, J.}, \bibinfo{author}{Guan, D.}, \bibinfo{author}{Xiao, A.} \& \bibinfo{author}{Lu, S.}
-\newblock \bibinfo{title}{Fsdr: Frequency space domain randomization for domain generalization}.
-\newblock In \emph{\bibinfo{booktitle}{CVPR}} (\bibinfo{year}{2021}).
+\bibitem{Li:2023:A}
+\bibinfo{author}{Li, J.}, \bibinfo{author}{Li, W.}, \bibinfo{author}{Wang, Q.}, \bibinfo{author}{Wang, B.} \& \bibinfo{author}{Chen, H.}
+\newblock \bibinfo{journal}{\bibinfo{title}{A systematic collection of medical image datasets for deep learning}}.
+\newblock {\emph{\JournalTitle{ACM Comput Surv}}}  (\bibinfo{year}{2023}).
 
-\bibitem{Zhou:2021:DGWM}
-\bibinfo{author}{Zhou, K.}, \bibinfo{author}{Yang, Y.}, \bibinfo{author}{Qiao, Y.} \& \bibinfo{author}{Xiang, T.}
-\newblock \bibinfo{journal}{\bibinfo{title}{Domain generalization with mixstyle}}.
-\newblock {\emph{\JournalTitle{ICLR}}}  (\bibinfo{year}{2021}).
+\bibitem{Zhao:2025:Leveraging}
+\bibinfo{author}{Zhao, L.}, \bibinfo{author}{Zhang, H.}, \bibinfo{author}{Chen, X.}, \bibinfo{author}{Wang, Y.} \& \bibinfo{author}{Li, J.}
+\newblock \bibinfo{journal}{\bibinfo{title}{Leveraging diffusion model and image foundation model for improved correspondence matching in coronary angiography}}.
+\newblock {\emph{\JournalTitle{arXiv preprint arXiv:2504.00191}}}  (\bibinfo{year}{2025}).
 
-\bibitem{Zhang:2018:Mixup}
-\bibinfo{author}{Zhang, H.}, \bibinfo{author}{Cisse, M.}, \bibinfo{author}{Dauphin, Y.~N.}, \bibinfo{author}{Lopez-Paz, D.} \emph{et~al.}
-\newblock \bibinfo{title}{mixup: Beyond empirical risk minimization}.
-\newblock In \emph{\bibinfo{booktitle}{ICLR}} (\bibinfo{year}{2018}).
+\bibitem{Ma:2021:Self-supervised}
+\bibinfo{author}{Ma, Y.} \emph{et~al.}
+\newblock \bibinfo{title}{Self-supervised vessel segmentation via adversarial learning}.
+\newblock In \emph{\bibinfo{booktitle}{ICCV}} (\bibinfo{year}{2021}).
 
-\bibitem{Verma:2019:ManifoldMixup}
-\bibinfo{author}{Verma, V.} \emph{et~al.}
-\newblock \bibinfo{title}{Manifold mixup: Better representations by interpolating hidden states}.
-\newblock In \emph{\bibinfo{booktitle}{International conference on machine learning}} (\bibinfo{year}{2019}).
+\bibitem{Piayda:2021:Dynamic}
+\bibinfo{author}{Piayda, K.} \emph{et~al.}
+\newblock \bibinfo{journal}{\bibinfo{title}{Dynamic coronary roadmap in percutaneous coronary intervention: results from an open-label, randomized trial}}.
+\newblock {\emph{\JournalTitle{Circ Cardiovasc Interv}}}  (\bibinfo{year}{2021}).
 
-\bibitem{Yun:2019:Cutmix}
-\bibinfo{author}{Yun, S.} \emph{et~al.}
-\newblock \bibinfo{title}{Cutmix: Regularization strategy to train strong classifiers with localizable features}.
-\newblock In \emph{\bibinfo{booktitle}{ICCV}} (\bibinfo{year}{2019}).
-
-\bibitem{Uddin:2021:Saliencymix}
-\bibinfo{author}{Uddin, A. F.~M.}, \bibinfo{author}{Monira, M.}, \bibinfo{author}{Shin, W.}, \bibinfo{author}{Chung, T.} \& \bibinfo{author}{Bae, S.~H.}
-\newblock \bibinfo{journal}{\bibinfo{title}{Saliencymix: A saliency guided data augmentation strategy for better regularization}}.
-\newblock {\emph{\JournalTitle{ICLR}}}  (\bibinfo{year}{2021}).
-
-\bibitem{Qin:2020:Resizemix}
-\bibinfo{author}{Qin, J.} \emph{et~al.}
-\newblock \bibinfo{journal}{\bibinfo{title}{Resizemix: Mixing data with preserved object information and true labels}}.
-\newblock {\emph{\JournalTitle{arXiv preprint arXiv:2012.11101}}}  (\bibinfo{year}{2020}).
-
-\bibitem{Balasubramanian:2023:TIIM}
-\bibinfo{author}{Balasubramanian, S.} \& \bibinfo{author}{Feizi, S.}
-\newblock \bibinfo{title}{Towards improved input masking for convolutional neural networks}.
-\newblock In \emph{\bibinfo{booktitle}{ICCV}} (\bibinfo{year}{2023}).
-
-\bibitem{Arjovsky2019InvariantRM}
-\bibinfo{author}{Arjovsky, M.}, \bibinfo{author}{Bottou, L.}, \bibinfo{author}{Gulrajani, I.} \& \bibinfo{author}{Lopez-Paz, D.}
-\newblock \bibinfo{journal}{\bibinfo{title}{Invariant risk minimization}}.
-\newblock {\emph{\JournalTitle{arXiv preprint arXiv:1907.02893}}}  (\bibinfo{year}{2019}).
-
-\bibitem{Kingma:2014:Adam}
-\bibinfo{author}{Kingma, D.~P.} \& \bibinfo{author}{Ba, J.}
-\newblock \bibinfo{journal}{\bibinfo{title}{Adam: A method for stochastic optimization}}.
-\newblock {\emph{\JournalTitle{International Conference on Learning Representations (ICLR)}}}  (\bibinfo{year}{2015}).
-
-\bibitem{Wong:2012:CKiDReview}
-\bibinfo{author}{Wong, C.~J.}, \bibinfo{author}{Moxey-Mims, M.}, \bibinfo{author}{Jerry-Fluker, J.}, \bibinfo{author}{Warady, B.~A.} \& \bibinfo{author}{Furth, S.~L.}
-\newblock \bibinfo{journal}{\bibinfo{title}{Ckid (ckd in children) prospective cohort study: a review of current findings}}.
-\newblock {\emph{\JournalTitle{American Journal of Kidney Diseases}}}  (\bibinfo{year}{2012}).
-
-\bibitem{Ng:2023:PredictionTool}
-\bibinfo{author}{Ng, D.~K.} \emph{et~al.}
-\newblock \bibinfo{journal}{\bibinfo{title}{Development of an adaptive clinical web-based prediction tool for kidney replacement therapy in children with chronic kidney disease}}.
-\newblock {\emph{\JournalTitle{Kidney International}}}  (\bibinfo{year}{2023}).
-
-\bibitem{Maaten:2008:tSNE}
-\bibinfo{author}{Maaten, L. V.~D.} \& \bibinfo{author}{Hinton, G.}
-\newblock \bibinfo{journal}{\bibinfo{title}{Visualizing data using t-sne}}.
-\newblock {\emph{\JournalTitle{Journal of machine learning research}}}  (\bibinfo{year}{2008}).
+\bibitem{Westra:2018:Diagnostic}
+\bibinfo{author}{Westra, J.} \emph{et~al.}
+\newblock \bibinfo{journal}{\bibinfo{title}{Diagnostic performance of in-procedure angiography-derived quantitative flow reserve compared to pressure-derived fractional flow reserve: the favor ii europe-japan study}}.
+\newblock {\emph{\JournalTitle{J Am Heart Assoc}}}  (\bibinfo{year}{2018}).
 
 \end{thebibliography}
